@@ -1,3 +1,33 @@
+# Self-added file extensions
+*.backup
+*.mkv
+*.DS_Store
+*settings.json
+*video_link.txt
+*.tgz
+.DS_Store
+sources/*
+elemzesmodszertan_merged.pdf
+*xdp*
+
+# LaTeX
+*.aux
+*.fls
+*.bbl
+*.blg
+*.log
+*.nav
+*.out
+*.vrb
+*.dvi
+*.snm
+*.gz
+*.bak
+*.toc
+*.synctex
+*.synctex.gz
+*.fdb_latexmk
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

@@ -1,0 +1,62 @@
+% Settings for the default beamer theme
+\documentclass[english, aspectratio=169]{beamer}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{tabularx}
+\usepackage{babel}
+\usepackage[ruled,vlined]{algorithm2e}
+\SetAlgorithmName{Algoritmus}{algoritmus}{List of Algorithms}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+\makeatletter
+
+\newcommand\makebeamertitle{\frame{\maketitle}}
+
+% (ERT) argument for the TOC
+\AtBeginDocument{%
+  \let\origtableofcontents=\tableofcontents
+  \def\tableofcontents{\@ifnextchar[{\origtableofcontents}{\gobbletableofcontents}}
+  \def\gobbletableofcontents#1{\origtableofcontents}
+}
+
+% Theme settings
+\usetheme{Frankfurt}
+\usecolortheme{default}
+\usefonttheme[onlymath]{serif}
+
+% Template settings
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{blocks}[rounded][shadow=false]
+\setbeamertemplate{title page}[default][colsep=-4bp, rounded=true, shadow=false]
+\makeatother
+
+% Define a custom darker red color
+\definecolor{DarkerGreen}{RGB}{0,85,0} % Adjust the RGB values as needed
+
+% Use the newly defined color in Beamer theme elements
+\setbeamercolor{structure}{fg=DarkerGreen} % Changes basic structural elements to Darker Green
+\setbeamercolor{title in head/foot}{bg=DarkerGreen} % Changes the title in header/footer to Darker Green
+
+
+\begin{document}
+
+% Title page
+\section{Bevezetés}
+\title[]{Adatbányászat a Gyakorlatban}
+\subtitle{}
+\author[Kuknyó Dániel]{Kuknyó Dániel\\Budapesti Gazdasági Egyetem}
+\date{2024/25\\1.félév}
+\makebeamertitle
+
+% Table of contents slide
+\begin{frame}
+\tableofcontents{}
+\end{frame}
+
+% Table of contents of the current section
+\begin{frame}
+\tableofcontents[currentsection]
+\end{frame}
+
+\end{document}

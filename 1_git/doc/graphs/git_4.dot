@@ -1,0 +1,63 @@
+digraph git {
+    graph [dpi=300]
+    rankdir="TD"
+
+    v1 [label="1. Verzió", shape="rect", style="rounded, filled", fillcolor="lightblue"]
+    v2 [label="2. Verzió", shape="rect", style="rounded, filled", fillcolor="lightblue"]
+    v3 [label="3. Verzió", shape="rect", style="rounded, filled", fillcolor="lightblue"]
+    v4 [label="4. Verzió", shape="rect", style="rounded, filled", fillcolor="lightblue"]
+    v5 [label="5. Verzió", shape="rect", style="rounded, filled", fillcolor="lightblue"]
+    
+    v1a [label="A fájl", shape="rect", style="rounded, filled", fillcolor="lightgreen"]
+    v1b [label="B fájl", shape="rect", style="rounded, filled", fillcolor="lightgreen"]
+    v1c [label="C fájl", shape="rect", style="rounded, filled", fillcolor="lightgreen"]
+
+    v2a [label=<A<sub>1</sub>>, shape="rect", style="rounded, filled", fillcolor="lightgreen"]
+    v2b [label="B", shape="rect", style="rounded, filled, dashed", fillcolor="lightgreen"]
+    v2c [label=<C<sub>1</sub>>, shape="rect", style="rounded, filled", fillcolor="lightgreen"]
+
+    v3a [label=<A<sub>1</sub>>, shape="rect", style="rounded, filled, dashed", fillcolor="lightgreen"]
+    v3b [label="B", shape="rect", style="rounded, filled, dashed", fillcolor="lightgreen"]
+    v3c [label=<C<sub>2</sub>>, shape="rect", style="rounded, filled", fillcolor="lightgreen"]
+
+    v4a [label=<A<sub>2</sub>>, shape="rect", style="rounded, filled", fillcolor="lightgreen"]
+    v4b [label=<B<sub>1</sub>>, shape="rect", style="rounded, filled", fillcolor="lightgreen"]
+    v4c [label=<C<sub>2</sub>>, shape="rect", style="rounded, filled, dashed", fillcolor="lightgreen"]
+
+    v5a [label=<A<sub>2</sub>>, shape="rect", style="rounded, filled, dashed", fillcolor="lightgreen"]
+    v5b [label=<B<sub>2</sub>>, shape="rect", style="rounded, filled", fillcolor="lightgreen"]
+    v5c [label=<C<sub>3</sub>>, shape="rect", style="rounded, filled", fillcolor="lightgreen"]
+
+    {rank="same"; v1; v2; v3; v4; v5;}
+    {rank="same"; v1a; v2a; v3a; v4a; v5a;}
+    {rank="same"; v1b; v2b; v3b; v4b; v5b;}
+    {rank="same"; v1c; v2c; v3c; v4c; v5c;}
+
+    v1 -> v1a [dir=none]
+    v1a -> v1b [dir=none]
+    v1b -> v1c [dir=none]
+
+    v2 -> v2a [dir=none]
+    v2a -> v2b [dir=none]
+    v2b -> v2c [dir=none]
+
+    v3 -> v3a [dir=none]
+    v3a -> v3b [dir=none]
+    v3b -> v3c [dir=none]
+
+    v4 -> v4a [dir=none]
+    v4a -> v4b [dir=none]
+    v4b -> v4c [dir=none]
+    
+    v5 -> v5a [dir=none]
+    v5a -> v5b [dir=none]
+    v5b -> v5c [dir=none]
+
+    v1a:e -> v2a:w [minlen=2, style="dashed"]
+    v3a:e -> v4a:w [minlen=2, style="dashed"]
+    v3b:e -> v4b:w [minlen=2, style="dashed"]
+    v4b:e -> v5b:w [minlen=2, style="dashed"]
+    v1c:e -> v2c:w [minlen=2, style="dashed"]
+    v2c:e -> v3c:w [minlen=2, style="dashed"]
+    v4c:e -> v5c:w [minlen=2, style="dashed"]
+}

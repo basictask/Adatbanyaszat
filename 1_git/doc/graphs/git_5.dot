@@ -1,0 +1,44 @@
+digraph git {
+    graph[dpi=300]
+    rankdir="TD"
+    splines=false
+    directory [label="Munkamappa", shape="rect", style="filled", fillcolor="red"]
+    stage [label="Index", shape="rect", style="filled", fillcolor="turquoise"]
+    git [label="Git tárhely", shape="rect", style="filled", fillcolor="tan2"]
+
+    dir1 [label="", shape=point, width=0.001, height=0.001]
+    dir2 [label="", shape=point, width=0.001, height=0.001]
+    dir3 [label="", shape=point, width=0.001, height=0.001]
+    dir4 [label="", shape=point, width=0.001, height=0.001]
+    stage2 [label="", shape=point, width=0.001, height=0.001]
+    stage3 [label="", shape=point, width=0.001, height=0.001]
+    stage4 [label="", shape=point, width=0.001, height=0.001]
+    git1 [label="", shape=point, width=0.001, height=0.001]
+    git2 [label="", shape=point, width=0.001, height=0.001]
+    git3 [label="", shape=point, width=0.001, height=0.001]
+    git4 [label="", shape=point, width=0.001, height=0.001]
+
+    {rank="same"; directory; stage; git}
+    {rank="same"; dir1; git1}
+    {rank="same"; dir2; stage2; git2}
+    {rank="same"; dir3; stage3; git3}
+
+    directory -> stage [style="invis"]
+    stage -> git [style="invis"]
+
+    directory -> dir1 [dir=none]
+    dir1 -> dir2 [dir=none]
+    dir2 -> dir3 [dir=none]
+    dir3 -> dir4 [dir=none]
+    stage -> stage2 [dir=none]
+    stage2 -> stage3 [dir=none]
+    stage3 -> stage4 [dir=none]
+    git -> git1 [dir=none]
+    git1 -> git2 [dir=none]
+    git2 -> git3 [dir=none]
+    git3 -> git4 [dir=none]
+
+    git1:w -> dir1:e [constraint=False, taillabel="checkout        ", style="dashed"] 
+    dir2 -> stage2 [constraint=False, label="indexelés", style="dashed"]
+    stage3 -> git3 [constraint=False, label="commit", style="dashed"]
+}

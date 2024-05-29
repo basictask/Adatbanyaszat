@@ -1,0 +1,72 @@
+digraph git {
+    graph [dpi=300]
+    rankdir="BT"
+    nodesep=1.5
+    
+    subgraph cluster_1 {
+        label="Szerver számítógép"
+        style="filled"
+        
+        subgraph cluster_11 {
+            label="Verzió adatbázis"
+            style="filled"
+            fillcolor="white"
+
+            v11 [label="1. Verzió", style="rounded, filled", shape="rect" fillcolor="lightblue"]
+            v12 [label="2. Verzió", style="rounded, filled", shape="rect" fillcolor="lightblue"]
+            v13 [label="3. Verzió", style="rounded, filled", shape="rect" fillcolor="lightblue"]
+        }
+        
+    }
+
+    subgraph cluster_2 {
+        label="1. Munkaállomás"
+        style="filled"
+
+        file2 [label="Fájl", style="rounded, filled", shape="rect", fillcolor="lightgreen"]
+
+        subgraph cluster_22 {
+            label="Verzió adatbázis"
+            style="filled"
+            fillcolor="white"
+
+            v21 [label="1. Verzió", style="rounded, filled", shape="rect" fillcolor="lightblue"]
+            v22 [label="2. Verzió", style="rounded, filled", shape="rect" fillcolor="lightblue"]
+            v23 [label="3. Verzió", style="rounded, filled", shape="rect" fillcolor="lightblue"]
+        }
+    }
+
+    subgraph cluster_3 {
+        label="2. Munkaállomás"
+        style="filled"
+
+        file3 [label="Fájl", style="rounded, filled", shape="rect", fillcolor="lightgreen"]
+
+        subgraph cluster_33 {
+            label="Verzió adatbázis"
+            style="filled"
+            fillcolor="white"
+
+            v31 [label="1. Verzió", style="rounded, filled", shape="rect" fillcolor="lightblue"]
+            v32 [label="2. Verzió", style="rounded, filled", shape="rect" fillcolor="lightblue"]
+            v33 [label="3. Verzió", style="rounded, filled", shape="rect" fillcolor="lightblue"]
+        }
+    }
+
+    v11 -> v12
+    v12 -> v13
+
+    v21 -> v22
+    v22 -> v23
+
+    v31 -> v32
+    v32 -> v33
+
+    v23 -> file2
+    v33 -> file3
+
+    file2 -> v13 [constraint="false"]
+    file3 -> v13 [constraint="false"]    
+    v13 -> file2 
+    v13 -> file3 
+}

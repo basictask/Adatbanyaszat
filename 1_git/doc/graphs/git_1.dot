@@ -1,0 +1,26 @@
+digraph git {
+    graph [dpi = 300]
+    rankdir="BT"
+
+    subgraph cluster_1 {
+        label="Lokális számítógép"
+        labelloc="top"
+
+        file [label="Fájl", shape="rect", style="rounded, filled", fillcolor="lightgreen"]
+
+        subgraph cluster_2 {
+            label="Verzió adatbázis"
+            labelloc="top"
+
+            v1 [label="1. Verzió", shape="rect", style="rounded, filled", fillcolor="lightblue"]
+            v2 [label="2. Verzió", shape="rect", style="rounded, filled", fillcolor="lightblue"]
+            v3 [label="3. Verzió", shape="rect", style="rounded, filled", fillcolor="lightblue"]
+        }
+
+        v1 -> v2
+        v2 -> v3
+        v3 -> file [label=" Checkout"]
+
+        {rank="same"; file}
+    }
+}

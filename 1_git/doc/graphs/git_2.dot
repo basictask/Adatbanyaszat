@@ -1,0 +1,13 @@
+digraph git {
+    graph [dpi=300]
+    rankdir="BT"
+
+    shared [label="Megosztott\ntárhely", style="rounded, filled", shape="rect", fillcolor="gold"]
+    dev1 [label="Fejlesztő", style="rounded, filled", shape="rect", fillcolor="orange"]
+    dev2 [label="Fejlesztő", style="rounded, filled", shape="rect", fillcolor="orange"]
+    dev3 [label="Fejlesztő", style="rounded, filled", shape="rect", fillcolor="orange"]
+
+    dev1 -> shared    
+    dev2 -> shared
+    dev3 -> shared    
+}

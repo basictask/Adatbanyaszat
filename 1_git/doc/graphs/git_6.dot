@@ -1,0 +1,63 @@
+digraph git {
+    graph [dpi=300]
+    ut [label="Követetlen", shape="rect", style="filled", fillcolor="lightblue3"]
+    um [label="Módosítatlan", shape="rect", style="filled", fillcolor="turquoise"]
+    m [label="Módosított", shape="rect", style="filled", fillcolor="tan2"]
+    s [label="Indexelt", shape="rect", style="filled", fillcolor="red"]
+
+    ut1 [label="", shape=point, width=0.001, height=0.001]
+    ut2 [label="", shape=point, width=0.001, height=0.001]
+    ut3 [label="", shape=point, width=0.001, height=0.001]
+    ut4 [label="", shape=point, width=0.001, height=0.001]
+    ut5 [label="", shape=point, width=0.001, height=0.001]
+    #um1 [label="", shape=point, width=0.001, height=0.001]
+    um2 [label="", shape=point, width=0.001, height=0.001]
+    um3 [label="", shape=point, width=0.001, height=0.001]
+    um4 [label="", shape=point, width=0.001, height=0.001]
+    um5 [label="", shape=point, width=0.001, height=0.001]
+    #m1 [label="", shape=point, width=0.001, height=0.001]
+    m2 [label="", shape=point, width=0.001, height=0.001]
+    m3 [label="", shape=point, width=0.001, height=0.001]
+    #m4 [label="", shape=point, width=0.001, height=0.001]
+    m5 [label="", shape=point, width=0.001, height=0.001]
+    s1 [label="", shape=point, width=0.001, height=0.001]
+    s2 [label="", shape=point, width=0.001, height=0.001]
+    s3 [label="", shape=point, width=0.001, height=0.001]
+    s4 [label="", shape=point, width=0.001, height=0.001]
+    s5 [label="", shape=point, width=0.001, height=0.001]
+
+    ut -> um [style="invis"]
+    um -> m [style="invis"]
+    m -> s [style="invis"]
+
+    {rank="same"; ut; um; m; s;}
+    {rank="same"; ut1; s1;}
+    {rank="same"; ut2; um2; m2; s2;}
+    {rank="same"; ut3; um3; m3; s3;}
+    {rank="same"; ut4; um4; s4;}
+    {rank="same"; ut5; um5; m5; s5;}
+
+    ut -> ut1 [dir=none]
+    ut1 -> ut2 [dir=none] 
+    ut2 -> ut3 [dir=none]
+    ut3 -> ut4 [dir=none]
+    ut4 -> ut5 [dir=none]
+    um -> um2 [dir=none]
+    um2 -> um3 [dir=none]
+    um3 -> um4 [dir=none]
+    um4 -> um5 [dir=none]
+    m -> m2 [dir=none]
+    m2 -> m3 [dir=none]
+    m3 -> m5 [dir=none]
+    s -> s1 [dir=none]
+    s1 -> s2 [dir=none] 
+    s2 -> s3 [dir=none]
+    s3 -> s4 [dir=none]
+    s4 -> s5 [dir=none]
+
+    ut1 -> s1 [style="dashed", constraint="false", label="hozzáadás\naz indexhez"]
+    um2 -> m2 [style="dashed", constraint="false", label="módosítás"]
+    um3 -> ut3 [style="dashed", constraint="false", label="indexből\neltávolítás"]
+    m3 -> s3 [style="dashed", constraint="false", label="indexelés"] 
+    s4 -> um4 [style="dashed", constraint="false", taillabel="commit        "]
+}

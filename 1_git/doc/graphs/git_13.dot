@@ -1,0 +1,26 @@
+digraph git {
+    graph [dpi=300]
+    rankdir="LR"
+
+    commit1 [label="98ca9", shape="rect", style="filled", fillcolor="salmon1"]
+    commit2 [label="34ac2", shape="rect", style="filled", fillcolor="salmon1"]
+    commit3 [label="f30ab", shape="rect", style="filled", fillcolor="salmon1"]
+    commit4 [label="87ab2", shape="rect", style="filled", fillcolor="salmon1"]
+    testing [label="testing", shape="rect", style="filled", fillcolor="red"]
+    master [label="master", shape="rect", style="filled", fillcolor="red"]
+    head [label="HEAD", shape="rect", style="filled", fillcolor="gold"]
+
+    {rank="same"; head}
+    {rank="same"; master}
+    {rank="same"; commit1; commit2; commit3; commit4} 
+    {rank="same"; testing}
+
+    commit2 -> commit1 [minlen=2]
+    commit3 -> commit2 [minlen=2]
+    commit4 -> commit3 [minlen=2]
+
+    testing -> commit4
+    master -> commit3
+    
+    head -> master
+}

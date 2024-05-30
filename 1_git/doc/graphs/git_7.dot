@@ -1,0 +1,79 @@
+digraph git {
+    graph [dpi=300]
+    rankdir="LR"
+
+    
+    subgraph cluster_commit {
+        label="98ca9"
+        color="invis"
+        commit [label=<
+        <table border="0" cellborder="0" cellspacing="0">
+            <tr><td align="left"><b>commit </b> size</td></tr>
+            <tr><td align="left"><b>tree: </b> 92ec2</td></tr>
+            <tr><td align="left"><b>author: </b> Scott</td></tr>
+            <tr><td align="left"><b>committer: </b> Scott</td></tr>
+            <tr><td>The initial commit of my project</td></tr>
+        </table>
+    >, shape="rect", style="filled", fillcolor="salmon1"]
+    }
+
+    subgraph cluster_tree {
+        label="92ec2"
+        color="invis"
+        tree [label=<
+        <table border="0" cellborder="0" cellspacing="0">
+            <tr><td align="left"><b>tree </b> size</td></tr>
+            <tr><td align="left"><b>blob </b> 5b1d3 README</td></tr>
+            <tr><td align="left"><b>blob </b> 911e7 LICENSE</td></tr>
+            <tr><td align="left"><b>blob </b> cba0a test.py</td></tr>
+        </table>
+    >, shape="rect", style="filled", fillcolor="turquoise"]
+    }
+
+    subgraph cluster_blob1 {
+        label="5b1d3"
+        color="invis"
+        blob1 [label=<
+        <table border="0" cellborder="0" cellspacing="0">
+            <tr><td><b>blob </b> size</td></tr>
+            <tr><td align="left">== Testing library</td></tr>
+            <tr><td align="left">Copyright (c) 2008 Scott Chacon</td></tr>
+            <tr><td align="left">Permission is hereby granted,</td></tr>
+            <tr><td align="left">free of charge, to any person</td></tr>
+        </table>
+    >, shape="rect", style="filled", fillcolor="gold", width=2.9]
+    }
+
+    subgraph cluster_blob2 {
+        label="911e7"
+        color="invis"
+        blob2 [label=<
+        <table border="0" cellborder="0" cellspacing="0">
+            <tr><td><b>blob </b> size</td></tr>
+            <tr><td align="left">== Testing library</td></tr>
+            <tr><td align="left">Copyright (c) 2008 Scott Chacon</td></tr>
+            <tr><td align="left">Permission is hereby granted,</td></tr>
+            <tr><td align="left">free of charge, to any person</td></tr>
+        </table>
+    >, shape="rect", style="filled", fillcolor="gold", width=2.9]
+    }
+
+    subgraph cluster_blob3 {
+        label="cba0a"
+        color="invis"        
+        blob3 [label=<
+        <table border="0" cellborder="0" cellspacing="0">
+            <tr><td><b>blob </b> size</td></tr>
+            <tr><td align="left">import numpy as np</td></tr>
+            <tr><td align="left">import pandas as pd</td></tr>
+            <tr><td align="left">print("Hello world")</td></tr>
+        </table>
+    >, shape="rect", style="filled", fillcolor="gold", width=2.9]
+    }
+
+    commit -> tree
+    tree:e -> blob1:w [minlen=2]
+    tree:e -> blob2:w [minlen=2]
+    tree:e -> blob3:w [minlen=2]
+
+}

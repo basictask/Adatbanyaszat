@@ -1,0 +1,68 @@
+digraph git {
+    graph [dpi=300]
+    rankdir="TD"
+
+    subgraph cluster_commit1 {
+        label="98ca9"
+        color="invis"
+        commit1 [label=<
+        <table border="0" cellborder="0" cellspacing="0">
+            <tr><td align="left"><b>commit </b> size</td></tr>
+            <tr><td align="left"><b>tree: </b> 92ec2</td></tr>
+            <tr><td align="left"><b>parent: </b></td></tr>
+            <tr><td align="left"><b>author: </b> Scott</td></tr>
+            <tr><td align="left"><b>committer: </b> Scott</td></tr>
+            <tr><td>The initial commit of my project</td></tr>
+        </table>
+    >, shape="rect", style="filled", fillcolor="salmon1", width=3, height=2]
+
+        snapshot1 [label="1. Pillanatkép ", shape="rect", style="filled", fillcolor="turquoise"]
+    }
+
+    subgraph cluster_commit2 {
+        label="34ac2"
+        color="invis"
+        commit2 [label=<
+        <table border="0" cellborder="0" cellspacing="0">
+            <tr><td align="left"><b>commit </b> size</td></tr>
+            <tr><td align="left"><b>tree: </b> 184ca</td></tr>
+            <tr><td align="left"><b>parent: </b> 98ca9</td></tr>
+            <tr><td align="left"><b>author: </b> Scott</td></tr>
+            <tr><td align="left"><b>committer: </b> Scott</td></tr>
+            <tr><td align="left">Fixed bug #1328 - stack overflow</td></tr>
+        </table>
+    >, shape="rect", style="filled", fillcolor="salmon1", width=3, height=2]
+
+        snapshot2 [label="2. Pillanatkép ", shape="rect", style="filled", fillcolor="turquoise"]
+    }
+
+    subgraph cluster_commit3 {
+        label="f30ab"
+        color="invis"
+        commit3 [label=<
+        <table border="0" cellborder="0" cellspacing="0">
+            <tr><td align="left"><b>commit </b> size</td></tr>
+            <tr><td align="left"><b>tree: </b> 0de24</td></tr>
+            <tr><td align="left"><b>parent: </b> 34ac2</td></tr>
+            <tr><td align="left"><b>author: </b> Scott</td></tr>
+            <tr><td align="left"><b>committer: </b> Scott</td></tr>
+            <tr><td align="left">Add feature #32 - ability</td></tr>
+            <tr><td align="left">to add new formats</td></tr>
+        </table>
+    >, shape="rect", style="filled", fillcolor="salmon1", width=3, height=2]
+
+        snapshot3 [label="3. Pillanatkép ", shape="rect", style="filled", fillcolor="turquoise"]
+    }
+
+    commit1 -> snapshot1 [minlen=3]
+    commit2 -> snapshot2 [minlen=1]
+    commit3 -> snapshot3 [minlen=1]
+
+    commit2 -> commit1
+    commit3 -> commit2
+
+    #{rank="same"; commit1; snapshot1}
+    #{rank="same"; commit2; snapshot2}
+    #{rank="same"; commit3; snapshot3}
+
+}

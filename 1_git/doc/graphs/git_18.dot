@@ -1,0 +1,6 @@
+digraph git {
+    graph [dpi=300]
+    rankdir="BT"
+
+    
+}

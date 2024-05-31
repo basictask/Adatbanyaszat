@@ -1,0 +1,45 @@
+digraph git {
+    graph [dpi=300]
+    rankdir="RL"
+    splines=false
+
+    c0 [label="C0", shape="rect", style="filled, rounded", fillcolor="lightgrey"]
+    c1 [label="C1", shape="rect", style="filled, rounded", fillcolor="lightgrey"]
+    master [label="master", shape="rect", style="filled", fillcolor="red"]
+    
+    {rank="same"; master; c6}
+
+    subgraph cluster_2 {
+        label=""
+        color="invis"
+        c2 [label="C2", shape="rect", style="filled, rounded", fillcolor="lightgrey"]
+    }
+    
+    subgraph cluster_4 {
+        label=""
+        color="invis"
+        c4 [label="C4", shape="rect", style="filled, rounded", fillcolor="lightgrey"]
+        c3 [label="C3", shape="rect", style="filled, rounded", fillcolor="lightgrey"]
+    }
+    
+    subgraph cluster_5 {
+        label=""
+        color="invis"
+        c5 [label="C5", shape="rect", style="filled, rounded", fillcolor="lightgrey"]
+        iss53 [label="iss53", shape="rect", style="filled", fillcolor="red"]
+        {rank="same"; c5; iss53}
+    }
+
+    c6 [label="C6", shape="rect", style="filled, rounded", fillcolor="lightgrey"]
+
+    c1 -> c0
+    c2 -> c1
+    c3 -> c2
+    c4 -> c2
+    c5 -> c3
+    c6 -> c4
+    c6 -> c5
+
+    master -> c6 [minlen=2]
+    iss53 -> c5 [minlen=2]
+}

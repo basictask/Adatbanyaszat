@@ -29,19 +29,16 @@ digraph git {
     c4_2 [label="4", shape="circle", style="filled", fillcolor="gold"]
     c5_2 [label="5", shape="circle", style="filled", fillcolor="gold"]
     c6_2 [label="6", shape="circle", style="filled", fillcolor="salmon1"]
-    ca_2 [label="A", shape="circle", style="filled", fillcolor="lightgreen"]
-    cb_2 [label="B", shape="circle", style="filled", fillcolor="lightgreen"]
-    cc_2 [label="C", shape="circle", style="filled", fillcolor="lightgreen"]
 
-    c1_2 -> c2_2 -> ca_2 -> c3_2 -> cb_2 -> c4_2 -> cc_2 -> c5_2 -> c6_2
+    c1_2 -> c2_2 -> c3_2 -> c4_2 -> c5_2 -> c6_2
 
     cb_1 -> temp1 [style="invis", minlen=0]
     temp1 -> temp2 [minlen=3]
-    temp2 ->  c3_2 [style="invis"]
+    temp2 ->  c4_2 [style="invis"]
 
     temp1 [shape="plaintext", label="", width=0]
     temp2 [shape="plaintext", label="", width=0]
 
-    {rank="same"; c4_1; cb_1; temp1; temp2 c3_2}
+    {rank="same"; c4_1; cb_1; temp1; temp2 c4_2}
 
 }

@@ -53,11 +53,11 @@ digraph git {
     v5a -> v5b [dir=none]
     v5b -> v5c [dir=none]
 
-    v1a:e -> v2a:w [minlen=2, style="dashed"]
-    v3a:e -> v4a:w [minlen=2, style="dashed"]
-    v3b:e -> v4b:w [minlen=2, style="dashed"]
-    v4b:e -> v5b:w [minlen=2, style="dashed"]
-    v1c:e -> v2c:w [minlen=2, style="dashed"]
-    v2c:e -> v3c:w [minlen=2, style="dashed"]
-    v4c:e -> v5c:w [minlen=2, style="dashed"]
+    v1a:e -> v2a:w [minlen=3, style="dashed"]
+    v3a:e -> v4a:w [minlen=3, style="dashed"]
+    v3b:e -> v4b:w [minlen=3, style="dashed"]
+    v4b:e -> v5b:w [minlen=3, style="dashed"]
+    v1c:e -> v2c:w [minlen=3, style="dashed"]
+    v2c:e -> v3c:w [minlen=3, style="dashed"]
+    v4c:e -> v5c:w [minlen=3, style="dashed"]
 }

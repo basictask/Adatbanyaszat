@@ -1,6 +1,6 @@
 digraph git {
     graph [dpi=300]
-    rankdir="LR"
+    rankdir="TD"
 
     commit1 [label="98ca9", shape="rect", style="filled", fillcolor="salmon1"]
     commit2 [label="34ac2", shape="rect", style="filled", fillcolor="salmon1"]
@@ -11,18 +11,17 @@ digraph git {
     master [label="master", shape="rect", style="filled", fillcolor="red"]
     head [label="HEAD", shape="rect", style="filled", fillcolor="gold"]
 
-    {rank="same"; head}
-    {rank="same"; master}
-    {rank="same"; commit1; commit2; commit3; commit4} 
-    {rank="same"; testing}
+    {rank="same"; head; master; commit5; commit4; testing;}
+    {rank="same"; commit1} 
+    {rank="same"; commit2}
+    {rank="same"; commit3}  
 
-    commit2 -> commit1 [minlen=2]
-    commit3 -> commit2 [minlen=2]
-    commit4 -> commit3 [minlen=2]
-    commit5 -> commit3 [minlen=2]
+    commit2 -> commit1 [minlen=1]
+    commit3 -> commit2 [minlen=1]
+    commit4 -> commit3 [minlen=1]
+    commit5 -> commit3 [minlen=1]
 
-    testing -> commit4
-    master -> commit5
-    
-    head -> master
+    testing -> commit4 [minlen=2]
+    master -> commit5 [minlen=2, constraint=false]
+    head -> master [minlen=2, constraint=false]
 }

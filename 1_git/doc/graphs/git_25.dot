@@ -1,0 +1,57 @@
+digraph git {
+    graph [dpi=300]
+    rankdir="TD"
+
+    subgraph cluster_1 {
+        label="git.company.com"
+        c1_1 [label="0b743", shape="rect", style="filled, rounded", fillcolor=""]
+        c2_1 [label="a6b4c", shape="rect", style="filled, rounded", fillcolor=""]
+        c3_1 [label="f4265", shape="rect", style="filled, rounded", fillcolor=""]
+        c4_1 [label="31b8e", shape="rect", style="filled, rounded", fillcolor=""]
+        c5_1 [label="190a3", shape="rect", style="filled, rounded", fillcolor=""]
+        master_1 [label="master", shape="rect", style="filled", fillcolor="red"]
+
+        {rank="same"; c5_1; master_1;}
+    }
+
+    subgraph cluster_2 {
+        label="Saját munkaállomás"
+        c1_2 [label="0b743", shape="rect", style="filled, rounded", fillcolor=""]
+        c2_2 [label="a6b4c", shape="rect", style="filled, rounded", fillcolor=""]
+        c3_2 [label="f4265", shape="rect", style="filled, rounded", fillcolor=""]
+        c4_2 [label="a38de", shape="rect", style="filled, rounded", fillcolor=""]
+        c5_2 [label="893cf", shape="rect", style="filled, rounded", fillcolor=""]
+        c6_2 [label="31b8e", shape="rect", style="filled, rounded", fillcolor=""]
+        c7_2 [label="190a3", shape="rect", style="filled, rounded", fillcolor=""]
+        master_2 [label="master", shape="rect", style="filled", fillcolor="red"]
+        origin_2 [label="origin/master", shape="rect", style="filled", fillcolor="red"]
+
+        {rank="same"; master_2; c5_2}
+        {rank="same"; origin_2; c7_2}
+    }
+
+    temp1 [shape="plaintext", label="", width=0]
+    temp2 [shape="plaintext", label="", width=0]
+
+    c2_1 -> c1_1
+    c3_1 -> c2_1
+    c4_1 -> c3_1
+    c5_1 -> c4_1
+    master_1 -> c5_1 [minlen=1]
+
+    c2_2 -> c1_2
+    c3_2 -> c2_2
+    c4_2 -> c3_2
+    c5_2 -> c4_2
+    c6_2 -> c3_2
+    c7_2 -> c6_2
+
+    master_2 -> c5_2 [minlen=2]
+    origin_2 -> c7_2 [minlen=2]
+
+    c3_1 -> temp1 [constraint="false", style="invis"]
+    temp2 -> c3_2 [constraint="false", style="invis"]
+    temp1 -> temp2 [label="git fetch origin", minlen=4, style="dashed"]
+
+    {rank="same"; temp1; temp2;}
+}

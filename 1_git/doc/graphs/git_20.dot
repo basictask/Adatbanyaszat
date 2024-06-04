@@ -35,7 +35,7 @@ digraph git {
     c1_2 -> c2_2 -> c3_2 -> c4_2 -> c5_2 -> ca_2 -> cb_2 -> cc_2
 
     cb_1 -> temp1 [style="invis", minlen=0]
-    temp1 -> temp2 [minlen=3]
+    temp1 -> temp2 [minlen=3, style="dashed"]
     temp2 ->  c5_2 [style="invis"]
 
     temp1 [shape="plaintext", label="", width=0]

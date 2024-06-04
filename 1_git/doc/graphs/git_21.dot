@@ -1,0 +1,32 @@
+digraph git {
+    graph [dpi=300]
+    rankdir="RL"
+
+    c1 [label="C1", shape="rect", style="filled, rounded", fillcolor=""]
+    c2 [label="C2", shape="rect", style="filled, rounded", fillcolor=""]
+    c3 [label="C3", shape="rect", style="filled, rounded", fillcolor=""]
+    c4 [label="C4", shape="rect", style="filled, rounded", fillcolor=""]
+    c5 [label="C5", shape="rect", style="filled, rounded", fillcolor=""]
+    c6 [label="C6", shape="rect", style="filled, rounded", fillcolor=""]
+    c7 [label="C7", shape="rect", style="filled, rounded", fillcolor=""]
+
+    master [label="master", shape="rect", style="filled", fillcolor=red, width=1]
+    develop [label="develop", shape="rect", style="filled", fillcolor=red, width=1]
+    topic [label="topic", shape="rect", style="filled", fillcolor=red, width=1]
+
+    c7 -> c6 -> c5 -> c4 -> c3 -> c2 -> c1
+
+    master -> c1
+    develop -> c5
+    topic -> c7
+
+    {rank="same"; c1; master}
+    {rank="same"; c2; }
+    {rank="same"; c3; }
+    {rank="same"; c4; }
+    {rank="same"; c5; develop}
+    {rank="same"; c6; }
+    {rank="same"; c7; topic}
+
+
+}

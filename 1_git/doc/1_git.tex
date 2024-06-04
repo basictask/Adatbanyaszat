@@ -32,17 +32,19 @@
 \makeatother
 
 % Define a custom darker red color
-\definecolor{DarkerGreen}{RGB}{0,85,0} % Adjust the RGB values as needed
+\definecolor{DarkerGreen}{RGB}{0,85,0}
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
 
 % Use the newly defined color in Beamer theme elements
 \setbeamercolor{structure}{fg=DarkerGreen} % Changes basic structural elements to Darker Green
 \setbeamercolor{title in head/foot}{bg=DarkerGreen} % Changes the title in header/footer to Darker Green
 
-
 \begin{document}
 
 % Title page
-\section{Verziókezelés alapfogalmai}
+\section{Beveztés}
 \title[]{Adatbányászat a Gyakorlatban}
 \subtitle{1. Előadás: Verziókezelés}
 \author[Kuknyó Dániel]{Kuknyó Dániel\\Budapesti Gazdasági Egyetem}
@@ -53,8 +55,6 @@
 \begin{frame}
 \tableofcontents{}
 \end{frame}
-
-\section{Verziókezelés alapfogalmai}
 
 \begin{frame}
 	\tableofcontents[currentsection]
@@ -287,7 +287,24 @@ Ha ebben az állapotban a master ágra érkezik egy commit, egy új főág nyíl
 \section{Több ág kezelése}
 
 \begin{frame}
-	\tableofcontents[currentsection]
+\tableofcontents[currentsection]
+\end{frame}
+
+\begin{frame}{Hosszan futó fejlesztési ágak}
+\only<1>{
+Sok Git fejlesztő alkalmaz egy olyan munkafolyamatot, amely azt a megközelítést követi, hogy csak teljesen stabil kódot tartanak a \texttt{master} ágon.\\
+\vspace{0.2cm}
+Van egy másik párhuzamos águk, amit \texttt{develop} vagy \texttt{next} néven neveznek, amelyen dolgoznak vagy a stabilitást tesztelik. Ezt használják a témakör ágak beolvasztására, amikor készen állnak, hogy megbizonyosodjanak arról, hogy minden teszt átment és nem vezetnek be hibákat.\\
+\vspace{0,2cm}
+Valójában arról beszélünk, hogy a mutatók feljebb mozognak a készített commitok sorában. A stabil ágak lejjebb vannak a commit történetben, míg a legújabb fejlesztések ágai feljebb találhatók.
+\begin{center}
+\includegraphics[width=14cm, height=7cm, keepaspectratio]{graphs/git_21.png}
+\end{center}}
+\only<2>{
+Ezzel ekvivalens definíció, ha a fejlesztési ágak külön-külön silókban vannak ábrázolva. Ezt lehetséges tovább végezni több szinten keresztül, de az általános elv a fejlesztési ágak létrehozására, hogy különböző stabilitási szintekkel rendelkeznek. Amikor egy ág elér egy stabilabb állapotot, akkor beolvad a felette lévőbe.
+\begin{center}
+\includegraphics[width=12cm, keepaspectratio]{graphs/git_22.png}
+\end{center}}
 \end{frame}
 
 \begin{frame}{Több ág összeolvasztása}
@@ -339,6 +356,129 @@ Ahelyett, hogy egyszerűen előre mozgatná az ág mutatóját, a Git létrehoz 
 \end{center}
 \end{column}
 \end{columns}
+\end{frame}
+
+\section{Összeolvasztási konfliktusok}
+
+\begin{frame}
+\tableofcontents[currentsection]
+\end{frame}
+
+\begin{frame}{Konfliktusok előfordulása}
+\begin{columns}
+\begin{column}{.5\textwidth}
+\begin{footnotesize}
+\begin{block}{}
+\texttt{
+\$ git merge iss53\\
+Auto-merging index.html\\
+CONFLICT (content): Merge conflict in index.html\\
+Automatic merge failed; fix conflicts and then commit the result.\\}
+\end{block}
+\end{footnotesize}
+\end{column}
+\begin{column}{.5\textwidth}
+Időnként az összefésülési folyamat nem megy zökkenőmentesen. Ha ugyanazon fájl ugyanazon részét különböző
+módon módosították a két egyesítendő ágon, a Git nem lesz képes tisztán egyesíteni őket.\\
+\vspace{0.2cm}
+A Git ebben az esetben nem hoz létre összefésülési commitot, hanem leállítja a folyamatot addig, amíg a konfliktust
+manuálisan fel nem oldja a fejlesztő
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Konfliktusok előfordulása}
+\begin{columns}
+\begin{column}{.5\textwidth}
+\begin{footnotesize}
+\begin{block}{}
+\texttt{
+\$ git status\\
+On branch master\\
+You have unmerged paths.\\
+(fix conflicts and run "git commit")\\
+Unmerged paths:\\
+(use "git add <file>..." to mark resolution)\\
+both modified: index.html\\
+no changes added to commit (use "git add" and/or "git commit -a"\\}
+\end{block}
+\end{footnotesize}
+\end{column}
+\begin{column}{.5\textwidth}
+A \texttt{git status} parancs füttatásával lehet látni, melyek azok a fájlok, amelyekben összefésületlen konfliktusok
+találhatóak.\\
+\vspace{0.2cm}
+Minden olyan fájl, amelyikben konfliktus található, összefésületlen státuszba kerül.
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{Konfliktusok jelölése fájlokban}
+\begin{columns}
+\begin{column}{.5\textwidth}
+\begin{footnotesize}
+\begin{block}{}
+\begin{verbatim}
+<<<<<<< HEAD:index.html
+<div id="footer">contact :
+email.support@github.com</div>
+=======
+<div id="footer">
+please contact us at support@github.com
+</div>
+>>>>>>> iss53:index.html
+\end{verbatim}
+\end{block}
+\end{footnotesize}
+\end{column}
+\begin{column}{.5\textwidth}
+A konfliktusos fájlok megfelelő részeiben ehhez hasonló szekciók lesznek találhatóak, amik jelzik a különbséget a két ág, ebben az esetben a \texttt{master} és a \texttt{iss53} között.\\
+\vspace{0.2cm}
+A programozónak olyan formára kell hoznia a fájlokat, hogy a konfliktus feloldódjon a megfelelő részek kitörtésével.
+\end{column}
+\end{columns}
+\end{frame}
+
+\section{Távoli fejlesztési ágak}
+
+\begin{frame}
+\tableofcontents[currentsection]
+\end{frame}
+
+\begin{frame}{Távoli tárhely lemásolása (\texttt{clone})}
+Ha van egy Git szerver a hálózaton a \texttt{git.company.com} címen, innen a Git képes automatikusan letölteni a az összes adatot. A távoli tárhelyet a Git \texttt{origin} néven nevezi el, és létrehoz egy mutatót a \texttt{master} ágra. Lokálisan \texttt{origin/master} néven inicializál mutatót egy helyi \texttt{master} ágra.
+\begin{center}
+\includegraphics[width=14cm]{graphs/git_23.png}
+\end{center}
+\end{frame}
+
+\begin{frame}{Fejlesztés a távoli ágon (\texttt{commit})}
+\begin{columns}
+\begin{column}{.5\textwidth}
+Ha a lokális \texttt{master} ágon történő munka közben egy másik fejlesztő feltölt változtatást a \texttt{git.company.com} szerverre és frissítani annak \texttt{master} ágát, a két fejlesztési történet divergál.\par\smallskip
+Amíg nem töltődnek le a frissítések a távoli szerverről, a helyi \texttt{master} mutató változatlan marad.
+\end{column}
+\begin{column}{.5\textwidth}
+\begin{center}
+\includegraphics[width=7cm, height=7cm, keepaspectratio]{graphs/git_24.png}
+\end{center}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Két ág szinkronizálása (\texttt{fetch})}
+Ágak szinkronizálását a \texttt{git fetch} parancs teszi lehetővé. Ez az utasítás megkeresi, hogy melyik szerver az \texttt{origin} (jelen esetben a \texttt{git.company.com}), letölti azokat az adatokat, amelyek még nincsenek jelen a lokális munkaállomáson, frissíti a helyi adatbázist és az \texttt{origin/master} mutatót naprakész pozícióba helyezi.
+\begin{center}
+\includegraphics[width=10.5cm, keepaspectratio]{graphs/git_25.png}
+\end{center}
+\end{frame}
+
+\begin{frame}{Harmadik ág szinkornizálása (\texttt{fetch})}
+Ha a programozó a \texttt{git fetch teamone} parancsot futtatja, hogy letöltsön minden, a \texttt{teamone} ágon található adatot, a Git nem kér le új adatot, mert már rendelkezik az \texttt{origin} szerveren található adatok egy részhalmazával. Egy új mutató inicializálódik, \texttt{teamone/master} néven, ami arra a commitra mutat, amelyet a \texttt{teamone} szerver \texttt{master} néven tart nyilván.
+\begin{center}
+\includegraphics[width=12cm, keepaspectratio]{graphs/git_26.png}
+\end{center}
+
 \end{frame}
 
 \end{document}

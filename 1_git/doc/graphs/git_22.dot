@@ -1,0 +1,67 @@
+digraph git {
+    graph [dpi=300]
+    rankdir="LR"
+
+    
+
+    subgraph cluster_1 {
+        label="master"
+
+        c2_1 [label="", shape="plaintext"]
+        c3_1 [label="", shape="plaintext"]
+        c4_1 [label="", shape="plaintext"]
+        c5_1 [label="", shape="plaintext"]
+        c6_1 [label="", shape="plaintext"]
+        c7_1 [label="", shape="plaintext"]
+        c1_1 [label="C1", shape="rect", style="filled, rounded", fillcolor=""]
+
+    }
+
+    subgraph cluster_2 {
+        label="develop"
+
+        c7_2 [label="", shape="plaintext"]
+        c6_2 [label="", shape="plaintext"]
+        c2_2 [label="C2", shape="rect", style="filled, rounded", fillcolor=""]
+        c3_2 [label="C3", shape="rect", style="filled, rounded", fillcolor=""]
+        c4_2 [label="C4", shape="rect", style="filled, rounded", fillcolor=""]
+        c5_2 [label="C5", shape="rect", style="filled, rounded", fillcolor=""]
+        c1_2 [label="", shape="plaintext"]
+    }
+
+    subgraph cluster_3 {
+        label="topic"
+        
+        c6_3 [label="C6", shape="rect", style="filled, rounded", fillcolor=""]
+        c7_3 [label="C7", shape="rect", style="filled, rounded", fillcolor=""]
+        c2_3 [label="", shape="plaintext"]
+        c3_3 [label="", shape="plaintext"]
+        c4_3 [label="", shape="plaintext"]
+        c5_3 [label="", shape="plaintext"]
+        c1_3 [label="", shape="plaintext"]
+    }
+
+    c1_1 -> c2_1 [style="invis"]
+    c2_1 -> c3_1 [style="invis"]
+    c3_1 -> c4_1 [style="invis"]
+    c4_1 -> c5_1 [style="invis"]
+    c5_1 -> c6_1 [style="invis"]
+    c6_1 -> c7_1 [style="invis"]
+    c1_2 -> c2_2 [style="invis"]
+    c2_2 -> c3_2 #[style="invis"]
+    c3_2 -> c4_2 #[style="invis"]
+    c4_2 -> c5_2 #[style="invis"]
+    c5_2 -> c6_2 [style="invis"]
+    c6_2 -> c7_2 [style="invis"]
+    c1_3 -> c2_3 [style="invis"]
+    c2_3 -> c3_3 [style="invis"]
+    c3_3 -> c4_3 [style="invis"]
+    c4_3 -> c5_3 [style="invis"]
+    c5_3 -> c6_3 [style="invis"]
+    c6_3 -> c7_3 #[style="invis"]
+
+    c1_1 -> c2_2 [constraint="false"]
+    c5_2 -> c6_3 [constraint="false"]
+
+
+}

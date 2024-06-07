@@ -1,0 +1,52 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{titling}
+\usepackage{xcolor}
+\usepackage{color}
+
+\definecolor{lightgrey}{gray}{0.95}
+
+\lstset{
+    language=bash,
+    basicstyle=\ttfamily\footnotesize, % Monospace font
+    backgroundcolor=\color{lightgrey}, % Background color
+    frame=single, % Frame around the code
+    caption=Sample Python Code,
+    keywordstyle=\color{blue}, % Keywords color
+    commentstyle=\color{green}, % Comments color
+    stringstyle=\color{red}, % Strings color
+    showstringspaces=false, % Do not show spaces in strings
+}
+
+\title{Adatbányászat a Gyakorlatban}
+\pretitle{\begin{center}\LARGE\bfseries}
+\posttitle{\end{center}}
+\preauthor{\begin{center}\large}
+\postauthor{\end{center}}
+\predate{\begin{center}\large}
+\postdate{\end{center}}
+\author{Kuknyó Dániel}
+\date{2024/25/1}
+
+\begin{document}
+
+\maketitle
+
+\begin{center}
+\large\textit{1. Gyakorlat: Verziókezelés}
+\end{center}
+
+\section*{Introduction}
+This is an example of a LaTeX document that includes program code.
+
+\section*{Program Code}
+Here is a sample piece of code:
+
+\begin{lstlisting}[language=Python, caption=Sample Python Code]
+def hello_world():
+    print("Hello, world!")
+
+hello_world()
+\end{lstlisting}
+
+\end{document}

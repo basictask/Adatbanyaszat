@@ -1,21 +1,24 @@
 \documentclass{article}
 \usepackage{listings}
+\usepackage{hyperref}
 \usepackage{titling}
 \usepackage{xcolor}
+\usepackage{float}
 \usepackage{color}
 
 \definecolor{lightgrey}{gray}{0.95}
 
+% Definitions for program code sections
 \lstset{
     language=bash,
     basicstyle=\ttfamily\footnotesize, % Monospace font
     backgroundcolor=\color{lightgrey}, % Background color
     frame=single, % Frame around the code
-    caption=Sample Python Code,
-    keywordstyle=\color{blue}, % Keywords color
-    commentstyle=\color{green}, % Comments color
+    keywordstyle=\color{black}, % Keywords color
+    commentstyle=\color{black}, % Comments color
     stringstyle=\color{red}, % Strings color
     showstringspaces=false, % Do not show spaces in strings
+    breaklines=true, % Automatically break long lines
 }
 
 \title{Adatbányászat a Gyakorlatban}
@@ -36,17 +39,272 @@
 \large\textit{1. Gyakorlat: Verziókezelés}
 \end{center}
 
-\section*{Introduction}
-This is an example of a LaTeX document that includes program code.
+\section{GitHub}
+\subsection*{Regisztráció a GitHub-ra}
+\href{www.github.com}{www.github.com}
 
-\section*{Program Code}
-Here is a sample piece of code:
+\subsection*{Git telepítése}
+\subsubsection*{Windows}
+Git Bash (parancssoros Git) letöltése: \href{https://git-scm.com/downloads}{https://git-scm.com/downloads}\\
+Asztali kliens: \href{https://desktop.github.com/}{https://desktop.github.com/}
 
-\begin{lstlisting}[language=Python, caption=Sample Python Code]
-def hello_world():
-    print("Hello, world!")
+\subsubsection*{Linux}
+\begin{lstlisting}
+(type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y)) \
+&& sudo mkdir -p -m 755 /etc/apt/keyrings \
+&& wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
+&& sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
+&& echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+&& sudo apt update \
+&& sudo apt install gh -y
+\end{lstlisting}
+Ezután telepítés:
+\begin{lstlisting}
+sudo apt update
+sudo apt install gh
+\end{lstlisting}
 
-hello_world()
+\subsection*{Konfigurálás}
+\subsubsection*{Parancssorban}
+
+Név hozzáadása:
+\begin{lstlisting}
+git config --global user.name "Gipsz Jakab"
+\end{lstlisting}
+
+E-mail cím hozzáadása
+\begin{lstlisting}
+git config --global user.email "gipsz.jakab@gmail.com"
+\end{lstlisting}
+
+\subsubsection*{Asztali kliensen}
+
+\texttt{File} / \texttt{Options} / \texttt{Accounts} / \texttt{Sign in} / Itt hitelesíteni kell a Githubot a böngészővel
+
+\section{Git alapok}
+\subsection*{Új tárhely létrehozása}
+\subsubsection*{Parancssorban}
+\begin{lstlisting}
+$ git init
+$ git add *.c
+$ git add LICENSE
+$ git commit -m 'Initial project version'
+\end{lstlisting}
+
+\subsubsection*{Asztali kliensen}
+\texttt{File} / \texttt{New repository}
+\begin{enumerate}
+\item \textbf{Name}: A tárhely neve
+\item \textbf{Description}: A tárhely rövid leírása
+\item \textbf{Local path}: A tárhely mappája a helyi számítógépen
+\item \textbf{Git ignore}: A gitignore-hoz adott fájlok nem lesznek feltöltve a tárhelyre. Itt érdemes kiválasztani az adott programnyelvhez tartozó ignore konfigurációt. A .gitignore a tárhely gyökerében lévő szöveges állomány, amihez saját magunk is hozzáírhatunk ha vannak olyan fájlok, amelyeket nem szeretnénk feltölteni a tárhelyre. Ilyenek lehetnek a nagyméretű állományok vagy személyes információt / konfigurációt tartalmazó állományok.
+\item \textbf{License}: Milyen másolhatósági / továbbadhatósági szabályok vonatkoznak a tárhelyre. Ezt legtöbb esetben elhagyhatjuk.
+\end{enumerate}
+
+\subsection*{Gitignore szerkesztése}
+Belépés a tárhely gyökerébe:
+\begin{lstlisting}
+cd c/Users/Jakab/GitHub/desktop-tutorial
+\end{lstlisting}
+Új ignore fájl létrehozása:
+\begin{lstlisting}
+nano .gitignore
+\end{lstlisting}
+Ezután minden sorban egy ignorált fált lehet megadni, vagy a * karakterrel egy általános definíciót megadni:
+\begin{lstlisting}
+videos/big_video.mp4
+passwords/*
+*.zip
+*.rar
+*.jpg
+\end{lstlisting}
+Mentés és kilépés a szerkesztőből:
+\begin{lstlisting}
+ctrl + o
+ctrl + x
+\end{lstlisting}
+Ezek a definíciók példa jellegűek. A valósan ignorált fájlok és típusok tárhelytől függően változhatnak.
+
+\subsection*{Létező tárhely klónozása}
+Egy tárolót a \texttt{git clone <url>} paranccsal lehetséges klónozni. Például, a libgit2 nevű Git linkelhető könyvtár klónozásának parancsa:
+\begin{lstlisting}
+git clone https://github.com/libgit2/libgit2
+\end{lstlisting}
+
+\section{Fejlesztési ágak kezelése}
+
+\subsection*{Fájlok státuszának ellenőrzése}
+A fő eszköz, amellyel meg lehet határozni, hogy mely fájlok milyen állapotban vannak, a \texttt{git status} parancs. Ha közvetlenül egy klónozás után fut ez a parancs, az output hasonló lesz:
+\begin{lstlisting}
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+nothing to commit, working tree clean
+\end{lstlisting}
+\begin{minipage}{\linewidth}
+Ha például egy README fájl hozzáadása futtatódik a parancs, a kimenet:
+\begin{lstlisting}
+$ echo 'My Project' > README
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Untracked files:
+(use "git add <file>..." to include in what will be committed)
+README
+nothing added to commit but untracked files present (use "git add" to track)
+\end{lstlisting}
+\end{minipage}
+
+\subsection*{Fájlok indexelése}
+\subsubsection*{Új fájlok esetén}
+Amikor egy új fájl létrejön a munkakönyvtárban, az alapértelmezés szerint nem kerül be a Git verziókezelésébe. A \texttt{git add <filename>} parancs segítségével hozzáadható ez az új fájl az indexhez. Ez azt jelenti, hogy a fájl készen áll arra, hogy a következő commit során bekerüljön a verziókezelésbe.
+\begin{lstlisting}
+$ git add README
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes to be committed:
+(use "git restore --staged <file>..." to unstage)
+new file:
+ README
+\end{lstlisting}
+
+\subsubsection*{Létező, módosított fájlok esetén}
+Amikor egy már verziókezelés alatt álló fájl módosításra kerül a munkakönyvtárban, a változtatások alapértelmezés szerint nem kerülnek azonnal az indexbe. A \texttt{git add <filename>} parancs segítségével a módosított fájl hozzáadható az indexhez. Ez azt jelenti, hogy a fájlban történt változtatások készen állnak arra, hogy a következő commit során bekerüljenek a verziókezelésbe.
+\begin{lstlisting}
+$ git add CONTRIBUTING.md
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes to be committed:
+(use "git reset HEAD <file>..." to unstage)
+new file:
+ README
+modified:
+ CONTRIBUTING.md
+\end{lstlisting}
+
+\subsubsection*{Fájlok eltávolítása az indexből}
+Egy fájl Gitből való eltávolításához a követett fájlok közül kell eltávolítani, majd commitolni kell a változtatásokat. Ezt a \texttt{git rm} parancs képes elvégezni. Ez a munkamappából is eltávolítja a fájlt.
+\begin{lstlisting}
+$ git rm PROJECTS.md
+rm 'PROJECTS.md'
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes to be committed:
+(use "git reset HEAD <file>..." to unstage)
+deleted:
+ PROJECTS.md
+\end{lstlisting}
+
+\subsubsection*{Egy indexelt fájl törlése az indexből}
+Ez a parancs nem fogja eltávolítani a fájlt a munkamappából, csak a Git követést fogja leállítani. Ez a változtatás commit és push esetén a távoli tárhelyről törölni fogja a fájlt.
+\begin{lstlisting}
+$ git reset HEAD CONTRIBUTING.md
+Unstaged changes after reset:
+M
+ CONTRIBUTING.md
+$ git status
+On branch master
+Changes not staged for commit:
+(use "git add <file>..." to update what will be committed)
+(use "git checkout -- <file>..." to discard changes in working directory)
+modified:
+ CONTRIBUTING.md
+\end{lstlisting}
+
+\subsection*{Változtatások commitolása}
+Commit során a változtatások elmentődnek egy lokális pillanatképbe. A pillanatképet a távoli tárhelyre \texttt{push} során lehetséges feltölteni.
+\begin{lstlisting}
+$ git commit -m "Story 182: fix benchmarks for speed"
+[master 463dc4f] Story 182: fix benchmarks for speed
+2 files changed, 2 insertions(+)
+create mode 100644 README
+\end{lstlisting}
+A \texttt{-m} paraméter kötelező, és a commit üzenetet (message) adja meg.
+
+\section{Távoli tárhelyek}
+\subsection*{Változtatások lekérdezése}
+A \texttt{fetch} parancs lekérdezi a változtatott fájlok listáját. Ezután letöltődnek azok az ágak és commitok, amelyek még nincsenek meg a lokális tárhelyen.
+\begin{lstlisting}
+$ git fetch origin
+\end{lstlisting}
+
+\subsection*{Változtatások befésülése}
+A \texttt{fetch} parancs által letöltött változtatások befésülését a \texttt{git pull} parancs képes elvégezni. Ez a lokális fájlrenszerben frissíti a fájlokat a távolira:
+\begin{lstlisting}
+git pull origin main
+\end{lstlisting}
+Ebben a példában az \texttt{origin} távoli tároló \texttt{main} fejlesztési ágáról történik a letöltés.
+
+\subsection*{Új fejlesztési ág létrehozása}
+A \texttt{git branch <branchname>} parancs lokálisan létrehoz egy új fejlesztési ágat. Egyenértékű vele a \texttt{checkout} parancs a \texttt{-b} argumentummal.
+\begin{lstlisting}
+$ git checkout testing
+\end{lstlisting}
+vagy
+\begin{lstlisting}
+$ git checkout -b testing
+\end{lstlisting}
+Az aktuálisan megjelölt ágat a \texttt{HEAD} mutató tartja számon. Ezt bármelyik pillanatban le lehet kérdezni a \texttt{git log} segítségével:
+\begin{lstlisting}
+$ git log --oneline --decorate
+f30ab (HEAD -> master, testing) Add feature #32 - ability to add new formats to the
+central interface
+34ac2 Fix bug #1328 - stack overflow under certain conditions
+98ca9 Initial commit
+\end{lstlisting}
+
+\subsection*{Váltás ágak között}
+A váltás a \texttt{git checkout} paranccsal történik:
+\begin{lstlisting}
+$ git checkout testing
+\end{lstlisting}
+Ez a parancs a \texttt{HEAD} mutatót átmozgatja a \texttt{testing} ágra.
+\vspace{0.3cm}
+A Git ágak közötti váltásra szabályok érvényesek, nem lehet minden esetben megtenni, és némelyik esetben pedig összeolvasztási konfliktusokhoz vezethet.
+\begin{itemize}
+    \item \textbf{Tiszta munkakönyvtár}: Ágak közötti váltás csak akkor lehetséges, ha a munkakönyvtár tiszta, azaz nincsenek nem commitolt változtatások. Ha vannak módosítások, azokat commitolni vagy stashelni kell a váltás előtt.
+
+    \item \textbf{Stash használata}: Ha a változtatások nem kívánatosak a jelenlegi ágban, de nem szeretnének commitolni, a git stash parancs használható. Ez ideiglenesen elmenti a változtatásokat, így lehetővé teszi az ágak közötti váltást.
+
+    \item \textbf{Konfliktusok elkerülése}: Ha egy másik ágra történő váltás során olyan fájlok vannak módosítva, amelyek a célágban is módosultak, merge konfliktusok léphetnek fel. Ezeket a konfliktusokat manuálisan kell megoldani a váltás után.
+
+    \item \textbf{Követetlen fájlok}: Az ágak közötti váltás nem érinti az untracked státuszban lévő (nem verziókezelt) fájlokat. Ezek a fájlok megmaradnak a munkakönyvtárban.
+\end{itemize}
+
+\subsection*{Stash}
+A \texttt{git stash} parancs ideiglenesen elmenti a munkakönyvtárban lévő módosításokat anélkül, hogy commitolni kellene őket. Ez hasznos lehet, ha váltani kell egy másik ágra, de a jelenlegi módosításokat még nem szeretnénk commitolni. A \texttt{git stash} parancs elmenti a változtatásokat egy "stash" nevű területre, ahonnan később vissza lehet őket állítani.
+\vspace{0.2cm}
+Módosítások stashelése:
+\begin{lstlisting}
+$ git stash -m "Temporary changes"
+\end{lstlisting}
+Ezután biztonságosal lehet váltani a \texttt{main} ágra:
+\begin{lstlisting}
+$ git checkout main
+\end{lstlisting}
+A stashelt változtatások megtekintése:
+\begin{lstlisting}
+$ git stash list
+stash@{0}: On feature-branch: Temporary changes
+\end{lstlisting}
+Változtatások kivétele a stashből:
+\begin{lstlisting}
+$ git stash pop stash@{0}
+\end{lstlisting}
+
+\subsection*{Összefésülések}
+Ágak összefésülése a \texttt{git merge} paranccsal lehetséges. Ebben az esetben a fejlesztési előzmények a két ág esetén eltérnek. Mivel a commit ág nem közvetlen őse a célágnak, a Git egy háromágú összefésülést végez a két pillanatkép és a közös ős segítségével.
+\begin{lstlisting}
+$ git checkout master
+Switched to branch 'master'
+$ git merge iss53
+Merge made by the 'recursive' strategy.
+index.html |
+ 1 +
+1 file changed, 1 insertion(+)
 \end{lstlisting}
 
 \end{document}

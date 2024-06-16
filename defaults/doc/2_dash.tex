@@ -1,0 +1,109 @@
+% Settings for the default beamer theme
+\documentclass[english, aspectratio=169]{beamer}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{babel}
+\usepackage[ruled,vlined]{algorithm2e}
+\SetAlgorithmName{Algoritmus}{algoritmus}{List of Algorithms}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+\makeatletter
+
+\newcommand\makebeamertitle{\frame{\maketitle}}
+
+% (ERT) argument for the TOC
+\AtBeginDocument{%
+  \let\origtableofcontents=\tableofcontents
+  \def\tableofcontents{\@ifnextchar[{\origtableofcontents}{\gobbletableofcontents}}
+  \def\gobbletableofcontents#1{\origtableofcontents}
+}
+
+% Theme settings
+\usetheme{Frankfurt}
+\usecolortheme{default}
+\usefonttheme[onlymath]{serif}
+
+% Template settings
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{blocks}[rounded][shadow=false]
+\setbeamertemplate{title page}[default][colsep=-4bp, rounded=true, shadow=false]
+\makeatother
+
+% Define a custom darker red color
+\definecolor{DarkerGreen}{RGB}{0,85,0} % Adjust the RGB values as needed
+\definecolor{lightgrey}{gray}{0.95}
+
+% Use the newly defined color in Beamer theme elements
+\setbeamercolor{structure}{fg=DarkerGreen} % Changes basic structural elements to Darker Green
+\setbeamercolor{title in head/foot}{bg=DarkerGreen} % Changes the title in header/footer to Darker Green
+
+% Definitions for program code sections
+\lstset{
+    language=bash,
+    basicstyle=\ttfamily\footnotesize, % Monospace font
+    backgroundcolor=\color{lightgrey}, % Background color
+    frame=single, % Frame around the code
+    keywordstyle=\color{black}, % Keywords color
+    commentstyle=\color{black}, % Comments color
+    stringstyle=\color{red}, % Strings color
+    showstringspaces=false, % Do not show spaces in strings
+    breaklines=true, % Automatically break long lines
+}
+
+\begin{document}
+
+% Title page
+\section{Bevezetés}
+\title[]{Adatbányászat a Gyakorlatban}
+\subtitle{2. Gyakorlat: Dash Alapok}
+\author[Kuknyó Dániel]{Kuknyó Dániel\\Budapesti Gazdasági Egyetem}
+\date{2024/25\\1.félév}
+\makebeamertitle
+
+% Table of contents slide
+\begin{frame}
+\tableofcontents{}
+\end{frame}
+
+% Table of contents of the current section
+\begin{frame}
+\tableofcontents[currentsection]
+\end{frame}
+
+\begin{frame}[fragile]{Órai környezet telepítése}
+\begin{enumerate}
+  \item Új python környezet létrehozása \texttt{dash} (vagy bármilyen más tetszőleges) néven:
+  \begin{lstlisting}
+  $ conda create --name dash python=3.12
+  \end{lstlisting}
+  \item Környezet aktiválása:
+  \begin{lstlisting}
+  $ conda activate dash
+  \end{lstlisting}
+  \item Az órai tárhely klónozása a Git tárhelyről:
+  \begin{lstlisting}
+  $ git clone https://github.com/basictask/Adatbanyaszat.git
+  \end{lstlisting}
+  \item Belépés a klónozott könyvtárba és a környezeti változók telepítése:
+  \begin{lstlisting}
+  $ cd Adatbanyaszat
+  $ pip install -r requirements.txt
+  \end{lstlisting}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{Mi az a Dash?}
+A Dash python könyvtár lehetővé teszi interaktív adatalapú alkalmazások létrehozását színtisztán Python nyelv segítségével. A Dash keretrendszer a Flask könyvtárat használja backend műveletekre, diagramokat a Plotly könyvtárral hoz létre, és a teljes alkalmazást egyetlen React alkalmazásként rendereli le.
+\begin{center}
+\includegraphics[width=3cm, height=3cm, keepaspectratio]{images/dash_1.png}
+\includegraphics[width=3cm, height=3cm, keepaspectratio]{images/dash_2.png}
+\includegraphics[width=3cm, height=3cm, keepaspectratio]{images/dash_3.png}
+\includegraphics[width=3cm, height=3cm, keepaspectratio]{images/dash_4.png}
+\end{center}
+\end{frame}
+
+\end{document}

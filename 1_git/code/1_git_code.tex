@@ -3,11 +3,17 @@
 \usepackage{hyperref}
 \usepackage{titlesec}
 \usepackage{titling}
+\usepackage{sectsty}
 \usepackage{xcolor}
 \usepackage{float}
 \usepackage{color}
 
 \definecolor{lightgrey}{gray}{0.95}
+\definecolor{DarkerGreen}{RGB}{0,85,0}
+
+\sectionfont{\color{DarkerGreen}}
+\subsectionfont{\color{DarkerGreen}}
+\subsubsectionfont{\color{DarkerGreen}}
 
 % Definitions for program code sections
 \lstset{
@@ -22,22 +28,22 @@
     breaklines=true, % Automatically break long lines
 }
 
-\title{Adatbányászat a Gyakorlatban}
+\title{\textcolor{DarkerGreen}{Adatbányászat a Gyakorlatban}}
 \pretitle{\begin{center}\LARGE\bfseries}
 \posttitle{\end{center}}
 \preauthor{\begin{center}\large}
 \postauthor{\end{center}}
 \predate{\begin{center}\large}
 \postdate{\end{center}}
-\author{Kuknyó Dániel}
-\date{2024/25/1}
+\author{\textcolor{DarkerGreen}{Kuknyó Dániel}}
+\date{\textcolor{DarkerGreen}{2024/25/1}}
 
 \begin{document}
 
 \maketitle
 
 \begin{center}
-\large\textit{1. Gyakorlat: Verziókezelés}
+\large\textit{\textcolor{DarkerGreen}{1. Gyakorlat: Verziókezelés}}
 \end{center}
 
 \section{GitHub}
@@ -50,6 +56,7 @@ Git Bash (parancssoros Git) letöltése: \href{https://git-scm.com/downloads}{ht
 Asztali kliens: \href{https://desktop.github.com/}{https://desktop.github.com/}
 
 \subsubsection*{Linux}
+A Linux terminálon a következő parancsot kell végrehajtani a \texttt{gh} csomag telepítéséhez.
 \begin{lstlisting}
 (type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y)) \
 && sudo mkdir -p -m 755 /etc/apt/keyrings \
@@ -58,11 +65,6 @@ Asztali kliens: \href{https://desktop.github.com/}{https://desktop.github.com/}
 && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
 && sudo apt update \
 && sudo apt install gh -y
-\end{lstlisting}
-Ezután telepítés:
-\begin{lstlisting}
-sudo apt update
-sudo apt install gh
 \end{lstlisting}
 
 \subsection*{Konfigurálás}
@@ -82,6 +84,7 @@ git config --global user.email "gipsz.jakab@gmail.com"
 
 \texttt{File} / \texttt{Options} / \texttt{Accounts} / \texttt{Sign in} / Itt hitelesíteni kell a Githubot a böngészővel
 
+\newpage
 \section{Git alapok}
 \subsection*{Új tárhely létrehozása}
 \subsubsection*{Parancssorban}
@@ -98,7 +101,7 @@ $ git commit -m 'Initial project version'
 \item \textbf{Name}: A tárhely neve
 \item \textbf{Description}: A tárhely rövid leírása
 \item \textbf{Local path}: A tárhely mappája a helyi számítógépen
-\item \textbf{Git ignore}: A gitignore-hoz adott fájlok nem lesznek feltöltve a tárhelyre. Itt érdemes kiválasztani az adott programnyelvhez tartozó ignore konfigurációt. A .gitignore a tárhely gyökerében lévő szöveges állomány, amihez saját magunk is hozzáírhatunk ha vannak olyan fájlok, amelyeket nem szeretnénk feltölteni a tárhelyre. Ilyenek lehetnek a nagyméretű állományok vagy személyes információt / konfigurációt tartalmazó állományok.
+\item \textbf{Git ignore}: A gitignore-hoz adott fájlok nem lesznek feltöltve a tárhelyre. Itt érdemes kiválasztani az adott programnyelvhez tartozó ignore konfigurációt. A \texttt{.gitignore} a tárhely gyökerében lévő rejtett, szöveges állomány, amelynek a tartalmában szereplő fájlokat a Git a verziókezelésből ki fogja hagyni. Ilyenek lehetnek a nagyméretű állományok vagy személyes információt, titkos adatokat, lokális konfigurációt tartalmazó fájlok.
 \item \textbf{License}: Milyen másolhatósági / továbbadhatósági szabályok vonatkoznak a tárhelyre. Ezt legtöbb esetben elhagyhatjuk.
 \end{enumerate}
 
@@ -132,6 +135,7 @@ Egy tárolót a \texttt{git clone <url>} paranccsal lehetséges klónozni. Péld
 git clone https://github.com/libgit2/libgit2
 \end{lstlisting}
 
+\newpage
 \section{Fejlesztési ágak kezelése}
 
 \subsection*{Fájlok státuszának ellenőrzése}
@@ -225,6 +229,7 @@ create mode 100644 README
 \end{lstlisting}
 A \texttt{-m} paraméter kötelező, és a commit üzenetet (message) adja meg.
 
+\newpage
 \section{Távoli tárhelyek}
 \subsection*{Változtatások lekérdezése}
 A \texttt{fetch} parancs lekérdezi a változtatott fájlok listáját. Ezután letöltődnek azok az ágak és commitok, amelyek még nincsenek meg a lokális tárhelyen.

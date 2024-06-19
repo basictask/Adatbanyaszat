@@ -9,6 +9,8 @@
 sources/*
 elemzesmodszertan_merged.pdf
 *xdp*
+.idea
+*pytxcode
 
 # LaTeX
 *.aux

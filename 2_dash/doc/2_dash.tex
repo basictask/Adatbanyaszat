@@ -2,11 +2,14 @@
 \documentclass[english, aspectratio=169]{beamer}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
+\usepackage{adjustbox}
 \usepackage{tabularx}
 \usepackage{listings}
 \usepackage{graphicx}
+\usepackage{array}
 \usepackage{babel}
 \usepackage[ruled,vlined]{algorithm2e}
+\usepackage{blkarray}
 \SetAlgorithmName{Algoritmus}{algoritmus}{List of Algorithms}
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{3}
@@ -59,7 +62,7 @@
 % Title page
 \section{Bevezetés}
 \title[]{Adatbányászat a Gyakorlatban}
-\subtitle{}
+\subtitle{2. Gyakorlat: Dash alapok}
 \author[Kuknyó Dániel]{Kuknyó Dániel\\Budapesti Gazdasági Egyetem}
 \date{2024/25\\1.félév}
 \makebeamertitle
@@ -76,11 +79,11 @@
 
 \begin{frame}[fragile]{Órai környezet telepítése}
 \begin{enumerate}
-  \item Új Anaconda környezet létrehozása dash néven:
+  \item Új Anaconda környezet létrehozása \texttt{dash} néven:
   \begin{lstlisting}
   $ conda create --name dash python=3.12
   \end{lstlisting}
-  \item Környezet aktiválása
+  \item Környezet aktiválása:
   \begin{lstlisting}
   $ conda activate dash
   \end{lstlisting}
@@ -97,13 +100,287 @@
 \end{frame}
 
 \begin{frame}{A Dash keretrendszer}
-A Dash keretrendszer segítségével lehetséges interaktív, dinamikus adatalapú műszerfalakat és alkalmazásokat készíteni színtisztán Python nyelvben. A Dash a Flask mikrokeretrendszert használja backend szerverként, Plotly segítségével jelenítni meg a diagramokat és React komponenseket használ a felhasználói interakció kezelésére.
+A Dash keretrendszer segítségével lehetséges interaktív, dinamikus adatalapú műszerfalakat és alkalmazásokat készíteni színtisztán Python nyelvben.\par\smallskip
+A Dash a ~\textbf{Flask} mikrokeretrendszert használja backend szerverként, \textbf{Plotly} segítségével jelenítui meg a diagramokat és \textbf{React} komponenseket használ a felhasználói interakció kezelésére.
+\vspace{0.4cm}
 \begin{center}
-\includegraphics[width=3cm, height=3cm, keepaspectratio]{images/dash_1.png} +
-\includegraphics[width=3cm, height=3cm, keepaspectratio]{images/dash_2.png} +
-\includegraphics[width=3cm, height=3cm, keepaspectratio]{images/dash_3.png} =
-\includegraphics[width=3cm, height=3cm, keepaspectratio]{images/dash_4.png}
+\begin{tabular}{c c c c c c c}
+\adjustbox{valign=c}{\includegraphics[height=1.5cm, keepaspectratio]{images/dash_1.png}} &
+\adjustbox{valign=c}{+} &
+\adjustbox{valign=c}{\includegraphics[height=1.5cm, keepaspectratio]{images/dash_2.png}} &
+\adjustbox{valign=c}{+} &
+\adjustbox{valign=c}{\includegraphics[height=1.5cm, keepaspectratio]{images/dash_3.png}} &
+\adjustbox{valign=c}{=} &
+\adjustbox{valign=c}{\includegraphics[height=1cm, keepaspectratio]{images/dash_4.png}} \\
+\end{tabular}
 \end{center}
 \end{frame}
 
+\begin{frame}[fragile]{A Dash könyvtár komponensei}
+\only<1>{
+\begin{block}{Dash}
+Ez a fő csomag, amely bármely alkalmazás gerincét biztosítja a \texttt{dash.Dash} objektumon keresztül.\par\smallskip
+Emellett néhány más eszközt is biztosít az interaktivitás és kivételek kezeléséhez, amelyekről később fogunk beszélni, amikor építjük az alkalmazásunkat.
+\end{block}}
+\only<2>{
+\begin{block}{Dash Core Components}
+Egy csomag, amely interaktív komponensek készletét biztosítja, amelyeket a felhasználók manipulálhatnak.\par\smallskip
+Legördülő menük, dátumválasztók, csúszkák és sok más komponens is megtalálható ebben a csomagban.
+\end{block}}
+\only<3>{
+\begin{block}{Dash HTML Components}
+Ez a csomag az összes elérhető HTML címkét Python osztályként biztosítja. Egyszerűen átalakítja a Pythont HTML-re.\par\smallskip
+Például, Pythonban a \texttt{dash\_html\_components.H1('Hello, World')} kód átalakul \texttt{<h1>Hello, World</h1>} HTML kóddá.
+\end{block}}
+\only<4>{
+\begin{block}{Dash Bootstrap Components}
+Ez egy harmadik féltől származó csomag, amely Bootstrap funkcionalitást ad a Dash-hez. Ez a csomag és annak komponensei számos elrendezéssel és vizuális jelekkel kapcsolatos lehetőséget kezelnek.\par\smallskip
+Az elemek egymás mellé vagy egymás fölé helyezése, méretük meghatározása a böngésző képernyőmérete alapján, valamint kódolt színek készletének biztosítása a jobb kommunikáció érdekében a felhasználókkal.
+\end{block}}
+\end{frame}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\scriptsize, % Basic font style
+    keywordstyle=\bfseries\color{blue}, % Keywords in bold and blue
+    stringstyle=\color{red}, % Strings in red
+    commentstyle=\color{green!50!black}, % Comments in green
+    showstringspaces=false, % Do not show spaces in strings
+    numbers=left, % Line numbers on the left
+    numberstyle=\tiny\color{gray}, % Line number style
+    stepnumber=1, % Line number step
+    numbersep=5pt, % Distance of line numbers from code
+    frame=single, % Frame around the code
+    rulecolor=\color{black}, % Frame color
+    tabsize=4, % Tab size
+    breaklines=true, % Automatic line breaking
+    breakatwhitespace=false, % Break lines at whitespace
+    captionpos=b, % Caption position
+    escapeinside={\%*}{*)}, % Escape to LaTeX
+	morekeywords={self}, % Additional keywords
+}
+
+\begin{frame}[fragile]{Egy Dash alkalmazás struktúrája}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			\begin{itemize}
+				\item Importálások:
+					\begin{lstlisting}
+import dash
+import dash_html_components as html
+import dash_core_components as dcc
+					\end{lstlisting}
+				\item Elrendezés:
+					\begin{lstlisting}
+app.layout = html.Div([
+	dcc.Dropdown()
+	dcc.Graph()
+	...
+])
+					\end{lstlisting}
+			\end{itemize}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{itemize}
+				\item Visszahívási függvények:
+					\begin{lstlisting}
+@app.callback()
+...
+@app.callback()
+...
+					\end{lstlisting}
+				\item Alkalmazás példányosítása:
+					\begin{lstlisting}
+app = dash.Dash(__name__)
+					\end{lstlisting}
+				\item Alkalmazás futtatása:
+					\begin{lstlisting}
+if __name__ == '__main__':
+	app.run_server()
+					\end{lstlisting}
+			\end{itemize}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\section{Dash komponensek}
+
+\begin{frame}
+	\tableofcontents[currentsection]
+\end{frame}
+
+\begin{frame}[fragile]{Egy kezdeti alkalmazás}
+	\begin{enumerate}
+		\item Egy új, \texttt{app.py} fájlban a következő csomagok importálásával:
+			\begin{lstlisting}
+import dash
+import dash_core_components as dcc
+			\end{lstlisting}
+		\item Alkalmazás példányosítása:
+			\begin{lstlisting}
+app = dash.Dash(__name__)
+			\end{lstlisting}
+		\item Alkalmazás elrendezésének létrehozása:
+			\begin{lstlisting}
+app.layout = html.Div([
+	html.H1('Hello, World!')
+])
+			\end{lstlisting}
+		\item Futtatás:
+			\begin{lstlisting}
+if __name__ == '__main__':
+	app.run_server(debug=True)
+			\end{lstlisting}
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{Az alkalmazás futtatása}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			A Python értelmező segítségével a megfelelő könyvtárban állva az \texttt{app\_v1\_1.py} fájl futtatásával az eredmény a következő:
+			\begin{lstlisting}[language=python]
+(dash) daniel@neptune:~/Documents/BGE/Adatbanyaszat/2_dash/code$ python app_v1_1.py
+Dash is running on http://127.0.0.1:8050/
+	
+* Serving Flask app 'app_v1_1'
+* Debug mode: on
+			\end{lstlisting}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			A böngészőben a \texttt{127.0.0.1:8050} címre navigálva a következő eredmény látható:
+			\begin{center}
+				\includegraphics[width=5cm, height=5cm, keepaspectratio]{images/dash_5.png}
+			\end{center}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Komponensek hozzáadása az alkalmazáshoz}
+	Komponensek hozzáadása az alkalmazás elrendezésének szerkesztésével érhető el (\texttt{app.layout}). Ez meglehetősen egyszerű, csak a legfelső szintű \texttt{html.Div} komponens \texttt{children} attribútumához kell hozzáfűzni a megfelelő elemeket.\par\smallskip
+	\begin{lstlisting}[language=python]
+html.Div(children=[component_1, component_2, component_3, ...])
+	\end{lstlisting}
+	\par\smallskip
+	\begin{block}{\texttt{Div}}
+		A \textbf{\texttt{Div}} a HTML-ben egy blokk szintű elem, amely képes egy dokumentum különböző komponenseit csoportosítani. A \texttt{Div} nem rendelkezik semmilyen alapértelmezett stílussal vagy viselkedéssel.
+	\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{HTML komponensek hozzáadása}
+	\begin{block}{\texttt{children}}
+		Ez az első, és a fő konténere a komponenseknek. Paraméterül kaphatja elemek listáját vagy egyetlen elemet is.
+	\end{block}
+	\begin{block}{\texttt{className}}
+		Ez megegyezik a HTML \texttt{class} attribútumával.
+	\end{block}
+	\begin{block}{\texttt{id}}
+		A komponens azonosítója. Az interaktivitás megvalósításában van kulcsfontosságú szerepe
+	\end{block}
+	\begin{block}{\texttt{style}}
+		Ez megfelel az azonos nevű HTML attribútumnak azzal a különbséggel, hogy camelCase stílust használ a változók elnevezésére.
+	\end{block}
+\end{frame}
+
+\begin{frame}{A Dash alkalmazás HTML komponensekkel}
+	\begin{center}
+		\includegraphics[width=10cm, height=6cm, keepaspectratio]{images/dash_6.png}
+	\end{center}
+\end{frame}
+
+\section{Elrendezés}
+
+\begin{frame}{}
+	\tableofcontents[currentsection]
+\end{frame}
+
+\begin{frame}[fragile]{Témák}
+Egy Dash alkalmazás témájának megváltoztatása rendkívül egyszerű: a Dash objektum létrehozásakor kell egy új téma argumentumot bevinni a konstruktor függvénybe.\par\medskip
+\begin{lstlisting}[language=python]
+import dash_bootstrap_components as dbc
+...
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+...
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Témák az előző alkalmazásban}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			\begin{center}
+				\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/dash_7.png}
+			\end{center}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{center}
+				\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/dash_8.png}
+			\end{center}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{A rács rendszer}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			A Bootstrap segítségével lehetséges oszlopokat definiálni, ami egy független képernyőként viselkedik, egymás fölött megjelenítve az elemeket.\par\medskip
+			A rács rendszer 12 oszlopra bontja a képernyőt, és egy komponens szélessége oszlopok számában adható meg. 
+		\end{column}
+		\begin{column}{.6\textwidth}
+			\begin{center}
+				\includegraphics[width=7cm, keepaspectratio]{images/dash_9.png}
+			\end{center}
+		\end{column}
+	\end{columns}
+	\vspace{0.2cm}
+	\begin{center}
+		\begin{lstlisting}[language=python]
+import dash_boostrap_components as dbc
+dbc.Col(children=[child1, child2, ...])
+		\end{lstlisting}
+	\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Rácsok dinamikus képernyő méreten}
+	\begin{columns}
+		\begin{column}{.4\textwidth}
+			Vannak olyan esetek, amikor nem kívánatos az elemek méretezése a képernyővel együtt. Amikor a képernyő kisebb lesz, némelyik komponenseknek jó, ha kiterjednek méretükben.\par\smallskip
+			Öt különböző méretet lehet definiálni: \texttt{xs} (extra-small), \texttt{md} (medium), \texttt{lg} (large), \texttt{xl} (extra-large).
+		\end{column}
+		\begin{column}{.6\textwidth}
+			\begin{center}
+				\includegraphics[width=7cm, keepaspectratio]{images/dash_10.png}
+			\end{center}
+		\end{column}
+	\end{columns}
+	\vspace{0.2cm}
+	\begin{center}
+		\begin{lstlisting}[language=python]
+import dash_boostrap_components as dbc
+dbc.Col(children=[child1, child2, ...], lg=6, md=12)
+		\end{lstlisting}
+	\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Bootstrap komponensek hozzáadása az alkalmazáshoz}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			Az alkalmazás következő verziójában két új komponens kerül hozzáadásra, a \texttt{Tabs} és \texttt{Tab}. Ezek szorosan kapcsolódnak egymáshoz. A \texttt{Tabs} a \texttt{Tab} konténere.\par\smallskip
+			Ennek eredménye egy informatívabb és jobban elrendezett alkalmazás. 
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{center}
+				\includegraphics[width=6cm, keepaspectratio]{images/dash_11.png}
+				asdasd
+			\end{center}
+		\end{column}
+	\end{columns}
+\end{frame}
+
 \end{document}
+
+
+
+
+
+
+
+

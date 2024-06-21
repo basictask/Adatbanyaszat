@@ -39,7 +39,7 @@ app.layout = html.Div([
                     html.A(
                         'https://github.com/PacktPublishing/Interactive-Dashboards-and-Data-Apps-with-Plotly-and-Dash',
                         'https://github.com/PacktPublishing/Interactive-Dashboards-and-Data-Apps-with-Plotly-and-Dash'
-                     )
+                    )
                 ])
             ])
         ], label='Projekt információ')

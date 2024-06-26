@@ -66,7 +66,7 @@ def display_country_report(country):
     filtered_df = poverty_data[
         (poverty_data['Country Name'] == country) &
         (poverty_data['Indicator Name'] == 'Population, total')
-        ]
+    ]
     population = filtered_df.loc[:, '2010'].values[0]
 
     return html.H3(country), f'{country} lakossága 2010-ben {population:,.0f} volt.'

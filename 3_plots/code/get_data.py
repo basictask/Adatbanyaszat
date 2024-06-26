@@ -1,4 +1,5 @@
 import os
+import re
 import numpy as np
 import pandas as pd
 from unicodedata import lookup
@@ -17,7 +18,7 @@ def flag(letters, country_codes):
 
 def get_poverty():
     """
-    Betölti és megtisztítja a povertz adathalmazt
+    Betölti és megtisztítja a poverty adathalmazt
     """
     # Adatok előkészítése
     current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -57,6 +58,23 @@ def get_poverty():
     poverty['is_country'] = [x if x != np.nan else False for x in poverty['is_country']]
 
     return poverty
+
+
+def get_income_share_df():
+    """
+    Betölti és megtisztítja a szegénységi adathalmazt
+    """
+    poverty = get_poverty()  # Adathalmaz betöltése
+    income_share_df = poverty.filter(regex='Country Name|^year$|Income share.*?20').dropna()
+    income_share_df = income_share_df.rename(columns={
+        'Income share held by lowest 20%': '1 Income share held by lowest 20%',
+        'Income share held by second 20%': '2 Income share held by second 20%',
+        'Income share held by third 20%': '3 Income share held by third 20%',
+        'Income share held by fourth 20%': '4 Income share held by fourth 20%',
+        'Income share held by highest 20%': '5 Income share held by highest 20%'
+    }).sort_index(axis=1)
+    income_share_df.columns = [re.sub(r'\d Income share held by ', '', col).title() for col in income_share_df.columns]
+    return income_share_df
 
 
 if __name__ == '__main__':

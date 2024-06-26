@@ -67,31 +67,39 @@ app.layout = html.Div([
 ])
 
 
-@app.callback(
-    Output('report', 'children'),
-    Input('country', 'value')
-)
-def display_country_report(country):
-    if country is None:
-        return ''
+def register_callbacks(param_app):
+    """
+    A register_callbacks() függvény célja, hogy a Dash alkalmazásban regisztrálja a callback függvényeket.
+    Ez a függvény általában egy másik modulban van definiálva, és az alkalmazás fő szkriptjében hívják meg,
+    hogy a callback-eket elkülönítve tartsák a fő alkalmazás logikájától.
+    """
+    @param_app.callback(
+        Output('report', 'children'),
+        Input('country', 'value')
+    )
+    def display_country_report(country):
+        if country is None:
+            return ''
 
-    filtered_df = poverty_data[
-        (poverty_data['Country Name'] == country) & (poverty_data['Indicator Name'] == 'Population, total')
-    ]
-    population = filtered_df.loc[:, '2010'].values[0]
-    return [html.H3(country), f'{country} lakossága 2010-ben {population:,.0f} fő volt.']
+        filtered_df = poverty_data[
+            (poverty_data['Country Name'] == country) & (poverty_data['Indicator Name'] == 'Population, total')
+        ]
+        population = filtered_df.loc[:, '2010'].values[0]
+        return [html.H3(country), f'{country} lakossága 2010-ben {population:,.0f} fő volt.']
+
+    @param_app.callback(
+        Output('population_chart', 'figure'),
+        Input('year_dropdown', 'value')
+    )
+    def plot_countries_by_population(year):
+        fig = go.Figure()
+        year_df = population_df[['Country Name', year]].sort_values(year, ascending=False)[:20]
+        fig.add_bar(x=year_df['Country Name'], y=year_df[year])
+        fig.layout.title = f'A húsz legnépesebb ország - {year}'
+        return fig
 
 
-@app.callback(
-    Output('population_chart', 'figure'),
-    Input('year_dropdown', 'value')
-)
-def plot_countries_by_population(year):
-    fig = go.Figure()
-    year_df = population_df[['Country Name', year]].sort_values(year, ascending=False)[:20]
-    fig.add_bar(x=year_df['Country Name'], y=year_df[year])
-    fig.layout.title = f'A húsz legnépesebb ország - {year}'
-    return fig
+register_callbacks(app)
 
 
 if __name__ == '__main__':

@@ -2,7 +2,7 @@ import dash
 from dash import dcc
 from dash import html
 import plotly.express as px
-from get_poverty import get_poverty
+from get_data import get_poverty
 import dash_bootstrap_components as dbc
 
 # Szűrési változók

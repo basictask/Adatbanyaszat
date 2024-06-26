@@ -3,7 +3,7 @@ from dash import dcc
 from dash import html
 import plotly.express as px
 from dash import Input, Output
-from get_poverty import get_poverty
+from get_data import get_poverty
 import dash_bootstrap_components as dbc
 from dash.exceptions import PreventUpdate
 
@@ -42,43 +42,44 @@ app.layout = html.Div([
 ])
 
 
-# Callback függvények
-@app.callback(
-    Output('gini_year_barchart', 'figure'),
-    Input('gini_year_dropdown', 'value')
-)
-def plot_gini_year_barchart(year):
-    if not year:
-        raise PreventUpdate
-    df = gini_df[gini_df['year'].eq(year)].sort_values(gini).dropna(subset=[gini])
-    n_countries = len(df['Country Name'])
-    fig = px.bar(
-        df,
-        x=gini,
-        y='Country Name',
-        orientation='h',
-        height=200 + (n_countries * 20),
-        title=gini + ' ' + str(year)
+def register_callbacks(param_app):
+    @param_app.callback(
+        Output('gini_year_barchart', 'figure'),
+        Input('gini_year_dropdown', 'value')
     )
-    return fig
+    def plot_gini_year_barchart(year):
+        if not year:
+            raise PreventUpdate
+        df = gini_df[gini_df['year'].eq(year)].sort_values(gini).dropna(subset=[gini])
+        n_countries = len(df['Country Name'])
+        fig = px.bar(
+            df,
+            x=gini,
+            y='Country Name',
+            orientation='h',
+            height=200 + (n_countries * 20),
+            title=gini + ' ' + str(year)
+        )
+        return fig
 
-
-@app.callback(
-    Output('gini_country_barchart', 'figure'),
-    Input('gini_country_dropdown', 'value')
-)
-def plot_gini_country_barchart(country):
-    if not country:
-        raise PreventUpdate
-    df = gini_df[gini_df['Country Name']==country].dropna(subset=[gini])
-    fig = px.bar(
-        df,
-        x='year',
-        y=gini,
-        title=' - '.join([gini, country])
+    @param_app.callback(
+        Output('gini_country_barchart', 'figure'),
+        Input('gini_country_dropdown', 'value')
     )
-    return fig
+    def plot_gini_country_barchart(country):
+        if not country:
+            raise PreventUpdate
+        df = gini_df[gini_df['Country Name'] == country].dropna(subset=[gini])
+        fig = px.bar(
+            df,
+            x='year',
+            y=gini,
+            title=' - '.join([gini, country])
+        )
+        return fig
 
+
+register_callbacks(app)
 
 if __name__ == '__main__':
     app.run_server(debug=True)

@@ -77,6 +77,24 @@
 	captionpos=b, % Caption position
 	escapeinside={\%*}{*)}, % Escape to LaTeX
 	morekeywords={self}, % Additional keywords
+    literate={á}{{\'a}}1
+    	{é}{{\'e}}1
+		{í}{{\'i}}1
+		{ó}{{\'o}}1
+		{ú}{{\'u}}1
+		{ő}{{\H{o}}}1
+		{ű}{{\H{u}}}1
+		{Á}{{\'A}}1
+		{É}{{\'E}}1
+		{Í}{{\'I}}1	
+		{Ó}{{\'O}}1	
+		{Ú}{{\'U}}1
+		{Ő}{{\H{O}}}1
+		{Ű}{{\H{U}}}1
+       	{Ö}{{\"O}}1
+		{Ü}{{\"U}}1
+		{ö}{{\"o}}1
+		{ü}{{\"u}}1
 }
 
 \begin{document}
@@ -451,10 +469,274 @@ px.bar(df, x='letters', y='floats', color='shapes', barmode='group')
 	\end{columns}
 \end{frame}
 
+\section{Diagramok paraméterei}
+
+\begin{frame}{}
+	\tableofcontents[currentsection]
+\end{frame}
+
+\begin{frame}[fragile]{Fektetett oszlopdiagram}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			Vannak olyan esetek, amikor a tengelycímek hosszúak, ezért fontos a jó olvashatóság. Ebben az esetben a vízszintes oszlopdiagram a megfelelő választás.\par\smallskip
+			Ehhez az \texttt{x} és \texttt{y} paramétereket meg kell cserélni és az \texttt{orientation='h'} paramétert be kell állítani:
+			\begin{lstlisting}[language=python]
+fig = px.bar(
+	df, 
+	x=gini, 
+	y='Country Name', 
+	title=' - '.join([gini, str(year)]), 
+	orientation='h'
+)
+			\end{lstlisting}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{center}
+				\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/plots_15.png}
+			\end{center}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Dinamikus méretű oszlopdiagram}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			Alapértelmezés szerint a plotly express diagramok maximális méretének intervalluma $\left[20.2, 65.8\right]$. Ezt manuálisan is lehet állítani, de amikor kevés rekord van a diagram eltorzulhat.\par\smallskip
+			Egy megoldás erre, ha országonként 20 pixellel nő meg a \texttt{height} paraméter.
+			\begin{lstlisting}[language=python]
+fig = px.bar(
+	df,
+	x=indicator,
+	y='Country Name',
+	title=' - '.join([gini, str(year)]),
+	height=200 + (20 * n_countries),
+	orientation='h',
+)
+			\end{lstlisting}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{center}
+				\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/plots_16.png}
+			\end{center}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Oszlopmódok}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			Ugyanazt az oszlopdiagramot többféleképpen is meg lehet jeleníteni. Ennek a felelőse a \texttt{barmode} paraméter.\par\medskip
+			\only<1>{
+				\begin{block}{\texttt{relative}}
+					Az oszlopok egymás mellett jelennek meg, és az értékek relatív különbségeit mutatják.
+				\end{block}
+			}
+			\only<2>{
+				\begin{block}{\texttt{group}}
+					Az oszlopok csoportosítva jelennek meg, különböző kategóriák szerint.
+				\end{block}
+			}
+			\only<3>{
+				\begin{block}{\texttt{overlay}}
+					Az oszlopok egymásra helyezve jelennek meg, átfedésben.
+				\end{block}
+			}
+			\only<4>{
+				\begin{block}{\texttt{stack}}
+					Az oszlopok egymásra rakva jelennek meg, az értékek összeadódnak.
+				\end{block}
+			}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{center}
+				\includegraphics<1>[width=7cm, height=7cm, keepaspectratio]{images/plots_19.png}
+				\includegraphics<2>[width=7cm, height=7cm, keepaspectratio]{images/plots_20.png}
+				\includegraphics<3>[width=7cm, height=7cm, keepaspectratio]{images/plots_21.png}
+				\includegraphics<4>[width=7cm, height=7cm, keepaspectratio]{images/plots_22.png}
+			\end{center}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Diagramok szétbontása felületekre}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			Szétbontással új dimenziókat lehet felvenni egy műszerfalra. Ki lehet választani egy jellemzőt, ami mentén a szeletelés történik. A megfelelő paraméterek erre a plotly express könyvtárban a \texttt{facet\_col} és \texttt{facet\_row} attól függően, hogy új oszlop vagy sor fog létrejönni a diagramban. \par\medskip
+			\begin{lstlisting}[language=python]
+fig = px.bar(df, x='year', y=gini, facet_row='Country Name')				
+			\end{lstlisting}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{center}
+				\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/plots_23.png}
+			\end{center}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\section{Dinamika diagramokkal}
+
+\begin{frame}{}
+	\tableofcontents[currentsection]
+\end{frame}
+
+\begin{frame}[fragile]{Legnépesebb országok régiónként}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			Egy legördülő listán ki lehet választani az évek közül a megfelelőt, ez elindít egy callback függvényt, ami egy \texttt{dcc.Graph} objektun \texttt{figure} adattagját frissíti egy plotly express diagrammal.
+			\begin{lstlisting}[language=python]
+dcc.Dropdown(
+	id='year_dropdown',
+	value='2010',
+	options=[{'label': year, 'value': str(year)} for year in range(1974, 2019)]
+),
+...
+dcc.Graph(id='population_chart'),				
+			\end{lstlisting}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{lstlisting}[language=python]
+@param_app.callback(
+	Output('population_chart', 'figure'),
+	Input('year_dropdown', 'value')
+)
+def plot_countries_by_population(year):
+	fig = go.Figure()
+	year_df = population_df[['Country Name', year]].sort_values(year, ascending=False)[:20]
+	fig.add_bar(x=year_df['Country Name'], y=year_df[year])
+	fig.layout.title = f'A húsz legnépesebb ország - {year}'
+	return fig				
+			\end{lstlisting}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Többváltozós legördülő lista}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			A \texttt{Dropdown} komponensnek van egy extra, opcionális paramétere, a \texttt{multi}, ami egy logikai változót vár el értékként, és ha be van kapcsolva lehetővé teszi több érték kiválasztását egy változóból.\par\medskip
+			\begin{lstlisting}[language=python]
+dcc.Dropdown(
+	id='gini_country_dropdown', 
+	multi=True,
+	options=[{'label': country, 'value': country} for country in gini_df['Country Name'].unique()]
+),				
+			\end{lstlisting}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{center}
+				\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/plots_24.png}
+			\end{center}			
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Helykitöltő szöveg legördülő listákhoz}
+	Egy további opcionális paramétere a \texttt{Dropdown} objektumoknak a \texttt{placeholder}, amivel lehetséges helykitöltő szöveget hozzáadni a legördülő listához.\par\smallskip
+	Ezzel megjelenít egy szöveget, ami azelőtt látszik, hogy a felhasználó belekattintana dobozba.
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			\begin{lstlisting}[language=python]
+dcc.Dropdown(
+	id='gini_country_dropdown',
+	placeholder='Válasszon egy vagy több országot',
+	multi=True,
+	options=[{'label': country, 'value': country} for country in gini_df['Country Name'].unique()]
+),				
+			\end{lstlisting}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{center}
+				\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/plots_26.png}
+			\end{center}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Elrendezés komponensek újrafelhasználása}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			Egy python szkriptben inicializált \texttt{layout} változót lehetséges egy másik szkriptben importálni.\par\medskip
+			Ebben az esetben a \texttt{layout.children} komponenst egy listaként kell átvenni, és hozzá kell fűzni az aktuális szkript elrendezés definíciójához.
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{lstlisting}[language=python]
+app.layout = html.Div([
+	*app_v2_3.app.layout.children[:-1],
+	dbc.Row([
+		...	
+	]),
+	app_v2_3.app.layout.children[-1]
+])				
+			\end{lstlisting}			
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{A lista kicsomagolás operátor}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			Az előző példában a listára értelmezett \texttt{*} operátor a python nyelvben arra használható, hogy egy lista értékeit kicsomagolja valamilyen argumentumban vagy másik adatstruktúrában.
+			\begin{lstlisting}[language=python]
+In [1]: a = [1, 2, 3]
+In [2]: b = 5
+In [3]: [*a, 4, b]
+Out[3]: [1, 2, 3, 4, 5]
+			\end{lstlisting}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			Ez a funkcionalitás akkor használatos, ha arra van szükség, hogy egy függvény tetszőleges számú paramétert legyen képes átvenni:
+			\begin{lstlisting}[language=python]
+def f(*argv):
+	...
+	
+f('Hello', 'World')
+			\end{lstlisting}
+			Abban az esetben ha nevesített argumentumokra van szűkség a \texttt{**} operátor teszi ezt lehetővé:
+			\begin{lstlisting}[language=python]
+def f(**kwargs):
+	...
+
+f(school='bge', spec='data')
+			\end{lstlisting}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Callback függvények újrafelhasználása}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			Callback függvényeket is lehetséges felhasználni szkriptek között, viszont ennek az eljárása eltér az elrendezés komponensek újrafelhasználásának módjától.\par\smallskip
+			Ahhoz, hogy egy alkalmazásba be lehessen importálni egy másik alkalmazás callback függvényeit, a definíció helyén egy külső függvénybe kell ezeket beágyazni, majd ezt a függvényt később meghívni egy paraméterezett \texttt{Dash} alkalmazás objektummal.
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{lstlisting}[language=python]
+def register_callbacks(param_app):
+	@param_app.callback(
+		...
+	)
+	def callback1(...):
+		...
+	
+	@param_app.callback(
+		...
+	)
+	def callback2(...):
+		...				
+			\end{lstlisting}
+			A meghívás egy másik alkalmazásból:
+			\begin{lstlisting}[language=python]
+import app_v2_1
+
+app = dash.Dash(__name___)
+...
+app_v2_1.register_callbacks(app)
+			\end{lstlisting}
+		\end{column}
+	\end{columns}
+\end{frame}
+
 \end{document}
-
-
-
 
 
 

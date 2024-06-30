@@ -1,0 +1,176 @@
+% Settings for the default beamer theme
+\documentclass[english, aspectratio=169]{beamer}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{adjustbox}
+\usepackage{tabularx}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{babel}
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{blkarray}
+\SetAlgorithmName{Algoritmus}{algoritmus}{List of Algorithms}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+
+\makeatletter
+
+\newcommand\makebeamertitle{\frame{\maketitle}}
+
+% (ERT) argument for the TOC
+\AtBeginDocument{%
+  \let\origtableofcontents=\tableofcontents
+  \def\tableofcontents{\@ifnextchar[{\origtableofcontents}{\gobbletableofcontents}}
+  \def\gobbletableofcontents#1{\origtableofcontents}
+}
+
+% Theme settings
+\usetheme{Frankfurt}
+\usecolortheme{default}
+\usefonttheme[onlymath]{serif}
+
+% Template settings
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{blocks}[rounded][shadow=false]
+\setbeamertemplate{title page}[default][colsep=-4bp, rounded=true, shadow=false]
+\makeatother
+
+% Custom color definitions
+\definecolor{lightgrey}{gray}{0.95}
+\definecolor{DarkerGreen}{RGB}{0,85,0} % Adjust the RGB values as needed
+
+% Use the newly defined color in Beamer theme elements
+\setbeamercolor{structure}{fg=DarkerGreen} % Changes basic structural elements to Darker Green
+\setbeamercolor{title in head/foot}{bg=DarkerGreen} % Changes the title in header/footer to Darker Green
+
+% Definitions for program code sections
+\lstset{
+	language=bash,
+	basicstyle=\ttfamily\footnotesize, % Monospace font
+	backgroundcolor=\color{lightgrey}, % Background color
+	frame=single, % Frame around the code
+	keywordstyle=\color{black}, % Keywords color
+	commentstyle=\color{black}, % Comments color
+	stringstyle=\color{red}, % Strings color
+	showstringspaces=false, % Do not show spaces in strings
+	breaklines=true, % Automatically break long lines
+}
+
+\lstset{
+	language=python,
+	basicstyle=\ttfamily\scriptsize, % Basic font style
+	keywordstyle=\bfseries\color{blue}, % Keywords in bold and blue
+	stringstyle=\color{red}, % Strings in red
+	commentstyle=\color{green!50!black}, % Comments in green
+	showstringspaces=false, % Do not show spaces in strings
+	numbers=left, % Line numbers on the left
+	numberstyle=\tiny\color{gray}, % Line number style
+	stepnumber=1, % Line number step
+	numbersep=5pt, % Distance of line numbers from code
+	frame=single, % Frame around the code
+	rulecolor=\color{black}, % Frame color
+	tabsize=2, % Tab size
+	breaklines=true, % Automatic line breaking
+	breakatwhitespace=false, % Break lines at whitespace
+	captionpos=b, % Caption position
+	escapeinside={\%*}{*)}, % Escape to LaTeX
+	morekeywords={self}, % Additional keywords
+	literate={á}{{\'a}}1
+	{é}{{\'e}}1
+	{í}{{\'i}}1
+	{ó}{{\'o}}1
+	{ú}{{\'u}}1
+	{ő}{{\H{o}}}1
+	{ű}{{\H{u}}}1
+	{Á}{{\'A}}1
+	{É}{{\'E}}1
+	{Í}{{\'I}}1	
+	{Ó}{{\'O}}1	
+	{Ú}{{\'U}}1
+	{Ő}{{\H{O}}}1
+	{Ű}{{\H{U}}}1
+	{Ö}{{\"O}}1
+	{Ü}{{\"U}}1
+	{ö}{{\"o}}1
+	{ü}{{\"u}}1
+}
+
+
+\begin{document}
+
+% Title page
+\section{Bevezetés}
+\title[]{Adatbányászat a Gyakorlatban}
+\subtitle{4. Gyakorlat: Pontdiagramok és viselkedésük}
+\author[Kuknyó Dániel]{Kuknyó Dániel\\Budapesti Gazdasági Egyetem}
+\date{2024/25\\1.félév}
+\makebeamertitle
+
+% Table of contents slide
+\begin{frame}
+\tableofcontents{}
+\end{frame}
+
+% Table of contents of the current section
+\begin{frame}
+\tableofcontents[currentsection]
+\end{frame}
+
+\begin{frame}{Alapvető pontdiagramok}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			A plotly könyvtárban a pontdiagramokat a \texttt{graph\_objects} valósítja meg. Az alapvető jelölőtípusok:
+			\begin{itemize}
+				\item \texttt{markers}: Csak jelölők
+				\item \texttt{lines}: Csak vonalak
+				\item \texttt{text}: Csak szöveget
+				\item \texttt{markers+lines}: Jelölők és vonalak
+				\item \texttt{markers+text}: Jelölők és szöveg
+				\item \texttt{lines+text}: Vonalak és szöveg
+				\item \texttt{markers+lines+text}: Jelölők, vonalak és szöveg
+			\end{itemize}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{center}
+				\includegraphics<1>[width=7cm, height=7cm, keepaspectratio]{images/scatter_1.png}
+				\includegraphics<2>[width=7cm, height=7cm, keepaspectratio]{images/scatter_2.png}
+				\includegraphics<3>[width=7cm, height=7cm, keepaspectratio]{images/scatter_3.png}
+				\includegraphics<4>[width=7cm, height=7cm, keepaspectratio]{images/scatter_4.png}
+				\includegraphics<5>[width=7cm, height=7cm, keepaspectratio]{images/scatter_5.png}
+				\includegraphics<6>[width=7cm, height=7cm, keepaspectratio]{images/scatter_6.png}
+				\includegraphics<7>[width=7cm, height=7cm, keepaspectratio]{images/scatter_7.png}
+			\end{center}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Több pontszórási nyomvonal egy diagramon}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			Ahhoz, hogy több vonal jelenjen meg egy vásznon belül, egyesével kell hozzáadni a diagramhoz a megfelelő adatokkal definiált \texttt{trace} objektumokat.
+			\begin{lstlisting}[language=python]
+for country in countries:
+	df_country = df[df['Country Name'] == country]
+	fig.add_scatter(x=df_country['year'], y=df_country[perc_pov_19], name=country, mode='markers+lines')
+			\end{lstlisting}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+

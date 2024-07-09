@@ -29,7 +29,7 @@ app.layout = html.Div([
         dbc.Col(lg=1),
         dbc.Col([
             html.Br(),
-            dbc.Label('Select poverty level:'),
+            dbc.Label('Válasszon szegénységi szintet:'),
             dcc.Slider(
                 id='perc_pov_indicator_slider',
                 min=0,
@@ -46,7 +46,7 @@ app.layout = html.Div([
         ], lg=2),
         dbc.Col([
             html.Br(),
-            dbc.Label('Select year:'),
+            dbc.Label('Válasszon évet:'),
             dcc.Slider(
                 id='perc_pov_year_slider',
                 min=perc_pov_years[0],

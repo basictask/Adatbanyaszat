@@ -15,25 +15,28 @@ poverty = pd.read_csv(os.path.join(current_dir, '../../data/poverty.csv'), low_m
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
-app.layout = map_app_v2.app.layout.children + [  # Előző alkalmazás layout komponense
-    # Új komponensek hozzáadása az előző alkalmazás elrendezésén túl
-    html.Div(style={'marginBottom': '20px'}),  # Vertikális hely a két komponens között
-    dcc.Dropdown(
-        id='indicator_dropdown',
-        value='GINI index (World Bank estimate)',
-        options=[{'label': indicator, 'value': indicator} for indicator in poverty.columns[3:54]]
-    ),
-    dbc.Row(
-        dbc.Col(
-            [
-                dcc.Markdown(
-                    id='indicator_map_details_md',
-                )
-            ],
-            width=12,
-        )
-    ),
-]
+app.layout = html.Div(
+    style={'padding': '20px'},
+    children=map_app_v2.app.layout.children + [  # Előző alkalmazás layout komponense
+        # Új komponensek hozzáadása az előző alkalmazás elrendezésén túl
+        html.Div(style={'marginBottom': '20px'}),  # Vertikális hely a két komponens között
+        dcc.Dropdown(
+            id='indicator_dropdown',
+            value='GINI index (World Bank estimate)',
+            options=[{'label': indicator, 'value': indicator} for indicator in poverty.columns[3:54]]
+        ),
+        dbc.Row(
+            dbc.Col(
+                [
+                    dcc.Markdown(
+                        id='indicator_map_details_md',
+                    )
+                ],
+                width=12,
+            )
+        ),
+    ]
+)
 
 
 # Előző alkalmazás callback függvényei
@@ -56,6 +59,7 @@ def update_indicator_map_details_md(indicator):
         limitations = series_df['Limitations and exceptions'].fillna('N/A').str.replace('\n\n', '').values[0]
         # Markdown komponens szövegének definiálása
         markdown = f"""
+            ---
             ## {series_df['Indicator Name'].values[0]}
             {series_df['Long definition'].values[0]}
             * **Mértékegység:** {series_df['Unit of measure'].fillna('count').values[0]}

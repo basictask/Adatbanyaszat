@@ -38,7 +38,8 @@ def update_wb_data():
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
 app.layout = dbc.Container(
-    [
+    style={'padding': '20px'},
+    children=[
         dbc.Row(
             dbc.Col(
                 [
@@ -117,55 +118,63 @@ app.layout = dbc.Container(
 )
 
 
-@app.callback(
-    Output("storage", "data"),
-    Input("timer", "n_intervals")
-)
-def store_data(_):
+def register_callbacks(param_app):
     """
-    Ez a callback függvény a Timer komponens által kiváltott események hatására fut le,
-    az eltelt időközök számának megfelelően. Lekéri a frissített adatokat az update_wb_data
-    függvényből, és szótár formátumban tárolja azokat a Storage komponensben.
+    A register_callbacks() függvény kívülről meghívható. Ha egy másik paraméterül kapott alkalmazással meghívódik,
+    a függvénytörzsben definiált callback függvények regisztrálódnak a paraméterül kapott alkalmazáshoz.
     """
-    dataframe = update_wb_data()
-    return dataframe.to_dict("records")
-
-
-@app.callback(
-    Output("my-choropleth", "figure"),
-    Input("my-button", "n_clicks"),
-    Input("storage", "data"),
-    State("years-range", "value"),
-    State("radio-indicator", "value"),
-)
-def update_graph(_, stored_dataframe, years_chosen, indct_chosen):
-    dff = pd.DataFrame.from_records(stored_dataframe)
-    print(years_chosen)
-
-    if years_chosen[0] != years_chosen[1]:
-        dff = dff[dff.year.between(years_chosen[0], years_chosen[1])]
-        dff = dff.groupby(["iso3c", "country"])[indct_chosen].mean()
-        dff = dff.reset_index()
-
-    if years_chosen[0] == years_chosen[1]:
-        dff = dff[dff["year"].isin(years_chosen)]
-
-    fig = px.choropleth(
-        data_frame=dff,
-        locations="iso3c",
-        color=indct_chosen,
-        scope="world",
-        hover_data={"iso3c": False, "country": True},
-        labels={
-            indicators["SG.GEN.PARL.ZS"]: "Nők aránya",
-            indicators["IT.NET.USER.ZS"]: "Internethasználók aránya",
-        },
+    @param_app.callback(
+        Output("storage", "data"),
+        Input("timer", "n_intervals")
     )
-    fig.update_layout(
-        geo={"projection": {"type": "natural earth"}},
-        margin=dict(l=50, r=50, t=50, b=50),
+    def store_data(_):
+        """
+        Ez a callback függvény a Timer komponens által kiváltott események hatására fut le,
+        az eltelt időközök számának megfelelően. Lekéri a frissített adatokat az update_wb_data
+        függvényből, és szótár formátumban tárolja azokat a Storage komponensben.
+        """
+        dataframe = update_wb_data()
+        return dataframe.to_dict("records")
+
+    @param_app.callback(
+        Output("my-choropleth", "figure"),
+        Input("my-button", "n_clicks"),
+        Input("storage", "data"),
+        State("years-range", "value"),
+        State("radio-indicator", "value"),
     )
-    return fig
+    def update_graph(_, stored_dataframe, years_chosen, indct_chosen):
+        dff = pd.DataFrame.from_records(stored_dataframe)
+        print(years_chosen)
+
+        if years_chosen[0] != years_chosen[1]:
+            dff = dff[dff.year.between(years_chosen[0], years_chosen[1])]
+            dff = dff.groupby(["iso3c", "country"])[indct_chosen].mean()
+            dff = dff.reset_index()
+
+        if years_chosen[0] == years_chosen[1]:
+            dff = dff[dff["year"].isin(years_chosen)]
+
+        fig = px.choropleth(
+            data_frame=dff,
+            locations="iso3c",
+            color=indct_chosen,
+            scope="world",
+            hover_data={"iso3c": False, "country": True},
+            labels={
+                indicators["SG.GEN.PARL.ZS"]: "Nők aránya",
+                indicators["IT.NET.USER.ZS"]: "Internethasználók aránya",
+            },
+        )
+        fig.update_layout(
+            geo={"projection": {"type": "natural earth"}},
+            margin=dict(l=50, r=50, t=50, b=50),
+        )
+        return fig
+
+
+# Callback föggvények hozzáadása az alkalmazáshoz
+register_callbacks(app)
 
 
 if __name__ == "__main__":

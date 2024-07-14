@@ -499,7 +499,7 @@ def display_generic_map_chart(indicator):
 	\end{columns}
 \end{frame}
 
-\begin{frame}[fragile]{Alkalmazás legördülő menüvel és tematikus térképpel (\texttt{app\_v3\_3.py})}
+\begin{frame}[fragile]{Alkalmazás legördülő menüvel és tematikus térképpel (\texttt{map\_app\_v1.py})}
 	\begin{columns}
 		\begin{column}{.5\textwidth}
 			Az alkalmazás működésének megfelelően a felhasználó kiválaszthat egy indikátort a \texttt{Dropdown} menüből, ez elindít egy callback függvényt, aminek átadódik az indikátor értéke.\par\smallskip
@@ -555,7 +555,7 @@ return dash.no_update
 			\begin{itemize}
 				\item \texttt{interval}: Az intervallum (ms) hossza, ami két callback indítás között eltelik
 				\item \texttt{n\_intervals}: Az eltelt intervallumok számát tartalmazó attribútum
-				\item \texttt{disabled}: Ha értéke \texttt{True}, a callback függvény nem indul el.
+				\item \texttt{disabled}: Ha értéke \texttt{True}, a callback függvény nem indul el
 			\end{itemize}
 		\end{column}
 		\begin{column}{.5\textwidth}
@@ -574,6 +574,197 @@ app.layout = html.Div([
 )
 def update_output(n):
 	return f'Interval has triggered {n} times.'				
+			\end{lstlisting}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Alkalmazás \texttt{Storage} és \texttt{Interval} komponensekkel (\texttt{map\_app\_v2.py})}
+	\begin{columns}
+		\begin{column}{.6\textwidth}
+			\texttt{dcc.Storage}:
+			\begin{itemize}
+				\item A \texttt{store\_data} callback frissíti a \texttt{dcc.Store} komponens \texttt{data} attribútumát a Világbank adataival minden alkalommal, amikor a \texttt{dcc.Interval} komponens frissítést indít.
+			\end{itemize}
+			\texttt{dcc.Interval}:
+			\begin{itemize}
+				\item A \texttt{store\_data} callback minden alkalommal aktiválódik, amikor a \texttt{dcc.Interval} komponens növeli az \texttt{n\_intervals} attribútum értékét. Ez biztosítja, hogy a Világbank adatai minden percben frissüljenek és tárolódjanak a \texttt{dcc.Store} komponensben.
+			\end{itemize}
+		\end{column}
+		\begin{column}{.4\textwidth}
+			\begin{center}
+				\includegraphics[width=6cm, height=6cm, keepaspectratio]{images/scatter_24.png}
+			\end{center}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\section{Markdown}
+
+\begin{frame}{}
+	\tableofcontents[currentsection]
+\end{frame}
+
+\lstset{
+	basicstyle=\color{black}\ttfamily\scriptsize,
+	keywordstyle=\color{black},
+	commentstyle=\color{black},	
+	stringstyle=\color{black},
+	identifierstyle=\color{black},
+	numberstyle=\color{black},	
+}
+
+\begin{frame}[fragile]{Markdown alapjai}
+	A Markdown nyelv segítségével egyszerűen lehet HTML struktúrát létrehozni. Az outputot úgy jeleníti meg, mint bármelyik HTML dokumentum, de a megírása sokkal egyszerűbb.
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			\begin{block}{HTML}
+				\begin{center}
+					\begin{minipage}{.8\textwidth}
+						\begin{lstlisting}[language=bash]
+<h1>Főcím</h1>
+<h2>Alcím</h2>
+<ul>
+	<li>Első elem</li>
+	<li>Második elem</li>
+	<li>Harmadik elem</li>
+</ul>					
+						\end{lstlisting}	
+					\end{minipage}
+				\end{center}
+			\end{block}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{block}{Markdown}
+				\begin{center}
+					\begin{minipage}{.8\textwidth}
+						\begin{lstlisting}
+# Főcím
+## Alcím
+* Első elem
+* Második elem
+* Harmadik elem
+						\end{lstlisting}
+					\end{minipage}
+				\end{center}
+			\end{block}			
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Markdown szabályai}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			\begin{itemize}
+				\item Főcímek:
+				\begin{lstlisting}[language=python]
+# Első főcím
+## Második főcím
+### Harmadik főcím
+				\end{lstlisting}
+				\item Formázások:
+				\begin{lstlisting}[language=python]
+*Dőlt*
+**Félkövér**
+***Félkövér és dőlt***
+				\end{lstlisting}
+				\item Linkek:
+				\begin{lstlisting}[language=python]
+[Link szőveg](URL)
+				\end{lstlisting}
+				\item Képek:
+				\begin{lstlisting}[language=python]
+![Alternatív szöveg](Elérési út)
+				\end{lstlisting}
+			\end{itemize}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{itemize}
+				\item Számozatlan lista:
+				\begin{lstlisting}[language=python]
+* Első elem
+* Második elem
+				\end{lstlisting}
+				\item Számozott lista: 
+				\begin{lstlisting}[language=python]
+1. Első elem
+2. Második elem
+				\end{lstlisting}
+				\item Programkód:
+				\begin{lstlisting}[language=python]
+`print(Hello, World!)`
+				\end{lstlisting}
+				\item Táblázat:
+				\begin{lstlisting}[language=python]
+| Főcím 1 | Főcím 2 |
+|---------|---------|
+| Sor 1   | Adat    |
+				\end{lstlisting}
+			\end{itemize}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\lstset{
+	language=python,
+	basicstyle=\ttfamily\scriptsize, % Basic font style
+	keywordstyle=\bfseries\color{blue}, % Keywords in bold and blue
+	stringstyle=\color{red}, % Strings in red
+	commentstyle=\color{green!50!black}, % Comments in green
+	showstringspaces=false, % Do not show spaces in strings
+	numbers=left, % Line numbers on the left
+	numberstyle=\tiny\color{gray}, % Line number style
+	stepnumber=1, % Line number step
+	numbersep=5pt, % Distance of line numbers from code
+	frame=single, % Frame around the code
+	rulecolor=\color{black}, % Frame color
+	tabsize=2, % Tab size
+	breaklines=true, % Automatic line breaking
+	breakatwhitespace=false, % Break lines at whitespace
+	captionpos=b, % Caption position
+	escapeinside={\%*}{*)}, % Escape to LaTeX
+	morekeywords={self}, % Additional keywords
+	literate={á}{{\'a}}1
+	{é}{{\'e}}1
+	{í}{{\'i}}1
+	{ó}{{\'o}}1
+	{ú}{{\'u}}1
+	{ő}{{\H{o}}}1
+	{ű}{{\H{u}}}1
+	{Á}{{\'A}}1
+	{É}{{\'E}}1
+	{Í}{{\'I}}1	
+	{Ó}{{\'O}}1	
+	{Ú}{{\'U}}1
+	{Ő}{{\H{O}}}1
+	{Ű}{{\H{U}}}1
+	{Ö}{{\"O}}1
+	{Ü}{{\"U}}1
+	{ö}{{\"o}}1
+	{ü}{{\"u}}1
+}
+
+\begin{frame}[fragile]{\texttt{dcc.Markdown} komponensek}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			Dash keretrendszer alatt \texttt{dcc.Markdown} komponenseket lehetséges definiálni. Ezeket callback függvények segítségével dinamikusan lehet frissíteni.\par\smallskip
+			Markdown komponens létrehozása:
+			\begin{lstlisting}[language=python]
+dcc.Markdown(
+	id='indicator_map_details_md',
+	style={'backgroundColor': '#E5ECF6'})				
+			\end{lstlisting}
+			Callback dekorátor:
+			\begin{lstlisting}[language=python]
+@app.callback(
+	Output('indicator_map_chart', 'figure'),
+	Output('indicator_map_details_md', 'children'),
+	Input('indicator_dropdown', 'value'))
+			\end{lstlisting}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{lstlisting}[language=python]
+				
 			\end{lstlisting}
 		\end{column}
 	\end{columns}

@@ -1,13 +1,8 @@
 import os
-import warnings
 import map_app_v2
 import pandas as pd
-import plotly.express as px
-from pandas_datareader import wb
 import dash_bootstrap_components as dbc
-from map_app_v1 import multiline_indicator
-from dash import Dash, dcc, html, Input, Output, State
-from map_app_v2 import countries, indicators, update_wb_data
+from dash import Dash, dcc, html, Input, Output
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 series = pd.read_csv(os.path.join(current_dir, '../../data/PovStatsSeries.csv'), low_memory=False)

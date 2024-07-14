@@ -47,7 +47,7 @@ app.layout = dbc.Container(
                         "A Világbank országadatainak összehasonlítása",
                         style={"textAlign": "center"},
                     ),
-                    dcc.Graph(id="my-choropleth", figure={}),
+                    dcc.Graph(id="choropleth_map", figure={}),
                 ],
                 width=12,
             )
@@ -61,7 +61,7 @@ app.layout = dbc.Container(
                         style={"textDecoration": "underline", "fontSize": 20},
                     ),
                     dcc.RadioItems(
-                        id="radio-indicator",
+                        id="radio_indicator",
                         options=[{"label": i, "value": i} for i in indicators.values()],
                         value=list(indicators.values())[0],
                         inputClassName="me-2",
@@ -80,7 +80,7 @@ app.layout = dbc.Container(
                             style={"textDecoration": "underline", "fontSize": 20},
                         ),
                         dcc.RangeSlider(
-                            id="years-range",
+                            id="years_range",
                             min=2005,
                             max=2016,
                             step=1,
@@ -101,7 +101,7 @@ app.layout = dbc.Container(
                             },
                         ),
                         dbc.Button(
-                            id="my-button",
+                            id="filter_button",
                             children="Szűrés",
                             n_clicks=0,
                             color="primary",
@@ -137,11 +137,11 @@ def register_callbacks(param_app):
         return dataframe.to_dict("records")
 
     @param_app.callback(
-        Output("my-choropleth", "figure"),
-        Input("my-button", "n_clicks"),
+        Output("choropleth_map", "figure"),
+        Input("filter_button", "n_clicks"),
         Input("storage", "data"),
-        State("years-range", "value"),
-        State("radio-indicator", "value"),
+        State("years_range", "value"),
+        State("radio_indicator", "value"),
     )
     def update_graph(_, stored_dataframe, years_chosen, indct_chosen):
         dff = pd.DataFrame.from_records(stored_dataframe)

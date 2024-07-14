@@ -599,6 +599,80 @@ def update_output(n):
 	\end{columns}
 \end{frame}
 
+\section{Pontdiagramok térképekkel}
+
+\begin{frame}{}
+	\tableofcontents[currentsection]
+\end{frame}
+
+\begin{frame}{Térkép projekciók}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			\only<1>{
+				A térkép projekció egy matematikai módszer melynek feladata, hogy a Föld gömbölyű felületét egy síkra vetítse.\par\smallskip
+				A folyamat során szükségszerűen torzulások keletkeznek.				
+			}
+			\only<2-4>{
+				\begin{itemize}
+					\item \textbf{Equirectangular}: A legegyszerűbb projekció, ahol a földrajzi szélesség és hosszúság egyenesen arányosan van ábrázolva a síkon.
+					\item \textbf{Mercator}: Szögtartó, tehát a szögek és az irányok helyesek maradnak, így hasznos a navigációban.
+					\item \textbf{Orthographic}: Háromdimenziós gömböt ábrázol síkban úgy, mintha egy távoli pontból néznénk.
+					\item \textbf{Sinusoidal}: Ez az egyenlő területű projekció, amely megőrzi a területek arányait.
+				\end{itemize}
+			}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{center}
+				\includegraphics<1>[width=7cm, height=7cm, keepaspectratio]{images/scatter_25}
+				\includegraphics<2>[width=7cm, height=7cm, keepaspectratio]{images/scatter_26}
+				\includegraphics<3>[width=7cm, height=7cm, keepaspectratio]{images/scatter_27}
+				\includegraphics<4>[width=7cm, height=7cm, keepaspectratio]{images/scatter_28}
+			\end{center}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Pontdiagramok térképekkel}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			A plotly könyvtár alapértelmezetten támogatja az ISO-alpha3 országkódok pontos pozíciójának ábrázolását, ezért amikor paraméterül megkapja a \texttt{locations='Country Code'} értéket innen ki tudja olvasni az adott ország hosszúsági és szélességi koordinátáit.\par\smallskip
+			\begin{lstlisting}[language=python]
+df = poverty[poverty['year'].eq(2010) & poverty['is_country']]
+fig = px.scatter_geo(df, locations='Country Code')				
+			\end{lstlisting}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{center}
+				\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/scatter_29.png}
+			\end{center}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{\texttt{Mapbox} térképek}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			A \texttt{zoom} paraméter állításával lehetséges ráközelíteni a diagramra, a \texttt{center} paraméter a közelítés központját adja meg, és a \texttt{mapbox\_style} pedig a térképstílust.\par\medskip
+			\begin{lstlisting}[language=python]
+px.scatter_mapbox(
+	lon=[5, 10, 15, 20],
+	lat=[10, 7, 18, 5],
+	zoom=2,
+	center={'lon': 5, 'lat': 10},
+	size=[5]*4,
+	color_discrete_sequence=['darkred'],
+	mapbox_style='stamen-watercolor'
+)				
+			\end{lstlisting}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{center}
+				\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/scatter_30.png}
+			\end{center}
+		\end{column}
+	\end{columns}
+\end{frame}
+
 \section{Markdown}
 
 \begin{frame}{}
@@ -670,7 +744,7 @@ def update_output(n):
 				\end{lstlisting}
 				\item Linkek:
 				\begin{lstlisting}[language=python]
-[Link szőveg](URL)
+[Link szöveg](URL)
 				\end{lstlisting}
 				\item Képek:
 				\begin{lstlisting}[language=python]
@@ -744,7 +818,7 @@ def update_output(n):
 	{ü}{{\"u}}1
 }
 
-\begin{frame}[fragile]{\texttt{dcc.Markdown} komponensek}
+\begin{frame}[fragile]{\texttt{dcc.Markdown} komponensek frissítése callback függvénnyel}
 	\begin{columns}
 		\begin{column}{.5\textwidth}
 			Dash keretrendszer alatt \texttt{dcc.Markdown} komponenseket lehetséges definiálni. Ezeket callback függvények segítségével dinamikusan lehet frissíteni.\par\smallskip
@@ -764,10 +838,28 @@ dcc.Markdown(
 		\end{column}
 		\begin{column}{.5\textwidth}
 			\begin{lstlisting}[language=python]
-				
+def update(indicator):
+	...
+	markdown = f"""
+	---
+	## {series_df['Indicator Name'].values[0]}
+	{series_df['Long definition'].values[0]}
+	* **Mértékegység:** {series_df['Unit of measure'].fillna('count').values[0]}
+	* **Periodicitás:** {series_df['Periodicity'].fillna('N/A').values[0]}
+	* **Forrás:** {series_df['Source'].values[0]}
+	### Limitációk és kivételek: 
+	{limitations}
+	"""
+	return markdown				
 			\end{lstlisting}
 		\end{column}
 	\end{columns}
+\end{frame}
+
+\begin{frame}{Alkalmazás térképpel és \texttt{Markdown} komponenssel (\texttt{app\_v3\_3.py})}
+	\begin{center}
+		\includegraphics[width=10cm, height=7cm, keepaspectratio]{images/scatter_32.png}
+	\end{center}
 \end{frame}
 
 \end{document}

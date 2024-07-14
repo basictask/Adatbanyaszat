@@ -40,7 +40,7 @@ app.layout = html.Div([
     Output('indicator_map_chart', 'figure'),
     Input('indicator_dropdown', 'value')
 )
-def display_generic_map_chart(indicator_name):
+def display_map_chart(indicator_name):
     """
     Callback függvény a térkép komponens megjelenítéséhez
     """

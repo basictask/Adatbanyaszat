@@ -87,19 +87,24 @@ app.layout = html.Div([
                 options=[{'label': year, 'value': year} for year in gini_df['year'].drop_duplicates().sort_values()]
             ),
             html.Br(),
-            dcc.Graph(id='gini_year_barchart',
-                      figure=make_empty_fig())
+            dcc.Graph(
+                id='gini_year_barchart',
+                figure=make_empty_fig()
+            )
         ], md=12, lg=5),
         dbc.Col([
             dbc.Label('Országok'),
-            dcc.Dropdown(id='gini_country_dropdown',
-                         placeholder='Válasszon egy vagy több országot',
-                         multi=True,
-                         options=[{'label': country, 'value': country}
-                                  for country in gini_df['Country Name'].unique()]),
+            dcc.Dropdown(
+                id='gini_country_dropdown',
+                placeholder='Válasszon egy vagy több országot',
+                multi=True,
+                options=[{'label': country, 'value': country} for country in gini_df['Country Name'].unique()]
+            ),
             html.Br(),
-            dcc.Graph(id='gini_country_barchart',
-                      figure=make_empty_fig())
+            dcc.Graph(
+                id='gini_country_barchart',
+                figure=make_empty_fig()
+            )
         ], md=12, lg=5),
     ]),
     dbc.Row([

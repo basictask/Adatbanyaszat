@@ -31,7 +31,8 @@ app.layout = html.Div([
             html.Br(),
             dcc.Dropdown(
                 id='income_share_country_dropdown',
-                options=[{'label': country, 'value': country} for country in income_share_df['Country Name'].unique()]),
+                options=[{'label': country, 'value': country} for country in income_share_df['Country Name'].unique()]
+            ),
             dcc.Graph(id='income_share_country_barchart')
         ], lg=10)
     ]),

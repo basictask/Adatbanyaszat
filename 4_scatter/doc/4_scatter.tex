@@ -391,6 +391,12 @@ marks={
 	\end{columns}
 \end{frame}
 
+\begin{frame}{Csúszkák beépítése az alkalmazásba (\texttt{app\_v3\_2.py})}
+	\begin{center}
+		\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/scatter_34.png}
+	\end{center}
+\end{frame}
+
 \section{Tematikus térképek}
 
 \begin{frame}{}
@@ -852,6 +858,20 @@ def update(indicator):
 	"""
 	return markdown				
 			\end{lstlisting}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{\texttt{Markdown} komponens beépítése a térkép alkalmazásba (\texttt{map\_app\_v3.py})}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			Egy legördülő menü segítségével választható az indikátor neve. Az állapot változása elindít egy callback függvényt, ami kiolvassa az indikátornak megfelelő információt egy adatfájlból.\par\medskip
+			A kiolvasott tartalmat az alkalmazás Markdown formátumban jeleníti meg.
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{center}
+				\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/scatter_33.png}
+			\end{center}
 		\end{column}
 	\end{columns}
 \end{frame}

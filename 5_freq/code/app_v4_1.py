@@ -94,7 +94,6 @@ app.layout = html.Div([
     dbc.Col([
         html.H1('Szegénység és Egyenlőség Adatbázis'),
         html.H2('A Világbank'),
-
     ], style={'textAlign': 'center'}),
     html.Br(),
     dbc.Row([
@@ -280,10 +279,10 @@ app.layout = html.Div([
                 step=5,
                 marks={x: str(x) for x in range(0, 105, 5)}
             ),
+            dcc.Graph(id='indicator_year_histogram'),
         ])
     ]),
     html.Div(style={'height': '20px'}),
-    dcc.Graph(id='indicator_year_histogram'),
     dcc.Store(id="storage", storage_type="session", data={}),
     dcc.Interval(id="timer", interval=1000 * 60, n_intervals=0),
     html.Div(style={'height': '20px'}),
@@ -476,7 +475,7 @@ def update_map(years_chosen, indct_chosen, stored_dataframe):
     print(years_chosen)
 
     if years_chosen[0] != years_chosen[1]:
-        dff = dff[dff.year.between(years_chosen[0], years_chosen[1])]
+        dff = dff[dff.year.between(years_chosen[0], years_chosen[1])].copy()
         dff[indct_chosen + '_mean'] = dff.groupby(["iso3c", "country"])[indct_chosen].transform('mean')
         dff = dff.reset_index()
 

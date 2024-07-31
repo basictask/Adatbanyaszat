@@ -230,6 +230,29 @@ fig.show()
 	\end{columns}
 \end{frame}
 
+\begin{frame}[fragile]{Hisztogramok több dimenzióban}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			\begin{block}{2D hisztogram}
+				Két dimenzióban osztja fel az adatokat, és minden cella (osztályköz) azt mutatja meg, hogy hány adatpont esik az adott tartományba mindkét változó esetében. 
+			\end{block}
+			\begin{lstlisting}[language=python]
+fig = go.Figure()
+fig.add_histogram2d(
+	x=df['Income share held by fourth 20%'],
+	y=df['GINI index (World Bank estimate)'],
+	colorscale='cividis'
+)
+			\end{lstlisting}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{center}
+				\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/freq_11.png}
+			\end{center}
+		\end{column}
+	\end{columns}
+\end{frame}
+
 \begin{frame}{Alkalmazás interaktív hisztogramokkal (\texttt{freq\_app\_v1.py})}
 	\begin{columns}
 		\begin{column}{.5\textwidth}
@@ -239,6 +262,253 @@ fig.show()
 		\begin{column}{.5\textwidth}
 			\begin{center}
 				\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/freq_9.png}
+			\end{center}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Interaktív hisztogramok beépítése az alkalmazásba (\texttt{app\_v4\_1.py})}
+	\begin{center}
+		\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/freq_10.png}
+	\end{center}
+\end{frame}
+
+\section{Adattáblák}
+
+\begin{frame}{}
+	\tableofcontents[currentsection]
+\end{frame}
+
+\begin{frame}[fragile]{Adattábla létrehozása}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			A Dash keretrendszerben interaktív táblázatokat a \texttt{dash\_table} könyvtárral lehet létrehozni.\par\medskip
+			\begin{lstlisting}[language=python]
+from dash import html, dash_table
+
+app.layout = html.Div([
+	...
+	dash_table.DataTable(
+		data=pov_df.to_dict('records'),
+		columns=[{'name': col, 'id': col} for col in pov_df.columns]
+	)
+	...
+])
+
+			\end{lstlisting}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{center}
+				\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/freq_12.png}
+			\end{center}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Adattábla személyre szabása}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			\begin{lstlisting}[language=python]
+dash_table.DataTable(
+	data=pov_df.to_dict('records'),
+	columns=[{'name': col, 'id': col} for col in pov_df.columns],
+	style_header={'whiteSpace': 'normal'},
+	fixed_rows={'headers': True},
+	style_table={'height': '400px'},
+	virtualization=True,   
+)
+			\end{lstlisting}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{center}
+				\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/freq_13.png}
+			\end{center}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\section{Gépi tanulás}
+
+\begin{frame}{}
+	\tableofcontents[currentsection]
+\end{frame}
+
+\begin{frame}{$K$-közép klaszterezés}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			Az algoritmus eljárása:
+			\begin{enumerate}
+				\item $K$ számú klaszter centroid inicializálása véletlenszerűen: $\mu_1, \mu_2, \ldots, \mu_K$
+				\item Minden $x_i$ adatpont a hozzá legközelebb eső klaszterhez rendelése az euklideszi távolságot használva: $c_i = \arg\min_{j} \left\| x_i - \mu_j \right\|^2$
+				\item Klaszterközéppontok újraszámítása úgy, hogy az adott klaszterhez tartozó pontok várható értékét tükrözzék: $\mu_j = \frac{1}{|C_j|} \sum_{x_i \in C_j} x_i$
+				\item Ismétlés a kilépési kritériumig
+			\end{enumerate}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{center}
+				\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/freq_14.png}
+			\end{center}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Optimális klaszterszám megtalálása}
+	Egy klaszter konfiguráció annál jobb, minél szorosabban helyezkednek el az egy klaszterben lévő egyedek, és minél jobban elkülönülnek a más klaszterben lévő egyedektől. Ezt tükrözi a sziluett együttható:
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			\begin{block}{Sziluett}
+				\[
+				S(x) \in \left[ -1, 1 \right]= \frac{a(x) - b(x)}{max\{ a(x), b(x)\}}
+				\]
+				Ahol:
+				\begin{itemize}
+					\item $a(x)$: $x$ mintaegyed és minden vele nem egy klaszterben lévő mintaegyed távolsága
+					\item $b(x)$: $x$ mintaegyed és minden vele egy klaszterben lévő mintaegyed távolsága
+				\end{itemize}
+			\end{block}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{center}
+				\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/freq_15.png}
+			\end{center}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{\texttt{Scikit-learn} $K$-közép }
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			$K$-közép modul importálása és tanítása a \texttt{make\_blobs} adathalmazon:
+			\begin{lstlisting}[language=python]
+from sklearn.cluster import KMeans
+
+kmeans = KMeans(n_clusters=n_clusters, random_state=random_state)
+kmeans.fit(X)
+
+labels = kmeans.labels_
+centroids = kmeans.cluster_centers_
+			\end{lstlisting}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			Klaszter centroidok $x$ és $y$ koordinátái:
+			\begin{lstlisting}[language=python]
+ In [1]: print(kmeans.cluster_centers_)
+Out [1]: [[-2.70981136  8.97143336]
+[-6.83235205 -6.83045748]
+[ 4.7182049   2.04179676]
+[-8.87357218  7.17458342]]
+			\end{lstlisting}
+			\par\medskip
+			Becsült címkék az adathalmaz első 10 elemére:
+			\begin{lstlisting}[language=python]
+ In [2]: print(kmeans.labels_)
+Out [2]: [3 3 0 1 3 1 2 1 0 2]
+			\end{lstlisting}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Országok klaszterezése}
+	A következő program az országokat 5 klaszterbe sorolja be, majd ennek a kimenetét felhasználva hoz létre egy tematikus térképet:\par\smallskip
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			\begin{lstlisting}[language=python]
+year = 2018
+indicators = ['Population, total']
+kmeans = KMeans(n_clusters=5)
+df = poverty[poverty['year'].eq(year) & poverty['is_country']]
+data = df[indicators].values
+kmeans.fit(data)
+
+fig = px.choropleth(
+	df,
+	locations='Country Name',
+	locationmode='country names',
+	color=[str(x) for x in kmeans.labels_]
+)	
+			\end{lstlisting}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{center}
+				\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/freq_16.png}
+			\end{center}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Hiányzó értékek kezelése}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			Az \texttt{sklearn.impute.SimpleImputer} lehetővé teszi a hiányzó értékek pótlását különböző stratégiák alkalmazásával. Néhány gyakori stratégia:
+			\begin{itemize}
+				\item \texttt{mean} (átlag): A hiányzó értékeket az adott oszlop átlagával helyettesíti
+				\item \texttt{median} (medián): A hiányzó értékeket az adott oszlop mediánjával helyettesíti
+				\item \texttt{most\_frequent} (leggyakoribb): A hiányzó értékeket az adott oszlop leggyakoribb értékével
+				\item \texttt{constant} (állandó): Egy megadott állandó értékkel helyettesíti a hiányzó értékeket.
+			\end{itemize}			
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\texttt{SimpleImputer}  használata:
+			\begin{lstlisting}[language=python]
+from sklearn.impute import SimpleImputer
+
+data = np.array([1, 2, 1, 2, np.nan]).reshape(-1, 1)
+imp = SimpleImputer(strategy='mean')
+imp.fit(data)
+
+print(imp.transform(data))
+			\end{lstlisting}
+			\begin{lstlisting}[language=python]
+[[1. ]
+[2. ]
+[1. ]
+[2. ]
+[1.5]]
+			\end{lstlisting}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Adatok méretezése}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			\begin{lstlisting}[language=python]
+from sklearn.preprocessing import StandardScaler
+
+data = np.array([1, 2, 3, 4, 5]).reshape(-1, 1)
+
+scaler = StandardScaler()
+print(scaler.fit_transform(data))
+			\end{lstlisting}
+			\begin{lstlisting}[language=python]
+[[-1.41421356]
+[-0.70710678]
+[ 0.        ]
+[ 0.70710678]
+[ 1.41421356]]
+			\end{lstlisting}            
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{block}{Méretezés}
+				Adat előkészítési technika, mely során az adatok értékei egy adott tartományba transzformálódnak.
+			\end{block}
+			\begin{center}
+				\only<1>{\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/freq_17.png}}
+				\only<2>{\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/freq_18.png}}
+			\end{center}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Alkalmazás interaktív térképpel, K-közép klaszterezéssel (\texttt{kmeans\_app.py})}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			A callback függvény frissíti a térképet a kiválasztott év, klaszterszám és indikátor alapján.\par\smallskip
+			A hiányzó értékeket az átlaggal pótolja, majd az adatokat skálázza. A K-Közép algoritmust alkalmazza a transzformált adatokra, és a klaszterszámot a rendelkezésre álló adatok alapján korlátozza. Végül létrehozza a térképet, ahol az országokat a klaszter címkék alapján színezi, és finomhangolja a megjelenést.
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{center}
+				\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/freq_19.png}
 			\end{center}
 		\end{column}
 	\end{columns}

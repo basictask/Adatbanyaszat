@@ -4,10 +4,10 @@ import dash
 import warnings
 import numpy as np
 import pandas as pd
+from dash import html, dcc
 import plotly.express as px
 from pandas_datareader import wb
 import plotly.graph_objects as go
-from dash import html, dcc, no_update
 import dash_bootstrap_components as dbc
 from dash.exceptions import PreventUpdate
 from dash.dependencies import Output, Input, State
@@ -537,7 +537,7 @@ def update_map(years_chosen, indct_chosen, stored_dataframe):
     print(years_chosen)
 
     if years_chosen[0] != years_chosen[1]:
-        dff = dff[dff.year.between(years_chosen[0], years_chosen[1])].copy()
+        dff = dff[dff["year"].between(years_chosen[0], years_chosen[1])].copy()
         dff[indct_chosen + '_mean'] = dff.groupby(["iso3c", "country"])[indct_chosen].transform('mean')
         dff = dff.reset_index()
 

@@ -136,3 +136,5 @@ Werkzeug==3.0.3
 wheel==0.43.0
 zipp==3.19.2
 zstandard==0.22.0
+
+pandas-datareader~=0.10.0

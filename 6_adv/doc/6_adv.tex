@@ -244,6 +244,259 @@ def create_population_chart(country):
 	\end{columns}
 \end{frame}
 
+\begin{frame}{Az alkalmazás callback gráfja}
+	A felső gráf megegyezik az alkalmazás előző verziójában látottakkal. Az alsó gráfon a \texttt{MATCH} jelzi, hogy csak a megfelelő indexű komponenseket frissítse.\par\medskip
+	\begin{center}
+		\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/adv_4.png}
+	\end{center}
+	\par\medskip
+	A \texttt{MATCH} mellett az \texttt{ALL} használható minden komponens nevének illesztésére, az \texttt{ALLSMALLER} pedig azokra a komponensekre, amelyek a callback függvény indulása előtt lettek létrehozva.
+\end{frame}
+
+\section{URL manipuláció}
+
+\begin{frame}
+	\tableofcontents[currentsection]
+\end{frame}
+
+\begin{frame}[fragile]{\texttt{Location} és \texttt{Link} komponensek (\texttt{multi\_app\_v1.py})}
+	Dash keretrendszerben a \texttt{Location} és \texttt{Link} komponensek az útválasztás fontos elemei, melyek lehetővé teszik az URL kezelést és a navigációt. 
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			\only<1>{
+				\begin{block}{\texttt{Location}}
+					A Dash alkalmazásban történő kezelésére szolgál. A \texttt{Location} komponens adatai közvetlenül a böngésző URL-jéből származnak, és az alkalmazásban történő változásokat közvetlenül a böngésző URL-jébe írja vissza.
+				\end{block}
+			}
+			\only<2>{
+				\begin{block}{\texttt{Link}}
+					A \texttt{Link} komponens egy hiperhivatkozást hoz létre a Dash alkalmazásban. Fontosabb attribútumai:
+					\begin{itemize}
+						\item \texttt{href}: Meghatározza a hivatkozás URL-jét
+						\item \texttt{target}: Megadja, hogy a hivatkozást az aktuális vagy új ablakban kell-e megnyitni
+						\item \texttt{refresh}: Ha igaz, akkor az URL megnyitásakor frissül az oldal
+					\end{itemize}
+				\end{block}
+			}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{center}
+				\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/adv_5.png}
+			\end{center}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{\texttt{Location} és \texttt{Link} komponensek (\texttt{multi\_app\_v2.py})}
+	Az alkalmazás a \texttt{Link} komponens felhasználásával megváltoztatja az URL-t és a \texttt{Location} komponens segítségével pedig kivonatol tetszőleges attribútumokat.
+	\begin{columns}
+		\begin{column}{.6\textwidth}
+			\begin{lstlisting}[language=python]
+app.layout = html.Div([
+	dcc.Location(id='location', refresh=False),
+	html.A(href='/path', children='Mappába navigálás'),
+	dcc.Link(href='/path/search?one=1&two=2', children='Keresés indítása'),
+	dcc.Link(href='/path/?hello=HELLO#hash_string', children='Hash alapú oldalra navigálás'),
+	html.H4("URL tulajdonságai:"),
+	html.Div(id='location_output')
+])
+			\end{lstlisting}
+		\end{column}
+		\begin{column}{.4\textwidth}
+			\begin{center}
+				\includegraphics[width=6cm, height=7cm, keepaspectratio]{images/adv_6.png}
+			\end{center}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{\texttt{Location} és \texttt{Link} komponensek (\texttt{multi\_app\_v2.py})}
+	A callback függvény bemenetében a \texttt{Location} több paramétere található, és a formázást megőrző \texttt{html.Pre} majd kiíratódnak a \texttt{Div} tárolóra. 
+	\begin{columns}
+		\begin{column}{.6\textwidth}
+			\begin{lstlisting}[language=python]
+@app.callback(
+	Output('location_output', 'children'),
+	Input('location', 'pathname'),
+	Input('location', 'search'),
+	Input('location', 'href'),
+	Input('location', 'hash'),
+)
+def show_url(pathname, search, href, hash):
+	return html.Div([
+		html.Pre([
+			f"""href: {href}
+			path: {pathname}
+			search: {search}
+			hash: {hash}"""
+		])
+	])
+			\end{lstlisting}
+		\end{column}
+		\begin{column}{.4\textwidth}
+			\begin{center}
+				\includegraphics[width=6cm, height=7cm, keepaspectratio]{images/adv_6.png}
+			\end{center}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\section{Többlapos alkalmazások}
+
+\begin{frame}{}
+	\tableofcontents[currentsection]
+\end{frame}
+
+\begin{frame}[fragile]{Többlapos alkalmazások struktúrája}
+	Többlapos alkalmazások esetén az elrendezés csontvázát egy fő elrendezés komponens adja, amelyben egy üres \texttt{Div} található. A \texttt{Div} tartalma attól függően fog változni, hogy a felhasználó milyen oldalra navigál az alkalmazáson belül. 
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			\begin{enumerate}
+				\item Importok (boilerplate):
+					\begin{lstlisting}[language=python]
+import dash
+from dash import dcc
+...
+					\end{lstlisting}
+				\item Alkalmazás példányosítása:
+					\begin{lstlisting}[language=python]
+app = dash.Dash(__name__)
+					\end{lstlisting}
+				\item Alkalmazás elrendezése:
+					\begin{lstlisting}[language=python]
+app.layout = html.Div([
+	...
+])
+					\end{lstlisting}
+			\end{enumerate}			
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{enumerate}
+				\setcounter{enumi}{3}
+				\item Callback függvények:
+					\begin{lstlisting}[language=python]
+@app.callback()
+	...
+@app.callback()
+	...
+					\end{lstlisting}
+				\item Alkalmazás futtatása:
+					\begin{lstlisting}[language=python]
+if __name__ = '__main__':
+	app.run_server(debug=True)
+					\end{lstlisting}
+			\end{enumerate}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Többlapos alkalmazás: fő elrendezés}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			Ez a komponens szolgál az alkalmazás csontvázaként.\par\medskip
+			Tartalmaz egy \texttt{NavbarSimple} navigációs sávot és az országokat tartalmazó legördülő menüt. Az elrendezés még magában foglalja a lapos elrendezést az oldal alján.\par\medskip
+			A lap törzse tartalmaz egy \texttt{Location} komponenst és egy üres \texttt{Div} objektumot, ami majd az elrendezést fogja tartalmazni.
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{lstlisting}[language=python]
+main_layout = html.Div([
+	dbc.NavbarSimple([
+		...
+	]),
+	dcc.Location(id='location'),
+	html.Div(
+		id='main_content',
+		children=[...],
+	),
+	dbc.Tabs([
+		...
+	]),
+])
+
+...
+
+app.layout = main_layout
+			\end{lstlisting}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Többlapos alkalmazás: Indikátorok műszerfala}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			Ez az az elrendezés komponens, ami az eddigi alkalmazásokban került fejlesztésre. Azzal a különbséggel, hogy egy új változóba kerül elmentésre, és átadódik a \texttt{main\_content} \texttt{Div} komponensnek, ha a megfelelő feltételek teljesülnek (az URL nem tartalmaz egy országnevet).
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{lstlisting}[language=python]
+indicators_dashboard = html.Div([
+	# Minden eddigi komponens
+])
+			\end{lstlisting}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Többlapos alkalmazás: Országok műszerfala}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			Ez a komponens is egy külön változóba kerül elmentésre, és akkor jelenítődik meg, amikor az URL tartalmaz egy országnevet. Ebben a komponensben az elrendezés (grafikon és táblázat) az URL-ben szereplő országnévtől függően változhat. 
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{lstlisting}[language=python]
+country_dashboard = html.Div([
+	html.H1(id='country_heading'),
+	dcc.Graph(id='country_page_graph'),
+	dcc.Dropdown(id='country_page_indicator_dropdown'),
+	dcc.Dropdown(id='country_page_contry_dropdown'),
+	html.Div(id='country_table')
+])
+			\end{lstlisting}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Többlapos alkalmazás: Validációs elrendezés}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			Ez a komponens egy egyszerű lista egy Dash komponens formájában, ami az előző három elrendezést tartalmazza.\par\smallskip 
+			Ennek a jelentősége, hogy megadja az alkalmazás számára, hogy milyen elrendezések érhetőek el a számára. Amikor az alkalmazás csak egy elrendezésből jelenít meg komponenseket és a többiből nem, némely komponensek nem lesznek az alkalmazás része, és néhány callback függvény eltörik.\par\smallskip
+			A validációs elrendezés egy egyszerű módszert ad az alkalmazás egésze számára elérhető elrendezések kezelésére. 
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{lstlisting}[language=python]
+app.validation_layout = html.Div([
+	main_layout,
+	indicators_dashboard,
+	country_dashboard,
+])
+			\end{lstlisting}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Tartalom megjelenítése az URL-től függően}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			A következő callback függvény ellenőrzi, hogy a \texttt{Location} komponens egyike-e az elérhető országoknak vagy sem. Ha igen, visszatéríti a \texttt{country\_dashboard} elrendezést, egyébként pedig az \texttt{indicators\_layout} elrendezést. 
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{lstlisting}[language=python]
+countries = poverty[poverty['is_country']]['Country Name'].drop_duplicates().sort_values().tolist()
+...
+@app.callback(
+	Output('main_content', 'children'),
+	Input('location', 'pathname')
+)
+def display_content(pathname):
+if unquote(pathname[1:]) in countries:
+	return country_dashboard
+else:ar
+	return indicators_dashboard
+			\end{lstlisting}
+		\end{column}
+	\end{columns}
+\end{frame}
+
 \end{document}
 
 

@@ -1,6 +1,6 @@
 # Budapesti Gazdasági Egyetem 
 ## Adatbányászat a Gyakorlatban
-Adatbányászat és gépi tanulási algoritmusok alkalmazása
+Adatalapú alkalmazások és mesterséges intelligencia
 
 ## Feldolgozott témák a kurzus alatt
 1. Verziókezelés és Git
@@ -8,14 +8,12 @@ Adatbányászat és gépi tanulási algoritmusok alkalmazása
 3. Diagramok létrehozása Dash alatt
 4. Pontszórási diagramok, interaktív térképek
 5. Gyakorisági adatok, dinamikus komponensek, gépi tanulás
-6. Felhasználói komponensek, többlapos műszerfalak, alkalmazás telepítése  
-ZH
+6. Felhasználói komponensek, többlapos műszerfalak, alkalmazás telepítése
 7. Bevezetés a mesterséges mélytanulásba
 8. Objektum detekció
 9. Egyed szegmentáicó
 10. Visszacsatolásos neurális hálózatok
-11. Transzformáló archtiketkúrák  
-ZH
+11. Transzformáló archtiketkúrák
 
 ## Környezet telepítése
 ### Órai anyagok letöltése

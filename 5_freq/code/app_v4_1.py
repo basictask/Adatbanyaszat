@@ -3,10 +3,10 @@ import re
 import dash
 import warnings
 import pandas as pd
-from dash import html, dcc
 import plotly.express as px
 from pandas_datareader import wb
 import plotly.graph_objects as go
+from dash import html, dcc, no_update
 import dash_bootstrap_components as dbc
 from dash.exceptions import PreventUpdate
 from dash.dependencies import Output, Input, State
@@ -472,6 +472,8 @@ def store_data(_):
 )
 def update_map(years_chosen, indct_chosen, stored_dataframe):
     dff = pd.DataFrame.from_records(stored_dataframe)
+    if len(dff) == 0:
+        return no_update
     print(years_chosen)
 
     if years_chosen[0] != years_chosen[1]:

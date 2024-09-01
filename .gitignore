@@ -12,6 +12,7 @@ elemzesmodszertan_merged.pdf
 .idea
 *pytxcode
 scratchpad.py
+widgets.qss
 
 # LaTeX
 *.aux

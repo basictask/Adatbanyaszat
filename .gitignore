@@ -13,6 +13,25 @@ elemzesmodszertan_merged.pdf
 *pytxcode
 scratchpad.py
 widgets.qss
+7_dl/code/data/imagenette-160
+7_dl/code/imagenette-160.tgz
+8_od/code/images/
+7_dl/code/data/
+7_dl/code/runs/
+8_od/code/coco128
+9_instance/code/OneFormer/*
+9_instance/code/data
+9_instance/code/oneformer/
+10_recurrent/code/training_checkpoints/*
+10_recurrent/code/training_checkpoints
+11_transformer/code/distilbert-imdb
+11_transformer/code/fine_tuned_model
+11_transformer/code/logs
+11_transformer/code/results
+11_transformer/code/wandb
+11_transformer/code/gpt2-finetuned
+widgets.qss
+
 
 # LaTeX
 *.aux

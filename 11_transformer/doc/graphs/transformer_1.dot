@@ -1,0 +1,63 @@
+digraph transformer {
+    graph [dpi=300]
+    rankdir = "BT"
+    splines="false"
+
+    encoder_in1 [label="Hogy", shape="plaintext", fontsize=20]
+    encoder_in2 [label="vagy", shape="plaintext", fontsize=20]
+    encoder_in3 [label="ma", shape="plaintext", fontsize=20]
+    encoder_in4 [label="?", shape="plaintext", fontsize=20]
+
+    embed1 [label="beágyazás", shape="rectangle", style="filled", fillcolor="darkgoldenrod1"]
+    embed2 [label="beágyazás", shape="rectangle", style="filled", fillcolor="darkgoldenrod1"]
+    embed3 [label="beágyazás", shape="rectangle", style="filled", fillcolor="darkgoldenrod1"]
+    embed4 [label="beágyazás", shape="rectangle", style="filled", fillcolor="darkgoldenrod1"]        
+    
+    rnn1 [label="RNN", shape="rectangle", style="filled", fillcolor="lawngreen"]
+    rnn2 [label="RNN", shape="rectangle", style="filled", fillcolor="lawngreen"]
+    rnn3 [label="RNN", shape="rectangle", style="filled", fillcolor="lawngreen"]
+    rnn4 [label="RNN", shape="rectangle", style="filled", fillcolor="lawngreen"]
+
+    decoder_in1 [label="<NULL>", shape="plaintext", fontsize=20]
+    decoder_in2 [label="Köszi", shape="plaintext", fontsize=20]
+    decoder_in3 [label="jól", shape="plaintext", fontsize=20] 
+    
+    rnn5 [label="RNN", shape="rectangle", style="filled", fillcolor="lightblue"]
+    rnn6 [label="RNN", shape="rectangle", style="filled", fillcolor="lightblue"]
+    rnn7 [label="RNN", shape="rectangle", style="filled", fillcolor="lightblue"]
+    
+    output1 [label="Köszi", shape="plaintext", fontsize=20]
+    output2 [label="jól", shape="plaintext", fontsize=20]
+    output3 [label="vagyok", shape="plaintext", fontsize=20]
+
+    {rank="same"; embed1; embed2; embed3; embed4; decoder_in1; decoder_in2; decoder_in3;}
+    {rank="same"; rnn1; rnn2; rnn3; rnn4; rnn5; rnn6; rnn7;}
+
+    encoder_in1 -> embed1
+    encoder_in2 -> embed2
+    encoder_in3 -> embed3
+    encoder_in4 -> embed4
+
+    embed1 -> rnn1
+    embed2 -> rnn2
+    embed3 -> rnn3
+    embed4 -> rnn4
+
+    rnn5 -> output1
+    rnn6 -> output2
+    rnn7 -> output3
+
+    decoder_in1 -> rnn5
+    decoder_in2 -> rnn6
+    decoder_in3 -> rnn7
+
+    output1 -> decoder_in2 [constraint="false", style="dashed"]
+    output2 -> decoder_in3 [constraint="false", style="dashed"]
+    
+    rnn1:e -> rnn2:w [minlen=3]
+    rnn2:e -> rnn3:w [minlen=3]
+    rnn3:e -> rnn4:w [minlen=3]
+    rnn4:e -> rnn5:w [minlen=3]
+    rnn5:e -> rnn6:w [minlen=3]
+    rnn6:e -> rnn7:w [minlen=3]
+}

@@ -1,0 +1,123 @@
+digraph neural_network {
+    graph [dpi=300]
+    rankdir=LR; // Left to right layout
+    splines=false
+    ranksep=1.2
+
+    subgraph cluster_1 {
+        style="dotted"
+        label="Kódoló"
+        input1 [label="", shape="circle", penwidth=2, style="filled", fillcolor="lightblue"]
+        input2 [label="", shape="circle", penwidth=2, style="filled", fillcolor="lightblue"]
+        input3 [label="", shape="circle", penwidth=2, style="filled", fillcolor="lightblue"]
+        input4 [label="", shape="circle", penwidth=2, style="filled", fillcolor="lightblue"]
+        input5 [label="", shape="circle", penwidth=2, style="filled", fillcolor="lightblue"]
+        input6 [label="", shape="circle", penwidth=2, style="filled", fillcolor="lightblue"]
+
+        {rank="same"; input1; input2; input3; input4; input5; input6}
+
+        second1 [label="", shape="circle", penwidth=2, style="filled", fillcolor="lightblue"]
+        second2 [label="", shape="circle", penwidth=2, style="filled", fillcolor="lightblue"]
+        second3 [label="", shape="circle", penwidth=2, style="filled", fillcolor="lightblue"]
+        second4 [label="", shape="circle", penwidth=2, style="filled", fillcolor="lightblue"]
+        
+        {rank="same"; second1; second2; second3; second4;}
+    }
+
+    subgraph cluster_2 {
+        style="dotted"
+        label="Látens\ntér"
+        hidden1 [label="", shape="circle", penwidth=2, style="filled", fillcolor="yellow"]
+        hidden2 [label="", shape="circle", penwidth=2, style="filled", fillcolor="yellow"]
+    }
+
+    subgraph cluster_3 {
+        style="dotted"
+        label="Dekódoló"
+
+        fourth1 [label="", shape="circle", penwidth=2, style="filled", fillcolor="red"]
+        fourth2 [label="", shape="circle", penwidth=2, style="filled", fillcolor="red"]
+        fourth3 [label="", shape="circle", penwidth=2, style="filled", fillcolor="red"]
+        fourth4 [label="", shape="circle", penwidth=2, style="filled", fillcolor="red"]
+
+        {rank="same"; fourth1; fourth2; fourth3; fourth4;}
+
+        output1 [label="", shape="circle", penwidth=2, style="filled", fillcolor="red"]
+        output2 [label="", shape="circle", penwidth=2, style="filled", fillcolor="red"]
+        output3 [label="", shape="circle", penwidth=2, style="filled", fillcolor="red"]
+        output4 [label="", shape="circle", penwidth=2, style="filled", fillcolor="red"]
+        output5 [label="", shape="circle", penwidth=2, style="filled", fillcolor="red"]
+        output6 [label="", shape="circle", penwidth=2, style="filled", fillcolor="red"]
+
+        {rank="same"; output1; output2; output3; output4; output5; output6}
+    }
+
+    input1 -> second1
+    input1 -> second2
+    input1 -> second3
+    input1 -> second4
+    input2 -> second1
+    input2 -> second2
+    input2 -> second3
+    input2 -> second4
+    input3 -> second1
+    input3 -> second2
+    input3 -> second3
+    input3 -> second4
+    input4 -> second1
+    input4 -> second2
+    input4 -> second3
+    input4 -> second4
+    input5 -> second1
+    input5 -> second2
+    input5 -> second3
+    input5 -> second4
+    input6 -> second1
+    input6 -> second2
+    input6 -> second3
+    input6 -> second4
+
+    second1 -> hidden1
+    second2 -> hidden1
+    second3 -> hidden1
+    second4 -> hidden1    
+    second1 -> hidden2
+    second2 -> hidden2
+    second3 -> hidden2
+    second4 -> hidden2
+
+    hidden1 -> fourth1    
+    hidden1 -> fourth2
+    hidden1 -> fourth3
+    hidden1 -> fourth4
+    hidden2 -> fourth1    
+    hidden2 -> fourth2
+    hidden2 -> fourth3
+    hidden2 -> fourth4
+
+    fourth1 -> output1
+    fourth1 -> output2
+    fourth1 -> output3
+    fourth1 -> output4
+    fourth1 -> output5  
+    fourth1 -> output6  
+    fourth2 -> output1  
+    fourth2 -> output2  
+    fourth2 -> output3
+    fourth2 -> output4
+    fourth2 -> output5
+    fourth2 -> output6
+    fourth3 -> output1
+    fourth3 -> output2
+    fourth3 -> output3
+    fourth3 -> output4
+    fourth3 -> output5
+    fourth3 -> output6
+    fourth4 -> output1
+    fourth4 -> output2
+    fourth4 -> output3
+    fourth4 -> output4
+    fourth4 -> output5
+    fourth4 -> output6
+
+}   

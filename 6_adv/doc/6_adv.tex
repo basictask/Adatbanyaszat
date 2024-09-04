@@ -497,6 +497,67 @@ else:ar
 	\end{columns}
 \end{frame}
 
+\begin{frame}[fragile]{Alkalmazás többlapos támogatással (\texttt{app\_v6\_1.py})}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			Az alkalmazás következő verziójához az összes eddig implementált funkcionalitást be kell építeni a korábban létrehozott struktúrába.\par\smallskip
+			Ennek eredménye egy konstans navigációs sáv, amelyben kiválasztható a megfelelő ország. A sávon kiválasztható az ország, amely átnavigálja a felhasználót egy új oldalra, amihez tartozóan az országhoz tartozó specifikus adatok fognak megjelenni.
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{center}
+				\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/adv_7.png}
+			\end{center}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Az alkalmazás callback gráfja}
+	\begin{center}
+		\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/adv_8.png}
+	\end{center}
+\end{frame}
+
+\section{Kliensoldali callback függvények}
+
+\begin{frame}{}
+	\tableofcontents[currentsection]
+\end{frame}
+
+\begin{frame}[fragile]{}  % TODO: Gráf el van kezdve
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			\begin{lstlisting}[language=python]
+from dash import Input, Output
+
+@callback(
+	Output('out-component', 'value'),
+	Input('in-component1', 'value'),
+	Input('in-component2', 'value')
+)
+def large_params_function(largeValue1, largeValue2):
+	largeValueOutput = someTransform(largeValue1, largeValue2)
+return largeValueOutput	
+			\end{lstlisting}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{lstlisting}[language=python]
+from dash import clientside_callback, Input, Output
+
+clientside_callback(
+	"""
+	function(largeValue1, largeValue2) {
+		return someTransform(largeValue1, largeValue2);
+	}
+	""",
+	Output('out-component', 'value'),
+	Input('in-component1', 'value'),
+	Input('in-component2', 'value')
+)
+			\end{lstlisting}
+		\end{column}
+	\end{columns}
+\end{frame}
+
 \end{document}
 
 

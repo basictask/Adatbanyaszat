@@ -1,0 +1,18 @@
+digraph transformer {
+    graph [dpi=300]
+    rankdir = "BT"
+
+    X [label=<X = {x<sub>1</sub>, x<sub>2</sub>, ..., x<sub>n</sub>}>, shape="rectangle"]
+    Wq [label=<Q = XW<sub>Q</sub>>, shape="rectangle", style="filled", fillcolor="orangered3"]
+    Wk [label=<K = XW<sub>K</sub>>, shape="rectangle", style="filled", fillcolor="yellow2"]
+    Wv [label=<V = XW<sub>V</sub>>, shape="rectangle", style="filled", fillcolor="plum"]
+    attention [label="Figyelem(Q, K, V)", shape="rectangle"]
+
+    X -> Wq
+    X -> Wk
+    X -> Wv
+
+    Wq -> attention
+    Wk -> attention
+    Wv -> attention
+}

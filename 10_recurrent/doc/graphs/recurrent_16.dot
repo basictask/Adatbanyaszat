@@ -1,0 +1,44 @@
+digraph recurrent {
+    graph [dpi=300]
+    rankdir="BT"
+    input1 [label=<x<sub>1</sub>>, shape="circle", style="filled", fillcolor="pink"]
+    input2 [label=<x<sub>2</sub>>, shape="circle", style="filled", fillcolor="pink"]
+    input3 [label=<x<sub>3</sub>>, shape="circle", style="filled", fillcolor="pink"]
+
+    output3 [label=<ŷ<sub>3</sub>>, shape="circle", style="filled", fillcolor="lightblue"]
+    output4 [label=<ŷ<sub>3</sub>>, shape="circle", style="filled", fillcolor="lightblue"]
+    outputt [label=<ŷ<sub>t</sub>>, shape="circle", style="filled", fillcolor="lightblue"]
+
+    rnn1 [label="RNN", shape="rectangle", style="filled", fillcolor="lawngreen"]
+    rnn2 [label="RNN", shape="rectangle", style="filled", fillcolor="lawngreen"]
+    rnn3 [label="RNN", shape="rectangle", style="filled", fillcolor="lawngreen"]
+    rnn4 [label="RNN", shape="rectangle", style="filled", fillcolor="lawngreen"]
+    rnnt [label="RNN", shape="rectangle", style="filled", fillcolor="lawngreen"]
+
+    dot2 [label="...", shape="plaintext"]
+
+    start [shape="plaintext", label="", width=0]
+
+    {rank=same; input1; input2; input3;}
+    {rank=same; output3; output4; outputt; dot2;}
+    {rank=same; rnn1; rnn2; rnn3; rnn4; rnnt; start;}
+
+    start -> rnn1:w [minlen=2]
+
+    input1 -> rnn1 [minlen=2]
+    input2 -> rnn2 [minlen=2]
+    input3 -> rnn3 [minlen=2]
+    
+    rnn3 -> output3 [minlen=2]
+    rnn4 -> output4 [minlen=2]
+    rnnt -> outputt [minlen=2]
+    
+    rnn1:e -> rnn2:w [minlen=4]
+    rnn2:e -> rnn3:w [minlen=4]
+    rnn3:e -> rnn4:w [minlen=4]
+    rnn4:e -> rnnt:w [minlen=4]
+
+    output4 -> dot2 [style="invis"]
+    dot2 -> outputt [style="invis"]
+
+}

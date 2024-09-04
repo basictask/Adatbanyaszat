@@ -1,0 +1,31 @@
+digraph transformer {
+    graph [dpi=300]
+    rankdir="BT"
+
+    rnn1 [label="RNN", shape="rectangle", style="filled", fillcolor="lawngreen"]
+    rnn2 [label="RNN", shape="rectangle", style="filled", fillcolor="lawngreen"]
+    rnn3 [label="RNN", shape="rectangle", style="filled", fillcolor="lawngreen"]
+    rnn4 [label="RNN", shape="rectangle", style="filled", fillcolor="lawngreen"]
+    
+    x1 [label=<x<sub>1</sub>>, shape="plaintext"]
+    x2 [label=<x<sub>2</sub>>, shape="plaintext"]
+    x3 [label=<x<sub>3</sub>>, shape="plaintext"]
+    x4 [label=<x<sub>4</sub>>, shape="plaintext"]
+
+    z [label="z", shape="rectangle", style="filled", fillcolor="orangered"]
+    h0 [label=<h<sub>0</sub>>, shape="plaintext"]
+
+    x1 -> rnn1
+    x2 -> rnn2
+    x3 -> rnn3
+    x4 -> rnn4
+
+    h0:e -> rnn1:w [minlen=3] 
+    rnn1:e -> rnn2:w [minlen=3, headlabel=<h<sub>1</sub>      >]
+    rnn2:e -> rnn3:w [minlen=3, headlabel=<h<sub>2</sub>      >]
+    rnn3:e -> rnn4:w [minlen=3, headlabel=<h<sub>3</sub>      >]
+    rnn4:e -> z:w    [minlen=3, headlabel=<h<sub>4</sub>      >]
+
+
+    {rank="same"; rnn1; rnn2; rnn3; rnn4; z; h0}
+}

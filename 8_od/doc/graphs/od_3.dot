@@ -1,0 +1,18 @@
+digraph od {
+    graph [dpi=300]
+    rankdir="BT"
+
+    input [label="", shape="plaintext"]
+    regions [label="Javasolt területek\nw*h", shape="rectangle"]
+    warped_regions [label="Vetített területek\n224*224", shape="rectangle"]
+    conv_net [label="Lokalizáló hálózat\nminden területre", shape="rectangle"]
+    box [label="Kereteződoboz\nminden területre\n[x, y, w, h]", shape="rectangle"]
+    class [label="Becsült címke\nminden területre", shape="rectangle"]
+
+    input -> regions
+    regions -> warped_regions
+    warped_regions -> conv_net
+    conv_net -> box
+    conv_net -> class
+
+}

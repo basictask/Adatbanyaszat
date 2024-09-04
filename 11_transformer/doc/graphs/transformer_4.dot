@@ -1,0 +1,48 @@
+digraph transformer {
+    graph [dpi=300]
+    rankdir= "BT"
+    splines="false"
+
+    z [label="z", shape="rectangle", style="filled", fillcolor="orangered"]
+    rnn1 [label="RNN", shape="rectangle", style="filled", fillcolor="lightblue"]
+    rnn2 [label="RNN", shape="rectangle", style="filled", fillcolor="lightblue"]
+    rnn3 [label="RNN", shape="rectangle", style="filled", fillcolor="lightblue"]
+    rnn4 [label="RNN", shape="rectangle", style="filled", fillcolor="lightblue"]
+
+    x0 [label=<x<sub>0</sub>>, shape="plaintext"]
+    x1 [label=<x<sub>1</sub>>, shape="plaintext"]
+    x2 [label=<x<sub>2</sub>>, shape="plaintext"]
+    x3 [label=<x<sub>3</sub>>, shape="plaintext"]
+
+    y1 [label=<y<sub>1</sub>>, shape="plaintext"]
+    y2 [label=<y<sub>2</sub>>, shape="plaintext"]
+    y3 [label=<y<sub>3</sub>>, shape="plaintext"]
+    y4 [label=<y<sub>4</sub>>, shape="plaintext"]
+
+    z:e -> rnn1:w [minlen=3] 
+    rnn1:e -> rnn2:w [minlen=3] 
+    rnn2:e -> rnn3:w [minlen=3] 
+    rnn3:e -> rnn4:w [minlen=3] 
+
+    x0 -> rnn1
+    x1 -> rnn2
+    x2 -> rnn3
+    x3 -> rnn4
+
+    rnn1 -> y1 
+    rnn2 -> y2 
+    rnn3 -> y3 
+    rnn4 -> y4 
+
+    y1 -> x1 [constraint="false", style="dashed"]
+    y2 -> x2 [constraint="false", style="dashed"]
+    y3 -> x3 [constraint="false", style="dashed"]
+
+    {rank="same"; z; rnn1; rnn2; rnn3; rnn4;}
+    {rank="same"; x0; x1; x2; x3;}
+    {rank="same"; y1; y2; y3; y4;}
+
+
+
+
+}

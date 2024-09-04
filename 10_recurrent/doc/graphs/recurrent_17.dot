@@ -1,0 +1,50 @@
+digraph recurrent {
+    graph [dpi=300]
+    rankdir="BT"
+    
+    subgraph cluster_1 {
+        shape="rectangle"
+        style="filled"
+        fillcolor="lawngreen"
+
+        tanh1 [label="tanh", shape="rectangle", style="filled", fillcolor="orange"]
+    }
+
+    subgraph cluster_2 {
+        shape="rectangle"
+        style="filled"
+        fillcolor="lawngreen"
+
+        tanh2 [label="tanh", shape="rectangle", style="filled", fillcolor="orange"]
+    }
+
+    subgraph cluster_3 {
+        shape="rectangle"
+        style="filled"
+        fillcolor="lawngreen"
+
+        tanh3 [label="tanh", shape="rectangle", style="filled", fillcolor="orange"]
+    }
+
+    input1 [label=<x<sub>t-1</sub>>, shape="circle", style="filled", fillcolor="pink", width=.8]
+    input2 [label=<x<sub>t</sub>>, shape="circle", style="filled", fillcolor="pink", width=.8]
+    input3 [label=<x<sub>t+1</sub>>, shape="circle", style="filled", fillcolor="pink", width=.8]
+
+    state1 [label=<h<sub>t-1</sub>>, shape="circle", style="filled", fillcolor="lightblue", width=.8]
+    state2 [label=<h<sub>t</sub>>, shape="circle", style="filled", fillcolor="lightblue", width=.8]
+    state3 [label=<h<sub>t+1</sub>>, shape="circle", style="filled", fillcolor="lightblue", width=.8]
+
+    {rank=same; input1; input2; input3;}
+    {rank=same; state1; state2; state3;}
+
+    input1 -> tanh1
+    input2 -> tanh2
+    input3 -> tanh3
+
+    tanh1 -> state1 
+    tanh2 -> state2 
+    tanh3 -> state3  
+
+    tanh1:e -> tanh2:w [constraint="false", minlen=4]
+    tanh2:e -> tanh3:w [constraint="false", minlen=4]
+}

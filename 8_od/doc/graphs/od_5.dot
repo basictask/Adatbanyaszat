@@ -1,0 +1,19 @@
+digraph od {
+    graph [dpi=300]
+    rankdir="BT"
+
+    input [label="", shape="plaintext"]
+    convnet [label="Konvolúciós hálózat", shape="rectangle"]
+    proposal [label="Érdekelt terület javasoló", shape="rectangle"]
+    warp [label="Területi javaslatok lazítása", shape="rectangle"]
+    perregionnet [label="Régió osztályozó hálózat\n(konvolúció nélkül)", shape="rectangle"]
+    classes [label="Becsült osztályok", shape="rectangle"]
+    bboxes [label="Becsült kereteződobozok", shape="rectangle"]
+
+    input -> convnet
+    convnet -> proposal
+    proposal -> warp
+    warp -> perregionnet
+    perregionnet -> classes
+    perregionnet -> bboxes
+}

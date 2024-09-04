@@ -1,0 +1,67 @@
+digraph neural_network {
+    graph [dpi=300]
+    rankdir=LR; // Left to right layout
+    splines=false
+    ranksep=1.2
+
+    subgraph cluster_1 {
+        style="invis"
+        input1 [label=<x<sub>2</sub>>, shape="circle", penwidth=2]
+        input2 [label=<x<sub>3</sub>>, shape="circle", penwidth=2]
+        input3 [label=<x<sub>1</sub>>, shape="circle", penwidth=2]
+    }
+
+    subgraph cluster_2 {
+        style="invis"
+        hidden11 [label=<h<sub>11</sub>>, shape="circle", penwidth=2]
+        hidden12 [label=<h<sub>12</sub>>, shape="circle", penwidth=2]
+        hidden13 [label=<h<sub>13</sub>>, shape="circle", penwidth=2]
+        hidden14 [label=<h<sub>14</sub>>, shape="circle", penwidth=2]
+    }
+
+    subgraph cluster_3 {
+        style="invis"
+        hidden21 [label=<h<sub>21</sub>>, shape="circle", penwidth=2]
+        hidden22 [label=<h<sub>22</sub>>, shape="circle", penwidth=2]
+        hidden23 [label=<h<sub>23</sub>>, shape="circle", penwidth=2]
+        hidden24 [label=<h<sub>24</sub>>, shape="circle", penwidth=2]
+    }
+
+    subgraph cluster_4 {
+        style="invis"
+        output1 [label=<o<sub>1</sub>>, shape="circle", penwidth=2]
+    }
+
+    input1 -> hidden11
+    input2 -> hidden11
+    input3 -> hidden11
+    input1 -> hidden12
+    input2 -> hidden12
+    input3 -> hidden12
+    input1 -> hidden13
+    input2 -> hidden13
+    input3 -> hidden13
+    input1 -> hidden14
+    input2 -> hidden14
+    input3 -> hidden14
+    hidden11 -> hidden21
+    hidden12 -> hidden21
+    hidden13 -> hidden21
+    hidden14 -> hidden21
+    hidden11 -> hidden22
+    hidden12 -> hidden22
+    hidden13 -> hidden22
+    hidden14 -> hidden22
+    hidden11 -> hidden23
+    hidden12 -> hidden23
+    hidden13 -> hidden23
+    hidden14 -> hidden23
+    hidden11 -> hidden24
+    hidden12 -> hidden24
+    hidden13 -> hidden24
+    hidden14 -> hidden24
+    hidden21 -> output1
+    hidden22 -> output1
+    hidden23 -> output1
+    hidden24 -> output1
+}

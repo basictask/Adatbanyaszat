@@ -1,0 +1,54 @@
+digraph neural_network {
+    graph [dpi=300]
+    rankdir=LR; // Left to right layout
+    splines=false
+    ranksep=1.2
+
+    subgraph cluster_1 {
+        style="dotted"
+        input1 [label=<x<sub>2</sub>>, shape="circle", penwidth=2]
+        input2 [label=<x<sub>3</sub>>, shape="circle", penwidth=2]
+        input3 [label=<x<sub>1</sub>>, shape="circle", penwidth=2]
+    }
+
+    subgraph cluster_2 {
+        style="dotted"
+        hidden1 [label=<h<sub>1</sub>>, shape="circle", penwidth=2]
+        hidden2 [label=<h<sub>2</sub>>, shape="circle", penwidth=2]
+        hidden3 [label=<h<sub>3</sub>>, shape="circle", penwidth=2]
+        hidden4 [label=<h<sub>4</sub>>, shape="circle", penwidth=2]
+    }
+
+    subgraph cluster_3 {
+        style="dotted"
+        output1 [label=<o<sub>3</sub>>, shape="circle", penwidth=2]
+        output2 [label=<o<sub>1</sub>>, shape="circle", penwidth=2]
+        output3 [label=<o<sub>2</sub>>, shape="circle", penwidth=2]
+    }
+
+    input1 -> hidden1
+    input2 -> hidden1
+    input3 -> hidden1
+    input1 -> hidden2
+    input2 -> hidden2
+    input3 -> hidden2
+    input1 -> hidden3
+    input2 -> hidden3
+    input3 -> hidden3
+    input1 -> hidden4
+    input2 -> hidden4
+    input3 -> hidden4
+
+    hidden1 -> output1
+    hidden2 -> output1
+    hidden3 -> output1
+    hidden4 -> output1
+    hidden1 -> output2
+    hidden2 -> output2
+    hidden3 -> output2
+    hidden4 -> output2
+    hidden1 -> output3
+    hidden2 -> output3
+    hidden3 -> output3
+    hidden4 -> output3
+}

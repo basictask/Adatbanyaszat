@@ -1,0 +1,66 @@
+digraph transformer {
+    graph [dpi=300]
+    rankdir="LR"
+
+    input_seq [label="Input\nszekvencia", shape="rectangle", shape="plaintext"]
+    output_seq [label="Output\nszekvencia", shape="rectangle", shape="plaintext"]
+    input_embed [label="Beágyazás", shape="rectangle", style="filled", fillcolor="pink"]
+    output_embed [label="Beágyazás", shape="rectangle", style="filled", fillcolor="pink"]
+    pos_encoding1 [label="Pozícionális\nkódolás", shape="rectangle"]
+    pos_encoding2 [label="Pozícionális\nkódolás", shape="rectangle"]
+    
+
+    subgraph cluster_1 {
+        style="dashed"
+        label="Kódoló"
+        multihead1 [label="Többfejes\nfigyelem", shape="rectangle", style="filled", fillcolor="salmon1"]
+        fc1 [label="Teljesen\nbecsatolt\nréteg", shape="rectangle", style="filled", fillcolor="lightblue"]
+        add_norm1 [label="Összeadás és\nnormalizálás", shape="rectangle", style="filled", fillcolor="gold1"]
+        add_norm2 [label="Összeadás és\nnormalizálás", shape="rectangle", style="filled", fillcolor="gold1"]
+    }
+
+    subgraph cluster_2 {
+        style="dashed"
+        label="Dekódoló"
+        labelloc="b"
+        masked_multihead [label="Maszkolt\ntöbbfejes\nfigyelem", shape="rectangle", style="filled", fillcolor="salmon1"]
+        multihead2 [label="Többfejes\nfigyelem", shape="rectangle", style="filled", fillcolor="salmon1"]
+        add_norm3 [label="Összeadás és\nnormalizálás", shape="rectangle", style="filled", fillcolor="gold1"]
+        add_norm4 [label="Összeadás és\nnormalizálás", shape="rectangle", style="filled", fillcolor="gold1"]
+        add_norm5 [label="Összeadás és\nnormalizálás", shape="rectangle", style="filled", fillcolor="gold1"]
+        fc2 [label="Teljesen\nbecsatolt\nréteg", shape="rectangle", style="filled", fillcolor="lightblue"]
+    }
+
+    linear [label="Lineáris\nréteg", shape="rectangle", style="filled", fillcolor="orchid"]
+    softmax [label="Softmax\nréteg", shape="rectangle", style="filled", fillcolor="greenyellow"]
+
+    input_seq -> input_embed
+    input_embed -> pos_encoding1
+    pos_encoding1 -> multihead1
+    pos_encoding1 -> multihead1
+    pos_encoding1 -> multihead1
+    multihead1 -> add_norm1
+    add_norm1 -> fc1
+    fc1 -> add_norm2
+    pos_encoding1 -> add_norm1
+    add_norm1 -> add_norm2
+
+    output_seq -> output_embed
+    output_embed -> pos_encoding2
+    pos_encoding2 -> masked_multihead
+    pos_encoding2 -> masked_multihead
+    pos_encoding2 -> masked_multihead
+    masked_multihead -> add_norm3
+    add_norm3 -> multihead2
+    multihead2 -> add_norm4
+    add_norm4 -> fc2
+    fc2 -> add_norm5
+    add_norm5 -> linear
+    linear -> softmax
+    pos_encoding2 -> add_norm3
+    add_norm3 -> add_norm4
+    add_norm4 -> add_norm5
+
+    add_norm2 -> multihead2 [constraint="False"]
+    add_norm2 -> multihead2 [constraint="False"]
+}

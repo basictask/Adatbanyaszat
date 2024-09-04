@@ -1,0 +1,93 @@
+digraph transformer {
+    graph [dpi=300]
+    rankdir = "BT"
+    splines="false"
+
+    encoder_in1 [label="Hogy", shape="plaintext", fontsize=20]
+    encoder_in2 [label="vagy", shape="plaintext", fontsize=20]
+    encoder_in3 [label="ma", shape="plaintext", fontsize=20]
+    encoder_in4 [label="?", shape="plaintext", fontsize=20]
+
+    embed1 [label="beágyazás", shape="rectangle", style="filled", fillcolor="darkgoldenrod1"]
+    embed2 [label="beágyazás", shape="rectangle", style="filled", fillcolor="darkgoldenrod1"]
+    embed3 [label="beágyazás", shape="rectangle", style="filled", fillcolor="darkgoldenrod1"]
+    embed4 [label="beágyazás", shape="rectangle", style="filled", fillcolor="darkgoldenrod1"]        
+
+    
+    rnn11 [label="RNN", shape="rectangle", style="filled", fillcolor="lawngreen"]
+    rnn12 [label="RNN", shape="rectangle", style="filled", fillcolor="lawngreen"]
+    rnn13 [label="RNN", shape="rectangle", style="filled", fillcolor="lawngreen"]
+    rnn14 [label="RNN", shape="rectangle", style="filled", fillcolor="lawngreen"]
+
+    decoder_in1 [label="<NULL>", shape="plaintext", fontsize=20]
+    decoder_in2 [label="How", shape="plaintext", fontsize=20]
+    decoder_in3 [label="are", shape="plaintext", fontsize=20] 
+    decoder_in4 [label="you", shape="plaintext", fontsize=20] 
+    decoder_in5 [label="today", shape="plaintext", fontsize=20] 
+    
+    rnn21 [label="RNN", shape="rectangle", style="filled", fillcolor="lightblue"]
+    rnn22 [label="RNN", shape="rectangle", style="filled", fillcolor="lightblue"]
+    rnn23 [label="RNN", shape="rectangle", style="filled", fillcolor="lightblue"]
+    rnn24 [label="RNN", shape="rectangle", style="filled", fillcolor="lightblue"]
+    rnn25 [label="RNN", shape="rectangle", style="filled", fillcolor="lightblue"]
+
+    softmax1 [label="softmax", shape="rectangle", style="filled", fillcolor="moccasin"]
+    softmax2 [label="softmax", shape="rectangle", style="filled", fillcolor="moccasin"]
+    softmax3 [label="softmax", shape="rectangle", style="filled", fillcolor="moccasin"]
+    softmax4 [label="softmax", shape="rectangle", style="filled", fillcolor="moccasin"]
+    softmax5 [label="softmax", shape="rectangle", style="filled", fillcolor="moccasin"]
+    
+    z [label="z", shape="rectangle", style="filled", fillcolor="orangered"]
+
+    output1 [label="How", shape="plaintext", fontsize=20]
+    output2 [label="are", shape="plaintext", fontsize=20] 
+    output3 [label="you", shape="plaintext", fontsize=20] 
+    output4 [label="today", shape="plaintext", fontsize=20] 
+    output5 [label="?", shape="plaintext", fontsize=20] 
+    
+    encoder_in1 -> embed1
+    encoder_in2 -> embed2
+    encoder_in3 -> embed3
+    encoder_in4 -> embed4
+
+    embed1 -> rnn11
+    embed2 -> rnn12
+    embed3 -> rnn13
+    embed4 -> rnn14
+
+    rnn11:e -> rnn12:w [minlen=4]
+    rnn12:e -> rnn13:w [minlen=4]
+    rnn13:e -> rnn14:w [minlen=4]
+    rnn21:e -> rnn22:w [minlen=4]
+    rnn22:e -> rnn23:w [minlen=4]
+    rnn23:e -> rnn24:w [minlen=4]
+    rnn24:e -> rnn25:w [minlen=4]
+    rnn14:e -> z:w [minlen=3]
+    z:e -> rnn21:w [minlen=3]
+
+
+    {rank="same"; rnn11; rnn12; rnn13; rnn14; z; rnn21; rnn22; rnn23; rnn24; rnn25;}
+
+    decoder_in1 -> rnn21 [minlen=2]
+    decoder_in2 -> rnn22 [minlen=2]
+    decoder_in3 -> rnn23 [minlen=2]
+    decoder_in4 -> rnn24 [minlen=2]
+    decoder_in5 -> rnn25 [minlen=2]
+
+    rnn21 -> softmax1
+    rnn22 -> softmax2
+    rnn23 -> softmax3
+    rnn24 -> softmax4
+    rnn25 -> softmax5
+
+    softmax1 -> output1 [minlen=2]
+    softmax2 -> output2 [minlen=2]
+    softmax3 -> output3 [minlen=2]
+    softmax4 -> output4 [minlen=2]
+    softmax5 -> output5 [minlen=2]
+
+    output1:e -> decoder_in2 [style="dashed", constraint="false"]
+    output2:e -> decoder_in3 [style="dashed", constraint="false"]
+    output3:e -> decoder_in4 [style="dashed", constraint="false"]
+    output4:e -> decoder_in5 [style="dashed", constraint="false"]
+}

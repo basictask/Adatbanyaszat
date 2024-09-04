@@ -1,0 +1,70 @@
+digraph transformer {
+    graph [dpi=300]
+    rankdir="BT"
+    splines="false"
+
+    input1 [label=<x<sub>1</sub>>, shape="rectangle", style="filled", fillcolor="/blues9/1"]
+    input2 [label=<x<sub>2</sub>>, shape="rectangle", style="filled", fillcolor="/blues9/2"]
+    input3 [label=<x<sub>3</sub>>, shape="rectangle", style="filled", fillcolor="/blues9/3"]
+    input4 [label=<x<sub>4</sub>>, shape="rectangle", style="filled", fillcolor="/blues9/4"]
+    input5 [label=<x<sub>5</sub>>, shape="rectangle", style="filled", fillcolor="/blues9/5"]
+    input6 [label=<x<sub>6</sub>>, shape="rectangle", style="filled", fillcolor="/blues9/6"]
+    input7 [label=<x<sub>7</sub>>, shape="rectangle", style="filled", fillcolor="/blues9/7"]
+    input8 [label=<x<sub>8</sub>>, shape="rectangle", style="filled", fillcolor="/blues9/8"]
+    input9 [label=<x<sub>9</sub>>, shape="rectangle", style="filled", fillcolor="/blues9/9"]
+
+    rnn1 [label="RNN", shape="rectangle", style="filled", fillcolor="/blues9/1"]
+    rnn2 [label="RNN", shape="rectangle", style="filled", fillcolor="/blues9/2"]
+    rnn3 [label="RNN", shape="rectangle", style="filled", fillcolor="/blues9/3"]
+    rnn4 [label="RNN", shape="rectangle", style="filled", fillcolor="/blues9/4"]
+    rnn5 [label="RNN", shape="rectangle", style="filled", fillcolor="/blues9/5"]
+    rnn6 [label="RNN", shape="rectangle", style="filled", fillcolor="/blues9/6"]
+    rnn7 [label="RNN", shape="rectangle", style="filled", fillcolor="/blues9/7"]
+    rnn8 [label="RNN", shape="rectangle", style="filled", fillcolor="/blues9/8"]
+    rnn9 [label="RNN", shape="rectangle", style="filled", fillcolor="/blues9/9"]
+    
+    softmax1 [label="softmax", shape="rectangle", style="filled", fillcolor="/blues9/1"]
+    softmax2 [label="softmax", shape="rectangle", style="filled", fillcolor="/blues9/1"]
+    softmax3 [label="softmax", shape="rectangle", style="filled", fillcolor="/blues9/1"]
+    softmax4 [label="softmax", shape="rectangle", style="filled", fillcolor="/blues9/1"]
+    softmax5 [label="softmax", shape="rectangle", style="filled", fillcolor="/blues9/1"]
+    softmax6 [label="softmax", shape="rectangle", style="filled", fillcolor="/blues9/1"]
+    softmax7 [label="softmax", shape="rectangle", style="filled", fillcolor="/blues9/1"]
+    softmax8 [label="softmax", shape="rectangle", style="filled", fillcolor="/blues9/1"]
+    softmax9 [label="softmax", shape="rectangle", style="filled", fillcolor="/blues9/9"]
+
+    input1 -> rnn1
+    input2 -> rnn2
+    input3 -> rnn3
+    input4 -> rnn4
+    input5 -> rnn5
+    input6 -> rnn6
+    input7 -> rnn7
+    input8 -> rnn8
+    input9 -> rnn9
+
+    rnn1 -> softmax1
+    rnn2 -> softmax2
+    rnn3 -> softmax3
+    rnn4 -> softmax4
+    rnn5 -> softmax5
+    rnn6 -> softmax6
+    rnn7 -> softmax7
+    rnn8 -> softmax8
+    rnn9 -> softmax9
+
+    rnn1 -> rnn2 [minlen=2]   
+    rnn2 -> rnn3 [minlen=2]   
+    rnn3 -> rnn4 [minlen=2]   
+    rnn4 -> rnn5 [minlen=2]   
+    rnn5 -> rnn6 [minlen=2]   
+    rnn6 -> rnn7 [minlen=2]   
+    rnn7 -> rnn8 [minlen=2]   
+    rnn8 -> rnn9 [minlen=2]   
+
+    {rank="same"; rnn1; rnn2; rnn3; rnn4; rnn5; rnn6; rnn7; rnn8; rnn9;}
+    {rank="same"; input1; input2; input3; input4; input5; input6; input7; input8; input9;}
+    {rank="same"; softmax1; softmax2; softmax3; softmax4; softmax5; softmax6; softmax7; softmax8; softmax9;}
+
+
+}

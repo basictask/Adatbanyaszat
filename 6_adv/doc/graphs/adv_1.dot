@@ -1,0 +1,10 @@
+digraph adv {
+    graph [dpi=300]
+    rankdir="LR"
+
+    server [label="Szerver", shape="rectangle"]
+    client [label="Kliens", shape="rectangle"]
+
+    server -> client
+    client -> server
+}

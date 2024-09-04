@@ -1,0 +1,71 @@
+digraph transformer {
+    graph[dpi=300]
+    rankdir="BT"
+    splines="false"
+
+    input1 [label=<x<sub>1</sub>>, shape="plaintext"]
+    input2 [label=<x<sub>2</sub>>, shape="plaintext"]
+    input3 [label=<x<sub>3</sub>>, shape="plaintext"]
+    input4 [label=<x<sub>4</sub>>, shape="plaintext"]
+
+    output1 [label=<y<sub>1</sub>>, shape="plaintext"]
+    output2 [label=<y<sub>2</sub>>, shape="plaintext"]
+    output3 [label=<y<sub>3</sub>>, shape="plaintext"]
+    output4 [label=<y<sub>4</sub>>, shape="plaintext"]
+
+    subgraph cluster_1 {
+        label="Kódoló"
+        style="dashed"
+        labeljust="left"
+        rnn_encoder1 [label="RNN", shape="rectangle", style="filled", fillcolor="lawngreen"]
+        rnn_encoder2 [label="RNN", shape="rectangle", style="filled", fillcolor="lawngreen"]
+        rnn_encoder3 [label="RNN", shape="rectangle", style="filled", fillcolor="lawngreen"]
+        rnn_encoder4 [label="RNN", shape="rectangle", style="filled", fillcolor="lawngreen"]
+        asd1 [label="", shape="plaintext"]
+    } 
+
+    subgraph cluster_2 {
+        label="Dekódoló"
+        style="dashed"
+        labeljust="left"
+        rnn_decoder1 [label="RNN", shape="rectangle", style="filled", fillcolor="lightblue"]
+        rnn_decoder2 [label="RNN", shape="rectangle", style="filled", fillcolor="lightblue"]
+        rnn_decoder3 [label="RNN", shape="rectangle", style="filled", fillcolor="lightblue"]
+        rnn_decoder4 [label="RNN", shape="rectangle", style="filled", fillcolor="lightblue"]
+        asd2 [label="", shape="plaintext"]
+    } 
+
+    attention [label="Figyelmi neurális hálózat", shape="rectangle", style="filled", fillcolor="orange"]
+
+    input1 -> rnn_encoder1
+    input2 -> rnn_encoder2
+    input3 -> rnn_encoder3
+    input4 -> rnn_encoder4
+
+    rnn_encoder1 -> attention [minlen=2]    
+    rnn_encoder2 -> attention [minlen=2]
+    rnn_encoder3 -> attention [minlen=2]
+    rnn_encoder4 -> attention [minlen=2]
+
+    attention  -> rnn_decoder1 [minlen=2]
+    attention  -> rnn_decoder2 [minlen=2]
+    attention  -> rnn_decoder3 [minlen=2]
+    attention  -> rnn_decoder4 [minlen=2]
+
+    rnn_decoder1 -> output1 
+    rnn_decoder2 -> output2 
+    rnn_decoder3 -> output3 
+    rnn_decoder4 -> output4 
+
+
+
+
+
+
+
+
+
+
+
+
+}

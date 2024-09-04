@@ -1,0 +1,89 @@
+digraph transformer {
+    graph [dpi = 300]
+    rankdir = "BT"
+    splines = "False"
+
+    x1 [label=<x<sub>1</sub>>, shape="plaintext"]
+    x2 [label=<x<sub>2</sub>>, shape="plaintext"]
+    x3 [label=<x<sub>3</sub>>, shape="plaintext"]
+    x4 [label=<x<sub>4</sub>>, shape="plaintext"]
+    x5 [label=<x<sub>5</sub>>, shape="plaintext"]
+
+    y1 [label=<y<sub>1</sub>>, shape="plaintext"]
+    y2 [label=<y<sub>2</sub>>, shape="plaintext"]
+    y3 [label=<y<sub>3</sub>>, shape="plaintext"]
+    y4 [label=<y<sub>4</sub>>, shape="plaintext"]
+    y5 [label=<y<sub>5</sub>>, shape="plaintext"]
+
+    rnn_encoder1 [label="RNN", shape="rectangle", style="filled", fillcolor="lawngreen"]
+    rnn_encoder2 [label="RNN", shape="rectangle", style="filled", fillcolor="lawngreen"]
+    rnn_encoder3 [label="RNN", shape="rectangle", style="filled", fillcolor="lawngreen"]
+    rnn_encoder4 [label="RNN", shape="rectangle", style="filled", fillcolor="lawngreen"]
+    rnn_encoder5 [label="RNN", shape="rectangle", style="filled", fillcolor="lawngreen"]
+
+    rnn_decoder1 [label="RNN", shape="rectangle", style="filled", fillcolor="lightblue"]
+    rnn_decoder2 [label="RNN", shape="rectangle", style="filled", fillcolor="lightblue"]
+    rnn_decoder3 [label="RNN", shape="rectangle", style="filled", fillcolor="lightblue"]
+    rnn_decoder4 [label="RNN", shape="rectangle", style="filled", fillcolor="lightblue"]
+    rnn_decoder5 [label="RNN", shape="rectangle", style="filled", fillcolor="lightblue"]
+
+    attention5 [label="z", shape="rectangle", style="filled", fillcolor="orange"]
+
+    {rank="same"; rnn_decoder1; rnn_decoder2; rnn_decoder3; rnn_decoder4; rnn_decoder5}
+    {rank="same"; rnn_encoder1; rnn_encoder2; rnn_encoder3; rnn_encoder4; rnn_encoder5}
+
+    x1 -> rnn_encoder1
+    x2 -> rnn_encoder2
+    x3 -> rnn_encoder3
+    x4 -> rnn_encoder4
+    x5 -> rnn_encoder5
+
+    rnn_encoder1 -> attention5 [constraint="False", label=<α<sub><font point-size="10">5,1</font></sub>          >]
+    rnn_encoder2 -> attention5 [constraint="False", label=<α<sub><font point-size="10">5,2</font></sub>        >]
+    rnn_encoder3 -> attention5 [constraint="False", label=<α<sub><font point-size="10">5,3</font></sub>      >]
+    rnn_encoder4 -> attention5 [constraint="False", label=<α<sub><font point-size="10">5,4</font></sub>     >]
+    rnn_encoder5 -> attention5 [minlen=2, label=<α<sub><font point-size="10">5,5</font></sub>>]
+
+    rnn_encoder1 -> rnn_encoder2 [minlen=2]
+    rnn_encoder2 -> rnn_encoder3 [minlen=2]
+    rnn_encoder3 -> rnn_encoder4 [minlen=2]
+    rnn_encoder4 -> rnn_encoder5 [minlen=2]
+
+    rnn_decoder1 -> rnn_decoder2 [minlen=2]
+    rnn_decoder2 -> rnn_decoder3 [minlen=2]
+    rnn_decoder3 -> rnn_decoder4 [minlen=2]
+    rnn_decoder4 -> rnn_decoder5 [minlen=2]
+
+    rnn_decoder1 -> y1
+    rnn_decoder2 -> y2
+    rnn_decoder3 -> y3
+    rnn_decoder4 -> y4
+    rnn_decoder5 -> y5
+
+    attention5 -> rnn_decoder5 [minlen=2]
+    y4 -> attention5 [constraint="False", style="dashed"]
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

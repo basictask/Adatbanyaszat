@@ -1,0 +1,19 @@
+digraph od {
+    graph [dpi=300]
+    rankdir="BT"
+
+    input [label="Input", shape="rectangle"]
+    convnet [label="Konvolúciós hálózat", shape="rectangle"]
+    roi_coords [label="Érdekelt területek koordinátái", shape="rectangle"]
+    feature_map [label="Konvolúciós output mátrix", shape="rectangle"]
+    roi_pooling [label="Területi javaslatok lazítása", shape="rectangle"]
+    output [label="Fix méretű mátrix\nminden érdekelt területre", shape="rectangle"]
+
+    input -> convnet
+    convnet -> roi_coords
+    convnet -> feature_map
+    roi_coords -> roi_pooling
+    feature_map -> roi_pooling
+    roi_pooling -> output
+    
+}

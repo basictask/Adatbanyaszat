@@ -1,0 +1,24 @@
+digraph od {
+    graph [dpi=300]
+    rankdir="BT"
+
+    input [label="Input", shape="rectangle"]
+    convnet [label="Konvolúciós hálózat", shape="rectangle", style="filled", fillcolor="gray"]
+    rpn [label="Területjavasoló hálózat (RPN)", shape="rectangle", style="filled", fillcolor="gray"]
+    class_net [label="Osztályozó hálózat", shape="rectangle", style="filled", fillcolor="gray"]
+    roi_pooling [label="Területi javaslatok lazítása", shape="rectangle"]
+    class_loss1 [label="RPN osztályozás", shape="rectangle", style="filled", fillcolor="lightblue"]
+    class_loss2 [label="Objektum osztályozás", shape="rectangle", style="filled", fillcolor="lightblue"]
+    reg_loss1 [label="RPN regresszió", shape="rectangle", style="filled", fillcolor="pink"]
+    reg_loss2 [label="Objektum regresszió", shape="rectangle", style="filled", fillcolor="pink"]
+
+    input -> convnet 
+    convnet -> rpn
+    rpn -> roi_pooling
+    convnet -> roi_pooling
+    rpn -> class_loss1
+    rpn -> reg_loss1 
+    roi_pooling -> class_net
+    class_net -> reg_loss2
+    class_net -> class_loss2
+}

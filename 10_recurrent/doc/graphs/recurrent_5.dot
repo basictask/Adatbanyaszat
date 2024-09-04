@@ -1,0 +1,49 @@
+digraph recurrent {
+    graph [dpi=300]
+    rankdir="BT"
+    input1 [label=<x<sub>1</sub>>, shape="circle", style="filled", fillcolor="pink"]
+    input2 [label=<x<sub>2</sub>>, shape="circle", style="filled", fillcolor="pink"]
+    input3 [label=<x<sub>3</sub>>, shape="circle", style="filled", fillcolor="pink"]
+    inputt [label=<x<sub>t</sub>>, shape="circle", style="filled", fillcolor="pink"]
+
+    output1 [label=<ŷ<sub>1</sub>>, shape="circle", style="filled", fillcolor="lightblue"]
+    output2 [label=<ŷ<sub>2</sub>>, shape="circle", style="filled", fillcolor="lightblue"]
+    output3 [label=<ŷ<sub>3</sub>>, shape="circle", style="filled", fillcolor="lightblue"]
+    outputt [label=<ŷ<sub>t</sub>>, shape="circle", style="filled", fillcolor="lightblue"]
+
+    rnn1 [label="RNN", shape="rectangle", style="filled", fillcolor="lawngreen"]
+    rnn2 [label="RNN", shape="rectangle", style="filled", fillcolor="lawngreen"]
+    rnn3 [label="RNN", shape="rectangle", style="filled", fillcolor="lawngreen"]
+    rnnt [label="RNN", shape="rectangle", style="filled", fillcolor="lawngreen"]
+
+    dot1 [label="...", shape="plaintext"]
+    dot2 [label="...", shape="plaintext"]
+
+    start [shape="plaintext", label="", width=0]
+
+    {rank=same; input1; input2; dot1; input3; inputt;}
+    {rank=same; output1; output2; dot2; output3; outputt;}
+    {rank=same; rnn1; rnn2; rnn3; rnnt; start}
+
+    start -> rnn1:w [minlen=2, headlabel=<h<sub>0</sub>   >]
+
+    input1 -> rnn1 [minlen=2, headlabel=<w<sub>x</sub>  >]
+    input2 -> rnn2 [minlen=2, headlabel=<w<sub>x</sub>  >]
+    input3 -> rnn3 [minlen=2, headlabel=<w<sub>x</sub>  >]
+    inputt -> rnnt [minlen=2, headlabel=<w<sub>x</sub>  >]
+    
+    rnn1 -> output1 [minlen=2, headlabel=<w<sub>y</sub> >]
+    rnn2 -> output2 [minlen=2, headlabel=<w<sub>y</sub> >]
+    rnn3 -> output3 [minlen=2, headlabel=<w<sub>y</sub> >]
+    rnnt -> outputt [minlen=2, headlabel=<w<sub>y</sub> >]
+    
+    rnn1:e -> rnn2:w [minlen=4, headlabel=<h<sub>1</sub>   >]
+    rnn2:e -> rnn3:w [minlen=4, headlabel=<h<sub>2</sub>   >]
+    rnn3:e -> rnnt:w [minlen=4, headlabel=<h<sub>3</sub>   >]
+
+    output3 -> dot2 [style="invis"]
+    dot2 -> outputt [style="invis"]
+    input3 -> dot1 [style="invis"]
+    dot1 -> inputt [style="invis"]
+
+}

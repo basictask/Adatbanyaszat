@@ -1,0 +1,48 @@
+digraph neural_networks {
+    graph [dpi=300]
+    splines="false"
+    rankdir = "BT"
+
+    original_input [label="Input réteg", shape="rectangle"]
+    original_h1 [label="1. Rejtett réteg", shape="rectangle"]
+    original_h2 [label="2. Rejtett réteg", shape="rectangle"]
+    original_h3 [label="3. Rejtett réteg", shape="rectangle"]
+    original_h4 [label="4. Rejtett réteg", shape="rectangle"]
+    original_h5 [label="5. Rejtett réteg", shape="rectangle"]
+    original_out [label="Output réteg", shape="rectangle"]
+
+    new_input [label="Input réteg", shape="rectangle"]
+    subgraph cluster_1 {
+        style="dotted"
+        label="Fix"
+        labeljust="l"
+        new_h1 [label="1. Rejtett réteg", shape="rectangle"]
+        new_h2 [label="2. Rejtett réteg", shape="rectangle"]
+        new_h3 [label="3. Rejtett réteg", shape="rectangle"]
+    }
+    subgraph cluster_2 {
+        style="dotted"
+        label="Tanított"
+        labeljust="l"
+        new_h4 [label="4. Rejtett réteg", shape="rectangle"]
+    }
+    new_out [label="Output réteg", shape="rectangle"]
+    
+
+    original_input -> original_h1
+    original_h1 -> original_h2
+    original_h2 -> original_h3
+    original_h3 -> original_h4
+    original_h4 -> original_h5
+    original_h5 -> original_out
+
+    new_input -> new_h1
+    new_h1 -> new_h2
+    new_h2 -> new_h3
+    new_h3 -> new_h4
+    new_h4 -> new_out
+
+    original_h1:e -> new_h1:w [style="dashed", constraint="false", minlen=3] 
+    original_h2:e -> new_h2:w [style="dashed", constraint="false", minlen=3]
+    original_h3:e -> new_h3:w [style="dashed", constraint="false", minlen=3]
+}

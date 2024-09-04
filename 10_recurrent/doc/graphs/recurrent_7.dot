@@ -1,0 +1,43 @@
+digraph recurrent {
+    graph [dpi=300]
+    splines="false"
+    rankdir="BT"
+    input1 [label=<x<sub>1</sub>>, shape="circle", style="filled", fillcolor="pink"]
+    output1 [label=<ŷ<sub>1</sub>>, shape="circle", style="filled", fillcolor="lightblue"]
+    rnn1 [label="RNN", shape="rectangle", style="filled", fillcolor="lawngreen"]
+
+    input2 [label=<x<sub>2</sub>>, shape="circle", style="filled", fillcolor="pink"]
+    output2 [label=<ŷ<sub>2</sub>>, shape="circle", style="filled", fillcolor="lightblue"]
+    rnn2 [label="RNN", shape="rectangle", style="filled", fillcolor="lawngreen"]
+
+    input3 [label=<x<sub>t</sub>>, shape="circle", style="filled", fillcolor="pink"]
+    output3 [label=<ŷ<sub>t</sub>>, shape="circle", style="filled", fillcolor="lightblue"]
+    rnn3 [label="RNN", shape="rectangle", style="filled", fillcolor="lawngreen"]
+
+    dot1 [label="...", shape="plaintext"]
+    dot2 [label="...", shape="plaintext"]
+
+    {rank=same; input1; input2; dot1; input3;}
+    {rank=same; output1; output2; dot2; output3;}
+    {rank=same; rnn1; rnn2; rnn3;}
+
+    input1 -> rnn1 [minlen=2]
+    rnn1 -> output1 [minlen=2]
+
+    input2 -> rnn2 [minlen=2]
+    rnn2 -> output2 [minlen=2]
+
+    input3 -> rnn3 [minlen=2]
+    rnn3 -> output3 [minlen=2]
+
+    input2 -> dot1 [style="invis"]
+    dot1 -> input3 [style="invis"]
+
+    output2 -> dot2 [style="invis"]
+    dot2 -> output3 [style="invis"]
+
+    output1 -> output2 [minlen=4.5, style="invis"]
+    input1 -> input2 [minlen=4.5, style="invis"]
+    output1:e -> rnn2:w [minlen=4]
+    output2:e -> rnn3:w [minlen=4, constraint="true"]
+}

@@ -1,0 +1,43 @@
+digraph transformer {
+    graph [dpi=300]
+    rankdir = "BT"
+
+    X [label=<X = {x<sub>1</sub>, x<sub>2</sub>, ..., x<sub>n</sub>}>, shape="rectangle"]
+    Wq1 [label=<Q<sub>1</sub> = XW<sub>Q<font point-size="10">1</font></sub>>, shape="rectangle", style="filled", fillcolor="tomato"]
+    Wq2 [label=<Q<sub>2</sub> = XW<sub>Q<font point-size="10">2</font></sub>>, shape="rectangle", style="filled", fillcolor="orangered"]
+    Wq3 [label=<Q<sub>3</sub> = XW<sub>Q<font point-size="10">3</font></sub>>, shape="rectangle", style="filled", fillcolor="orangered2"]
+    Wk1 [label=<K<sub>1</sub> = XW<sub>K<font point-size="10">1</font></sub>>, shape="rectangle", style="filled", fillcolor="khaki1"]
+    Wk2 [label=<K<sub>2</sub> = XW<sub>K<font point-size="10">2</font></sub>>, shape="rectangle", style="filled", fillcolor="yellow"]
+    Wk3 [label=<K<sub>3</sub> = XW<sub>K<font point-size="10">3</font></sub>>, shape="rectangle", style="filled", fillcolor="gold"]
+    Wv1 [label=<V<sub>1</sub> = XW<sub>V<font point-size="10">1</font></sub>>, shape="rectangle", style="filled", fillcolor="violet"]
+    Wv2 [label=<V<sub>2</sub> = XW<sub>V<font point-size="10">2</font></sub>>, shape="rectangle", style="filled", fillcolor="orchid"]
+    Wv3 [label=<V<sub>3</sub> = XW<sub>V<font point-size="10">3</font></sub>>, shape="rectangle", style="filled", fillcolor="orchid3"]
+    q [label=<Q = [Q<sub>1</sub>, Q<sub>2</sub>, Q<sub>3</sub> ]>, shape="rectangle", style="filled", fillcolor="orangered3"]
+    k [label=<K = [K<sub>1</sub>, K<sub>2</sub>, K<sub>3</sub> ]>, shape="rectangle", style="filled", fillcolor="yellow2"]
+    v [label=<V = [V<sub>1</sub>, V<sub>2</sub>, V<sub>3</sub> ]>, shape="rectangle", style="filled", fillcolor="plum"]
+    attention [label="Figyelem(Q, K, V)", shape="rectangle"]
+
+    X -> Wq1
+    X -> Wq2
+    X -> Wq3
+    X -> Wk1
+    X -> Wk2
+    X -> Wk3
+    X -> Wv1
+    X -> Wv2
+    X -> Wv3
+
+    Wq1 -> q
+    Wq2 -> q
+    Wq3 -> q
+    Wk1 -> k
+    Wk2 -> k
+    Wk3 -> k
+    Wv1 -> v
+    Wv2 -> v
+    Wv3 -> v
+
+    q -> attention
+    k -> attention
+    v -> attention
+}

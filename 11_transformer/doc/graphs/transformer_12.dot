@@ -1,0 +1,19 @@
+digraph transformer {
+    graph [dpi=300]
+    rankdir="BT"
+
+    actor [label="Aktor", shape="plaintext"]
+    sim [label="Hasonlóság", shape="rectangle"]
+    memory [label="Megszerzett\ntapasztalat", shape="box3d"]
+    info [label="Tárolt\ninformáció", shape="box3d"]
+    map [label="Súlyok értékekhez\nrendelése", shape="rectangle"]
+    result [label="Releváns\ninformáció", shape="rectangle"]
+
+    actor -> sim [label=" Lekérdezés (Q)"]
+    memory -> sim [label="Kulcs (K)"]
+    {rank="same"; sim; memory;}
+    sim -> map [label=" Figyelmi\nsúlyok"]
+    info -> map [label="Érték (V)"]
+    {rank="same"; map; info;}
+    map -> result 
+}

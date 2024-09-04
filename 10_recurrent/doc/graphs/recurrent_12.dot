@@ -1,0 +1,10 @@
+digraph recurrent {
+    graph [dpi=300]
+    rankdir="BT"
+    input [label="x", shape="circle", style="filled", fillcolor="pink"]
+    output [label=<ŷ>, shape="circle", style="filled", fillcolor="lightblue"]
+    rnn [label="RNN", shape="rectangle", style="filled", fillcolor="lawngreen"]
+
+    input -> rnn [minlen=2]
+    rnn -> output [minlen=2]
+}

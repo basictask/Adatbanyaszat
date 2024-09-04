@@ -1,0 +1,15 @@
+digraph instance {
+    graph [dpi=300]
+    rankdir="LR"
+    input [label="", shape="plaintext", width=0, height=1.25]
+    conv1 [label="Konvolúció", shape="box3d", orientation=90]
+    conv2 [label="Konvolúció", shape="box3d", orientation=90]
+    score [label="Output", shape="Rectangle"]
+    output [label="", shape="plaintext", width=0]
+
+    input -> conv1
+    conv1 -> conv2 [label="..."]
+    conv2 -> score 
+    score -> output [label="argmax"]
+
+}

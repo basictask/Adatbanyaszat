@@ -1,0 +1,39 @@
+digraph od_4 {
+    graph[dpi=300]
+    rankdir="BT"
+    input [label="Input", shape="rectangle"]
+    conv [label="Konvolúciós hálózat", shape="rectangle"]
+    
+    subgraph cluster_1 {
+        style = "dashed"
+
+        asd [label="Pooling\nrétegek", shape="plaintext"]
+
+        four [label=<<table border="1" cellspacing="0" cellpadding="5">
+        <tr><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td></tr>
+        </table>>, shape="plaintext"];
+
+        two [label=<<table border="1" cellspacing="0" cellpadding="5">
+        <tr><td></td><td></td></tr>
+        <tr><td></td><td></td></tr>
+        </table>>, shape="plaintext"];
+
+        one [label=<<table border="1" cellspacing="0" cellpadding="5">
+        <tr><td></td></tr>
+        </table>>, shape="plaintext"];
+    }
+    flatten [label="Lapítás és konkatenáció", shape="rectangle"]
+    dense [label="Teljesen becsatolt rétegek", shape="rectangle"]
+
+    input -> conv
+    conv -> four
+    conv -> two
+    conv -> one
+    four -> flatten
+    two -> flatten
+    one -> flatten
+    flatten -> dense
+}

@@ -1,0 +1,257 @@
+digraph transformer {
+    graph [dpi=300]
+    rankdir = "BT"
+
+    x1 [label=<x<sub>1</sub>>, shape="plaintext"]
+    x2 [label=<x<sub>2</sub>>, shape="plaintext"]
+    x3 [label=<x<sub>3</sub>>, shape="plaintext"]
+    x4 [label=<x<sub>4</sub>>, shape="plaintext"]
+    x5 [label=<x<sub>5</sub>>, shape="plaintext"]
+
+    a1 [label=<a<sub>1</sub>>, shape="rectangle", style="filled", fillcolor=""]
+    a2 [label=<a<sub>2</sub>>, shape="rectangle", style="filled", fillcolor=""]
+    a3 [label=<a<sub>3</sub>>, shape="rectangle", style="filled", fillcolor=""]
+    a4 [label=<a<sub>4</sub>>, shape="rectangle", style="filled", fillcolor=""]
+    a5 [label=<a<sub>5</sub>>, shape="rectangle", style="filled", fillcolor=""]
+
+    q1 [label=<Q<sub>1</sub>>, shape="rectangle", style="filled", fillcolor="orangered3"]
+    q2 [label=<Q<sub>2</sub>>, shape="rectangle", style="filled", fillcolor="orangered3"]
+    q3 [label=<Q<sub>3</sub>>, shape="rectangle", style="filled", fillcolor="orangered3"]
+    q4 [label=<Q<sub>4</sub>>, shape="rectangle", style="filled", fillcolor="orangered3"]
+    q5 [label=<Q<sub>5</sub>>, shape="rectangle", style="filled", fillcolor="orangered3"]
+
+    k1 [label=<K<sub>1</sub>>, shape="rectangle", style="filled", fillcolor="yellow2"]
+    k2 [label=<K<sub>2</sub>>, shape="rectangle", style="filled", fillcolor="yellow2"]
+    k3 [label=<K<sub>3</sub>>, shape="rectangle", style="filled", fillcolor="yellow2"]
+    k4 [label=<K<sub>4</sub>>, shape="rectangle", style="filled", fillcolor="yellow2"]
+    k5 [label=<K<sub>5</sub>>, shape="rectangle", style="filled", fillcolor="yellow2"]
+
+    v1 [label=<V<sub>1</sub>>, shape="rectangle", style="filled", fillcolor="plum"]
+    v2 [label=<V<sub>2</sub>>, shape="rectangle", style="filled", fillcolor="plum"]
+    v3 [label=<V<sub>3</sub>>, shape="rectangle", style="filled", fillcolor="plum"]
+    v4 [label=<V<sub>4</sub>>, shape="rectangle", style="filled", fillcolor="plum"]
+    v5 [label=<V<sub>5</sub>>, shape="rectangle", style="filled", fillcolor="plum"]
+
+    embed1 [label="Beágyazás", shape="rectangle"]    
+    embed2 [label="Beágyazás", shape="rectangle"]    
+    embed3 [label="Beágyazás", shape="rectangle"]    
+    embed4 [label="Beágyazás", shape="rectangle"]    
+    embed5 [label="Beágyazás", shape="rectangle"]    
+
+    //alpha1 [label=<[α<sub><font point-size="10">1,1</font></sub>, α<sub><font point-size="10">1,2</font></sub>, α<sub><font point-size="10">1,3</font></sub>, α<sub><font point-size="10">1,4</font></sub>, α<sub><font point-size="10">1,5</font></sub>] >, shape="plaintext"]
+    alpha2 [label=<[α<sub><font point-size="10">2,1</font></sub>, α<sub><font point-size="10">2,2</font></sub>, α<sub><font point-size="10">2,3</font></sub>, α<sub><font point-size="10">2,4</font></sub>, α<sub><font point-size="10">2,5</font></sub>] >, shape="plaintext"]
+    //alpha3 [label=<[α<sub><font point-size="10">3,1</font></sub>, α<sub><font point-size="10">3,2</font></sub>, α<sub><font point-size="10">3,3</font></sub>, α<sub><font point-size="10">3,4</font></sub>, α<sub><font point-size="10">3,5</font></sub>] >, shape="plaintext"]
+    //alpha4 [label=<[α<sub><font point-size="10">4,1</font></sub>, α<sub><font point-size="10">4,2</font></sub>, α<sub><font point-size="10">4,3</font></sub>, α<sub><font point-size="10">4,4</font></sub>, α<sub><font point-size="10">4,5</font></sub>] >, shape="plaintext"]
+    //alpha5 [label=<[α<sub><font point-size="10">5,1</font></sub>, α<sub><font point-size="10">5,2</font></sub>, α<sub><font point-size="10">5,3</font></sub>, α<sub><font point-size="10">5,4</font></sub>, α<sub><font point-size="10">5,5</font></sub>] >, shape="plaintext"]
+
+    z [label="z", shape="rectangle", style="filled", fillcolor="orange"]
+    
+    rnn1 [label="RNN", shape="rectangle", style="filled", fillcolor="lightblue"]
+    rnn2 [label="RNN", shape="rectangle", style="filled", fillcolor="lightblue"]
+    rnn3 [label="RNN", shape="rectangle", style="filled", fillcolor="lightblue"]
+    rnn4 [label="RNN", shape="rectangle", style="filled", fillcolor="lightblue"]
+    rnn5 [label="RNN", shape="rectangle", style="filled", fillcolor="lightblue"]
+    
+    y1 [label=<y<sub>1</sub>>, shape="rectangle", shape="plaintext"]
+    y2 [label=<y<sub>2</sub>>, shape="rectangle", shape="plaintext"]
+    //y3 [label=<y<sub>3</sub>>, shape="rectangle", shape="plaintext"]
+    //y4 [label=<y<sub>4</sub>>, shape="rectangle", shape="plaintext"]
+    //y5 [label=<y<sub>5</sub>>, shape="rectangle", shape="plaintext"]
+
+    x1 -> embed1
+    x2 -> embed2
+    x3 -> embed3
+    x4 -> embed4
+    x5 -> embed5
+
+    embed1 -> a1
+    embed2 -> a2
+    embed3 -> a3
+    embed4 -> a4
+    embed5 -> a5
+
+    q11 [label=<Q<sub>11</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="tomato"]
+    q12 [label=<Q<sub>12</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="orangered"]
+    q13 [label=<Q<sub>13</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="orangered2"]
+    q21 [label=<Q<sub>21</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="tomato"]
+    q22 [label=<Q<sub>22</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="orangered"]
+    q23 [label=<Q<sub>23</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="orangered2"]
+    q31 [label=<Q<sub>31</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="tomato"]
+    q32 [label=<Q<sub>32</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="orangered"]
+    q33 [label=<Q<sub>33</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="orangered2"]
+    q41 [label=<Q<sub>41</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="tomato"]
+    q42 [label=<Q<sub>42</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="orangered"]
+    q43 [label=<Q<sub>43</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="orangered2"]
+    q51 [label=<Q<sub>51</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="tomato"]
+    q52 [label=<Q<sub>52</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="orangered"]
+    q53 [label=<Q<sub>53</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="orangered2"]
+    k11 [label=<K<sub>11</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="khaki1"]
+    k12 [label=<K<sub>12</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="yellow"]
+    k13 [label=<K<sub>13</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="gold"]
+    k21 [label=<K<sub>21</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="khaki1"]
+    k22 [label=<K<sub>22</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="yellow"]
+    k23 [label=<K<sub>23</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="gold"]
+    k31 [label=<K<sub>31</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="khaki1"]
+    k32 [label=<K<sub>32</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="yellow"]
+    k33 [label=<K<sub>33</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="gold"]
+    k41 [label=<K<sub>41</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="khaki1"]
+    k42 [label=<K<sub>42</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="yellow"]
+    k43 [label=<K<sub>43</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="gold"]
+    k51 [label=<K<sub>51</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="khaki1"]
+    k52 [label=<K<sub>52</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="yellow"]
+    k53 [label=<K<sub>53</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="gold"]
+    v11 [label=<V<sub>11</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="violet"]
+    v12 [label=<V<sub>12</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="orchid"]
+    v13 [label=<V<sub>13</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="orchid3"]
+    v21 [label=<V<sub>21</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="violet"]
+    v22 [label=<V<sub>22</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="orchid"]
+    v23 [label=<V<sub>23</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="orchid3"]
+    v31 [label=<V<sub>31</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="violet"]
+    v32 [label=<V<sub>32</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="orchid"]
+    v33 [label=<V<sub>33</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="orchid3"]
+    v41 [label=<V<sub>41</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="violet"]
+    v42 [label=<V<sub>42</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="orchid"]
+    v43 [label=<V<sub>43</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="orchid3"]
+    v51 [label=<V<sub>51</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="violet"]
+    v52 [label=<V<sub>52</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="orchid"]
+    v53 [label=<V<sub>53</sub>>, width=.1, fontsize=9, shape="rectangle", style="filled", fillcolor="orchid3"]
+
+    { rank=same; q11 q12 q13 q21 q22 q23 q31 q32 q33 q41 q42 q43 q51 q52 q53 k11 k12 k13 k21 k22 k23 k31 k32 k33 k41 k42 k43 k51 k52 k53 v11 v12 v13 v21 v22 v23 v31 v32 v33 v41 v42 v43 v51 v52 v53 }
+
+    a1 -> q11 [minlen=2]
+    a1 -> q12 [minlen=2]
+    a1 -> q13 [minlen=2]
+    a2 -> q21 [minlen=2]
+    a2 -> q22 [minlen=2]
+    a2 -> q23 [minlen=2]
+    a3 -> q31 [minlen=2]
+    a3 -> q32 [minlen=2]
+    a3 -> q33 [minlen=2]
+    a4 -> q41 [minlen=2]
+    a4 -> q42 [minlen=2]
+    a4 -> q43 [minlen=2]
+    a5 -> q51 [minlen=2]
+    a5 -> q52 [minlen=2]
+    a5 -> q53 [minlen=2]
+    a1 -> k11 [minlen=2]
+    a1 -> k12 [minlen=2]
+    a1 -> k13 [minlen=2]
+    a2 -> k21 [minlen=2]
+    a2 -> k22 [minlen=2]
+    a2 -> k23 [minlen=2]
+    a3 -> k31 [minlen=2]
+    a3 -> k32 [minlen=2]
+    a3 -> k33 [minlen=2]
+    a4 -> k41 [minlen=2]
+    a4 -> k42 [minlen=2]
+    a4 -> k43 [minlen=2]
+    a5 -> k51 [minlen=2]
+    a5 -> k52 [minlen=2]
+    a5 -> k53 [minlen=2]
+    a1 -> v11 [minlen=2]
+    a1 -> v12 [minlen=2]
+    a1 -> v13 [minlen=2]
+    a2 -> v21 [minlen=2]
+    a2 -> v22 [minlen=2]
+    a2 -> v23 [minlen=2]
+    a3 -> v31 [minlen=2]
+    a3 -> v32 [minlen=2]
+    a3 -> v33 [minlen=2]
+    a4 -> v41 [minlen=2]
+    a4 -> v42 [minlen=2]
+    a4 -> v43 [minlen=2]
+    a5 -> v51 [minlen=2]
+    a5 -> v52 [minlen=2]
+    a5 -> v53 [minlen=2]
+
+    q11 -> q1 
+    q12 -> q1 
+    q13 -> q1 
+    q21 -> q2 
+    q22 -> q2 
+    q23 -> q2 
+    q31 -> q3 
+    q32 -> q3 
+    q33 -> q3 
+    q41 -> q4 
+    q42 -> q4 
+    q43 -> q4 
+    q51 -> q5 
+    q52 -> q5 
+    q53 -> q5 
+    k11 -> k1 
+    k12 -> k1 
+    k13 -> k1 
+    k21 -> k2 
+    k22 -> k2 
+    k23 -> k2 
+    k31 -> k3 
+    k32 -> k3 
+    k33 -> k3 
+    k41 -> k4 
+    k42 -> k4 
+    k43 -> k4 
+    k51 -> k5 
+    k52 -> k5 
+    k53 -> k5 
+    v11 -> v1 
+    v12 -> v1 
+    v13 -> v1 
+    v21 -> v2 
+    v22 -> v2 
+    v23 -> v2 
+    v31 -> v3 
+    v32 -> v3 
+    v33 -> v3 
+    v41 -> v4 
+    v42 -> v4 
+    v43 -> v4 
+    v51 -> v5 
+    v52 -> v5 
+    v53 -> v5 
+
+    splines="False"
+    k1 -> alpha2 [minlen=4, constraint="False"]
+    v1 -> alpha2 [minlen=4, constraint="False"]
+    q2 -> alpha2 [minlen=4, constraint="True", color="red"]
+    k2 -> alpha2 [minlen=4, constraint="True"]
+    v2 -> alpha2 [minlen=4, constraint="True"]
+    k3 -> alpha2 [minlen=4, constraint="False"]
+    v3 -> alpha2 [minlen=4, constraint="False"]
+    k4 -> alpha2 [minlen=4, constraint="False"]
+    v4 -> alpha2 [minlen=4, constraint="False"]
+    k5 -> alpha2 [minlen=4, constraint="False"]
+    v5 -> alpha2 [minlen=4, constraint="False"]
+    
+    {rank="same"; rnn1; rnn2; rnn3; rnn4; rnn5;}
+
+    rnn1 -> rnn2 [constraint="true", minlen=23]
+    rnn2 -> rnn3 [constraint="true", style="invis", minlen=23]
+    rnn3 -> rnn4 [constraint="true", style="invis", minlen=23]
+    rnn4 -> rnn5 [constraint="true", style="invis", minlen=23]
+
+    rnn1 -> y1
+    rnn2 -> y2
+
+    alpha2 -> z
+    z -> rnn2
+    y1 -> z [style="dashed", constraint="false"]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

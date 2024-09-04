@@ -1,0 +1,13 @@
+digraph od_1 {
+    graph [dpi=300]
+    rankdir="BT"
+
+    input [shape="plaintext", label=""]
+    net [shape="rectangle", label="Osztályozó hálózat"]
+    vec [shape="rectangle", label="[macska: 0.9; kutya: 0.1]"]
+    pred [shape="rectangle", label="Predikció = macska"];
+
+    input -> net
+    net -> vec [label=" softmax"]
+    vec -> pred [label=" argmax"]
+}

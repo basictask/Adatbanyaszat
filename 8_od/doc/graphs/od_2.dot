@@ -1,0 +1,17 @@
+digraph od_1 {
+    graph [dpi=300]
+    rankdir="BT"
+
+    input [shape="plaintext", label=""]
+    net [shape="rectangle", label="Lokalizáló hálózat"]
+    vec [shape="rectangle", label="[macska: 0.9; kutya: 0.1]"]
+    pred [shape="rectangle", label="Predikció = macska"];
+    box [shape="rectangle", label="Doboz koordináták\n[x,y,w,h]"]
+    box_pred [shape="rectangle", label="Becsült doboz koordináták\n[x',y',w',h']"]
+
+    input -> net
+    net -> vec [label=" softmax"]
+    vec -> pred [label=" argmax"]
+    net -> box
+    box -> box_pred [label=" L2 költség"]
+}

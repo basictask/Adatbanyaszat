@@ -1,0 +1,21 @@
+digraph dl {
+    graph [dpi=300]
+    rankdir="BT"
+    input [label="x", shape="rectangle"]
+    output [label="x'", shape="rectangle"]
+    encoder [label="Kódoló\nP(z|x)", shape="rectangle"]
+    decoder [label="Dekódoló\nP(x'|z)", shape="rectangle"]
+    mu [label="μ", shape="rectangle", fontsize=20]
+    sigma [label="σ", shape="rectangle", fontsize=20]
+    epsilon  [label="ε", shape="rectangle", fontsize=20]
+    z [label="z=μ+σ*ε", shape="rectangle", fontsize=20]
+
+    input -> encoder
+    encoder -> mu
+    encoder -> sigma
+    mu -> z
+    sigma -> z
+    epsilon -> z
+    z -> decoder
+    decoder -> output
+}

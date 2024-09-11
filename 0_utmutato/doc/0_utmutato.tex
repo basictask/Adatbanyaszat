@@ -79,76 +79,75 @@
 }
 
 \begin{document}
+	% Title page
+	\section{Beveztés}
+	\title[]{Adatbányászat a Gyakorlatban}
+	\subtitle{Tantárgyi útmutató}
+	\author[Kuknyó Dániel]{Kuknyó Dániel\\Budapesti Gazdasági Egyetem}
+	\date{2024/25\\1.félév}
+	\makebeamertitle
 	
-% Title page
-\section{Beveztés}
-\title[]{Adatbányászat a Gyakorlatban}
-\subtitle{Tantárgyi útmutató}
-\author[Kuknyó Dániel]{Kuknyó Dániel\\Budapesti Gazdasági Egyetem}
-\date{2024/25\\1.félév}
-\makebeamertitle
-
-\begin{frame}{Tartalom}
-\tableofcontents{}
-\end{frame}
-
-\begin{frame}{Elérhetőségek}
-\begin{center}
-\begin{itemize}
-	\item \textbf{E-mail}: \href{mailto:daniel.kuknyo@mailbox.org}{daniel.kuknyo@mailbox.org}
-	\item \textbf{Messenger}: \href{https://www.facebook.com/dani.kkny/}{Dani Kuknyo}
-	\item \textbf{Coospace üzenet}: Y80L35
-	\item \textbf{A tárgy Git tárhelye}: \href{https://github.com/basictask/Adatbanyaszat}{basictask/Adatbanyaszat}
-	\item \textbf{Teams-en nem vagyok rendszeresen elérhető.} 
-\end{itemize}
-\end{center}
-A fenti címeken lehetősége van minden hallgatónak kérdezésre és konzultációt egyeztetni. A konzultáció platformja Teams, előre megbeszélt időpontban.
-\end{frame}
-
-\begin{frame}{A félév tematikája}
-
-\begin{itemize}
-	\item[-] Bevezetés
-	\begin{itemize}
-		\item[\textbf{1.}] \textbf{Verziókezelés és Git}
-	\end{itemize}
-	\item[-] Dash keretrendszer
-	\begin{itemize}
-		\item[\textbf{2.}] \textbf{Bevezetés a Dash keretrendszerbe}
-		\item[\textbf{3.}] \textbf{Diagramok létrehozása Dash alatt}
-		\item[\textbf{4.}] \textbf{Pontszórási diagramok, interaktív térképek}
-		\item[\textbf{5.}] \textbf{Gyakorisági adatok, dinamikus komponensek, gépi tanulás}
-		\item[\textbf{6.}] \textbf{Felhasználói komponensek, többlapos műszerfalak}
-	\end{itemize}
-	\item[-] Mélytanulás
-	\begin{itemize}
-		\item[\textbf{7.}] \textbf{Bevezetés a mesterséges mélytanulásba}
-		\item[\textbf{8.}] \textbf{Objektum detekció}
-		\item[\textbf{9.}] \textbf{Egyed szegmentáció}
-		\item[\textbf{10.}] \textbf{Visszacsatolásos neurális hálózatok}
-		\item[\textbf{11.}] \textbf{Transzformáló architektúrák}
-	\end{itemize}
-\end{itemize}
+	\begin{frame}{Tartalom}
+		\tableofcontents{}
+	\end{frame}
 	
-\end{frame}
-
-\section{Követelmények}
-
-\begin{frame}{}
-	\tableofcontents[currentsection]
-\end{frame}
-
-\begin{frame}{Követelmények}
-\begin{itemize}
-	\item A félév során \textbf{2 gyakorlati beadandót} kell teljesíteni, egyet megerősítéses tanulás és egyet mesterséges mélytanulás témaköréből. 
-	\item A beadandók \textbf{egyéniek, és hallgatónként más algoritmusokat kell implementálni}.
-	\item Egyenként 50-50 pont elérhető. Ez \textbf{összesen 100} gyakorlati pont. 
-	\item \textbf{Az egyedi munka elvárt és ellenőrzött}. Plágium esetén a munka érvénytelen. 
-\end{itemize}
-\par\smallskip
-	\begin{columns}
-	\begin{column}{.3\textwidth}
-		\end{column}
+	\begin{frame}{Elérhetőségek}
+		\begin{center}
+			\begin{itemize}
+				\item \textbf{E-mail}: \href{mailto:daniel.kuknyo@mailbox.org}{daniel.kuknyo@mailbox.org}
+				\item \textbf{Messenger}: \href{https://www.facebook.com/dani.kkny/}{Dani Kuknyo}
+				\item \textbf{Coospace üzenet}: Y80L35
+				\item \textbf{A tárgy Git tárhelye}: \href{https://github.com/basictask/Adatbanyaszat}{basictask/Adatbanyaszat}
+				\item \textbf{Teams-en nem vagyok rendszeresen elérhető.} 
+			\end{itemize}
+		\end{center}
+		A fenti címeken lehetősége van minden hallgatónak kérdezésre és konzultációt egyeztetni. A konzultáció platformja Teams, előre megbeszélt időpontban.
+	\end{frame}
+	
+	\begin{frame}{A félév tematikája}
+		
+		\begin{itemize}
+			\item[-] Bevezetés
+			\begin{itemize}
+				\item[\textbf{1.}] \textbf{Verziókezelés és Git}
+			\end{itemize}
+			\item[-] Dash keretrendszer
+			\begin{itemize}
+				\item[\textbf{2.}] \textbf{Bevezetés a Dash keretrendszerbe}
+				\item[\textbf{3.}] \textbf{Diagramok létrehozása Dash alatt}
+				\item[\textbf{4.}] \textbf{Pontszórási diagramok, interaktív térképek}
+				\item[\textbf{5.}] \textbf{Gyakorisági adatok, dinamikus komponensek, gépi tanulás}
+				\item[\textbf{6.}] \textbf{Felhasználói komponensek, többlapos műszerfalak}
+			\end{itemize}
+			\item[-] Mélytanulás
+			\begin{itemize}
+				\item[\textbf{7.}] \textbf{Bevezetés a mesterséges mélytanulásba}
+				\item[\textbf{8.}] \textbf{Objektum detekció}
+				\item[\textbf{9.}] \textbf{Egyed szegmentáció}
+				\item[\textbf{10.}] \textbf{Visszacsatolásos neurális hálózatok}
+				\item[\textbf{11.}] \textbf{Transzformáló architektúrák}
+			\end{itemize}
+		\end{itemize}
+		
+	\end{frame}
+	
+	\section{Követelmények}
+	
+	\begin{frame}{}
+		\tableofcontents[currentsection]
+	\end{frame}
+	
+	\begin{frame}{Követelmények}
+		\begin{itemize}
+			\item A félév során \textbf{2 gyakorlati beadandót} kell teljesíteni, egyet megerősítéses tanulás és egyet mesterséges mélytanulás témaköréből. 
+			\item A beadandók \textbf{egyéniek, és hallgatónként más algoritmusokat kell implementálni}.
+			\item Egyenként 50-50 pont elérhető. Ez \textbf{összesen 100} gyakorlati pont. 
+			\item \textbf{Az egyedi munka elvárt és ellenőrzött}. Plágium esetén a munka érvénytelen. 
+		\end{itemize}
+		\par\smallskip
+		\begin{columns}
+			\begin{column}{.3\textwidth}
+			\end{column}
 			\begin{column}{.3\textwidth}
 				\begin{block}{\begin{center}Ponthatárok\end{center}}
 					\begin{center}
@@ -160,69 +159,65 @@ A fenti címeken lehetősége van minden hallgatónak kérdezésre és konzultá
 					\end{center}
 				\end{block}
 			\end{column}
-		\begin{column}{.3\textwidth}
-		\end{column}
-	\end{columns}
-\end{frame}
-
-\begin{frame}{Beadás menete}
-	\begin{itemize}
-		\item A félév során mindenkinek létre kell hoznia egy \textbf{saját Git tárhelyet}, ahol a féléves munkáját fogja rögzíteni:
+			\begin{column}{.3\textwidth}
+			\end{column}
+		\end{columns}
+	\end{frame}
+	
+	\begin{frame}{Beadás menete}
 		\begin{itemize}
-			\item A Git felhasználónév teljesen mindegy, de a név mezőbe a teljes nevet írjátok be. 
-			\item A tárhely legyen privát. 
-			\item Vegyetek fel engem, mint hozzájáruló fejlesztőt a tárhelyre \emph{basictask} felhasználónévvel. 
+			\item A félév során mindenkinek létre kell hoznia egy \textbf{saját Git tárhelyet}, ahol a féléves munkáját fogja rögzíteni:
+			\begin{itemize}
+				\item A Git felhasználónév teljesen mindegy, de a név mezőbe a teljes nevet írjátok be. 
+				\item A tárhely legyen privát. 
+				\item Vegyetek fel engem, mint hozzájáruló fejlesztőt a tárhelyre \emph{basictask} felhasználónévvel. 
+			\end{itemize}
+			\item A munkák beadása Coospace felületen történik. \textbf{Csak egy linket várok, ami a beadandó feladathoz tartozó Git tárhelyre mutat}. Fájlokat és egyéb állományokat nem lehet feltölteni Coospace-re.
+			\item \textbf{Késői beadásra nincs lehetőség}. Ha a határidő után történik mentés a tárhelyre, nem lesz figyelembe véve.
 		\end{itemize}
-		\item A munkák beadása Coospace felületen történik. \textbf{Csak egy linket várok, ami a beadandó feladathoz tartozó Git tárhelyre mutat}. Fájlokat és egyéb állományokat nem lehet feltölteni Coospace-re.
-		\item \textbf{Késői beadásra nincs lehetőség}. Ha a határidő után történik mentés a tárhelyre, nem lesz figyelembe véve.
-	\end{itemize}
-\end{frame}
-
-\section{Órai környezet telepítése}
-
-\begin{frame}{}
-	\tableofcontents[currentsection]
-\end{frame}
-
-\begin{frame}[fragile]{Órai anyagok letöltése}
-	\begin{enumerate}
-		\item Anaconda környezet telepítése \href{https://www.anaconda.com/download}{innen}
-		\item Git telepítése \href{https://git-scm.com/downloads}{innen}
-		\item Órai tárhely klónozása a számítógépre (Git bash):
-		\begin{lstlisting}[language=bash]
-git clone https://github.com/basictask/Adatbanyaszat.git
-		\end{lstlisting}
-		\item Új \texttt{conda} környezet létrehozása és aktiválása (Anaconda prompt):
-		\begin{lstlisting}[language=bash]
-conda create -n dash python=3.11
-conda activate dash
-		\end{lstlisting}
-		\item A pro jekt gyökérmappájában állva a következő paranccsal lehet minden könyvtárat telepíteni (Anaconda prompt):
-		\begin{lstlisting}[language=bash]
-pip install -r requirements.txt
-		\end{lstlisting}
-	\end{enumerate}
-\end{frame}
-
-\begin{frame}{Javasolt fejlesztői környezetek}
-	    \begin{itemize}
-		\item \textbf{Dash alkalmazásokhoz}
+	\end{frame}
+	
+	\section{Órai környezet telepítése}
+	
+	\begin{frame}{}
+		\tableofcontents[currentsection]
+	\end{frame}
+	
+	\begin{frame}[fragile]{Órai anyagok letöltése}
+		\begin{enumerate}
+			\item Anaconda környezet telepítése \href{https://www.anaconda.com/download}{innen}
+			\item Git telepítése \href{https://git-scm.com/downloads}{innen}
+			\item Órai tárhely klónozása a számítógépre (Git bash):
+			\begin{lstlisting}[language=bash]
+				git clone https://github.com/basictask/Adatbanyaszat.git
+			\end{lstlisting}
+			\item Új \texttt{conda} környezet létrehozása és aktiválása (Anaconda prompt):
+			\begin{lstlisting}[language=bash]
+				conda create -n dash python=3.11
+				conda activate dash
+			\end{lstlisting}
+			\item A pro jekt gyökérmappájában állva a következő paranccsal lehet minden könyvtárat telepíteni (Anaconda prompt):
+			\begin{lstlisting}[language=bash]
+				pip install -r requirements.txt
+			\end{lstlisting}
+		\end{enumerate}
+	\end{frame}
+	
+	\begin{frame}{Javasolt fejlesztői környezetek}
 		\begin{itemize}
-			\item Pycharm Community/Professional (Egyetemi Hallgatóknak ingyenes a Professional)
-			\item Spyder (Anaconda fejlesztői csomaggal elérhető)
+			\item \textbf{Dash alkalmazásokhoz}
+			\begin{itemize}
+				\item Pycharm Community/Professional (Egyetemi Hallgatóknak ingyenes a Professional)
+				\item Spyder (Anaconda fejlesztői csomaggal elérhető)
+			\end{itemize}
+			\item \textbf{Jupyter notebook fájlokhoz}
+			\begin{itemize}
+				\item Jupyter notebook (Anaconda fejlesztői csomaggal ingyenes)
+				\item Visual Studio Code (Jupyter bővítménnyel)
+				\item Pycharm Professional Edition (Egyetemi Hallgatóknak ingyenes)
+			\end{itemize}
 		\end{itemize}
-		\item \textbf{Jupyter notebook fájlokhoz}
-		\begin{itemize}
-			\item Jupyter notebook (Anaconda fejlesztői csomaggal ingyenes)
-			\item Visual Studio Code (Jupyter bővítménnyel)
-			\item Pycharm Professional Edition (Egyetemi Hallgatóknak ingyenes)
-		\end{itemize}
-	\end{itemize}
-	\par\medskip
-	A felsoroltakon kívül bármely más fejlesztői környezet is használható a kurzus alatt.
-\end{frame}
-
-
-
-
+		\par\medskip
+		A felsoroltakon kívül bármely más fejlesztői környezet is használható a kurzus alatt.
+	\end{frame}
 \end{document}

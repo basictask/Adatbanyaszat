@@ -99,55 +99,54 @@
 
 
 \begin{document}
-
-% Title page
-\section{Dinamikus felhasználói komponensek}
-\title[]{Adatbányászat a Gyakorlatban}
-\subtitle{6. Gyakorlat: Haladó Dash módszerek}
-\author[Kuknyó Dániel]{Kuknyó Dániel\\Budapesti Gazdasági Egyetem}
-\date{2024/25\\1.félév}
-\makebeamertitle
-
-% Table of contents slide
-\begin{frame}
-\tableofcontents{}
-\end{frame}
-
-% Table of contents of the current section
-\begin{frame}
-\tableofcontents[currentsection]
-\end{frame}
-
-\begin{frame}[fragile]{Dinamikus felhasználói komponensek (\texttt{dyn\_component\_app\_v1.py})}
-	\begin{columns}
-		\begin{column}{.5\textwidth}
-			Olyan dinamikus komponensek, amelyek nem állandóak, hanem felhasználói interakcióra kerülnek hozzáadásra az alkalmazáshoz, és el is lehet őket távolítani.\par\smallskip
-			Ehhez tartozóan az első alkalmazás elrendezése:\par\smallskip
-			\begin{lstlisting}[language=python]
+	% Title page
+	\section{Dinamikus felhasználói komponensek}
+	\title[]{Adatbányászat a Gyakorlatban}
+	\subtitle{6. Gyakorlat: Haladó Dash módszerek}
+	\author[Kuknyó Dániel]{Kuknyó Dániel\\Budapesti Gazdasági Egyetem}
+	\date{2024/25\\1.félév}
+	\makebeamertitle
+	
+	% Table of contents slide
+	\begin{frame}
+	\tableofcontents{}
+	\end{frame}
+	
+	% Table of contents of the current section
+	\begin{frame}
+	\tableofcontents[currentsection]
+	\end{frame}
+	
+	\begin{frame}[fragile]{Dinamikus felhasználói komponensek (\texttt{dyn\_component\_app\_v1.py})}
+		\begin{columns}
+			\begin{column}{.5\textwidth}
+				Olyan dinamikus komponensek, amelyek nem állandóak, hanem felhasználói interakcióra kerülnek hozzáadásra az alkalmazáshoz, és el is lehet őket távolítani.\par\smallskip
+				Ehhez tartozóan az első alkalmazás elrendezése:\par\smallskip
+				\begin{lstlisting}[language=python]
 app.layout = html.Div([
 	dbc.Button("Diagram hozzáadása", id='dyn_component_button'),
 	html.Div(id='dyn_component_output', children=[]),
 ])
-			\end{lstlisting}
-		\end{column}
-		\begin{column}{.5\textwidth}
-			\begin{center}
-				\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/adv_1.png}
-			\end{center}
-		\end{column}
-	\end{columns}
-\end{frame}
-
-\begin{frame}[fragile]{Callback függvény felhasználói komponensek hozzáadására}
-	\begin{columns}
-		\begin{column}{.5\textwidth}
-			A callback a \texttt{dyn\_component\_output} \texttt{Div} \texttt{children} komponensét frissíti.\par\medskip
-			Ha a gombot megnyomták, létrehoz egy új oszlopdiagramot, és a diagram címében megjeleníti a gombnyomások számát.
-			Az új diagramot hozzáadja a \texttt{children} listához.\par\medskip
-			Visszatér a frissített \texttt{children} listával, amely tartalmazza az új diagramot.
-		\end{column}
-		\begin{column}{.5\textwidth}
-			\begin{lstlisting}[language=python]
+				\end{lstlisting}
+			\end{column}
+			\begin{column}{.5\textwidth}
+				\begin{center}
+					\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/adv_1.png}
+				\end{center}
+			\end{column}
+		\end{columns}
+	\end{frame}
+	
+	\begin{frame}[fragile]{Callback függvény felhasználói komponensek hozzáadására}
+		\begin{columns}
+			\begin{column}{.5\textwidth}
+				A callback a \texttt{dyn\_component\_output} \texttt{Div} \texttt{children} komponensét frissíti.\par\medskip
+				Ha a gombot megnyomták, létrehoz egy új oszlopdiagramot, és a diagram címében megjeleníti a gombnyomások számát.
+				Az új diagramot hozzáadja a \texttt{children} listához.\par\medskip
+				Visszatér a frissített \texttt{children} listával, amely tartalmazza az új diagramot.
+			\end{column}
+			\begin{column}{.5\textwidth}
+				\begin{lstlisting}[language=python]
 @app.callback(
 	Output('dyn_component_output', 'children'),
 	Input('dyn_component_button', 'n_clicks'),
@@ -159,43 +158,43 @@ def add_new_chart(n_clicks, children):
 	new_chart = dcc.Graph(figure=px.bar(title=f"Diagram {n_clicks}"))
 	children.append(new_chart)
 	return children
-
-			\end{lstlisting}
-		\end{column}
-	\end{columns}
-\end{frame}
-
-\begin{frame}{Az alkalmazás callback gráfja}
-	A callback gráf ebben az esetben egy speciális hurkot mutat. Ez azt jelenti, hogy a függvény egy olyan komponenst térít vissza, amit megkapott paraméterül és módosított a függvénytörzsben.\par\smallskip
-	Ez a diagram változatlan marad a hozzáadott komponensek számától függetlenül.
-	\vspace{1cm}
-	\begin{center}
-		\includegraphics[width=10cm, height=7cm, keepaspectratio]{images/adv_2.png}
-	\end{center}
-\end{frame}
-
-\begin{frame}[fragile]{Mintaillesztő callback függvények}
-	\begin{columns}
-		\begin{column}{.5\textwidth}
-			Az alkalmazás következő verziója interaktivitást ad a felhasználói komponenseknek, mintaillesztő callback függvények segítségével.\par\smallskip
-			Minden diagramnak van egy saját legördülő menüje, ahol ki lehet választani egy országnevet, majd kirajzolja a népességet a diagramra. 
-		\end{column}
-		\begin{column}{.5\textwidth}
-			\begin{center}
-				\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/adv_3.png}
-			\end{center}
-		\end{column}
-	\end{columns}
-\end{frame}
-
-\begin{frame}[fragile]{Dinamikus komponens elnevezések}
-	\begin{columns}
-		\begin{column}{.5\textwidth}
-			Dash rendszerben egy komponens \texttt{id} paramétere bármilyen hash-képes (egy függvényen keresztül egyértelműen leképezhető) objektum lehet, így pl. egy szótár is.\par\smallskip
-			Az alkalmazásban a \texttt{id} attribútum egy szótár, amely tartalmazza a \texttt{type} és \texttt{index} kulcsokat. Ez a struktúra lehetővé teszi komponenseket dinamikus azonosítását az alkalmazásban. Például több diagram létrehozása és módosítása esetén mindegyiket egyedi névvel látja el.  
-		\end{column}
-		\begin{column}{.5\textwidth}
-			\begin{lstlisting}[language=python]
+	
+				\end{lstlisting}
+			\end{column}
+		\end{columns}
+	\end{frame}
+	
+	\begin{frame}{Az alkalmazás callback gráfja}
+		A callback gráf ebben az esetben egy speciális hurkot mutat. Ez azt jelenti, hogy a függvény egy olyan komponenst térít vissza, amit megkapott paraméterül és módosított a függvénytörzsben.\par\smallskip
+		Ez a diagram változatlan marad a hozzáadott komponensek számától függetlenül.
+		\vspace{1cm}
+		\begin{center}
+			\includegraphics[width=10cm, height=7cm, keepaspectratio]{images/adv_2.png}
+		\end{center}
+	\end{frame}
+	
+	\begin{frame}[fragile]{Mintaillesztő callback függvények}
+		\begin{columns}
+			\begin{column}{.5\textwidth}
+				Az alkalmazás következő verziója interaktivitást ad a felhasználói komponenseknek, mintaillesztő callback függvények segítségével.\par\smallskip
+				Minden diagramnak van egy saját legördülő menüje, ahol ki lehet választani egy országnevet, majd kirajzolja a népességet a diagramra. 
+			\end{column}
+			\begin{column}{.5\textwidth}
+				\begin{center}
+					\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/adv_3.png}
+				\end{center}
+			\end{column}
+		\end{columns}
+	\end{frame}
+	
+	\begin{frame}[fragile]{Dinamikus komponens elnevezések}
+		\begin{columns}
+			\begin{column}{.5\textwidth}
+				Dash rendszerben egy komponens \texttt{id} paramétere bármilyen hash-képes (egy függvényen keresztül egyértelműen leképezhető) objektum lehet, így pl. egy szótár is.\par\smallskip
+				Az alkalmazásban a \texttt{id} attribútum egy szótár, amely tartalmazza a \texttt{type} és \texttt{index} kulcsokat. Ez a struktúra lehetővé teszi komponenseket dinamikus azonosítását az alkalmazásban. Például több diagram létrehozása és módosítása esetén mindegyiket egyedi névvel látja el.  
+			\end{column}
+			\begin{column}{.5\textwidth}
+				\begin{lstlisting}[language=python]
 # Új diagram létrehozása
 new_chart = dcc.Graph(
 	id={'type': 'chart', 'index': n_clicks},
@@ -209,19 +208,19 @@ new_dropdown = dcc.Dropdown(
 	options=[{'label': c, 'value': c} for c in countries],
 	placeholder='Ország kiválasztása'
 )
-			\end{lstlisting}
-		\end{column}
-	\end{columns}
-\end{frame}
-
-\begin{frame}[fragile]{Dash \texttt{MATCH}}
-	\begin{columns}
-		\begin{column}{.5\textwidth}
-			A \texttt{dash.dependencies.MATCH} lehetővé teszi, hoyg a callback egy adott komponenscsoport egy adott példányára vonatkozzon.\par\medskip
-			Például ha több dinamikus objektum közül mindegyiknek van egy egyedi \texttt{id} paramétere egy szótár formájában, akkor a \texttt{MATCH} segítségével meg lehet határozni, hogy a callback csak az adott indexnek megfelelő komponensre reagáljon.
-		\end{column}
-		\begin{column}{.5\textwidth}
-			\begin{lstlisting}[language=python]
+				\end{lstlisting}
+			\end{column}
+		\end{columns}
+	\end{frame}
+	
+	\begin{frame}[fragile]{Dash \texttt{MATCH}}
+		\begin{columns}
+			\begin{column}{.5\textwidth}
+				A \texttt{dash.dependencies.MATCH} lehetővé teszi, hoyg a callback egy adott komponenscsoport egy adott példányára vonatkozzon.\par\medskip
+				Például ha több dinamikus objektum közül mindegyiknek van egy egyedi \texttt{id} paramétere egy szótár formájában, akkor a \texttt{MATCH} segítségével meg lehet határozni, hogy a callback csak az adott indexnek megfelelő komponensre reagáljon.
+			\end{column}
+			\begin{column}{.5\textwidth}
+				\begin{lstlisting}[language=python]
 @app.callback(
 	Output({'type': 'chart', 'index': MATCH}, 'figure'),
 	Input({'type': 'dropdown', 'index': MATCH}, 'value'),
@@ -239,59 +238,59 @@ def create_population_chart(country):
 		title=f'{country} ország népessége'
 	)
 	return fig
-			\end{lstlisting}
-		\end{column}
-	\end{columns}
-\end{frame}
-
-\begin{frame}{Az alkalmazás callback gráfja}
-	A felső gráf megegyezik az alkalmazás előző verziójában látottakkal. Az alsó gráfon a \texttt{MATCH} jelzi, hogy csak a megfelelő indexű komponenseket frissítse.\par\medskip
-	\begin{center}
-		\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/adv_4.png}
-	\end{center}
-	\par\medskip
-	A \texttt{MATCH} mellett az \texttt{ALL} használható minden komponens nevének illesztésére, az \texttt{ALLSMALLER} pedig azokra a komponensekre, amelyek a callback függvény indulása előtt lettek létrehozva.
-\end{frame}
-
-\section{URL manipuláció}
-
-\begin{frame}
-	\tableofcontents[currentsection]
-\end{frame}
-
-\begin{frame}[fragile]{\texttt{Location} és \texttt{Link} komponensek (\texttt{multi\_app\_v1.py})}
-	Dash keretrendszerben a \texttt{Location} és \texttt{Link} komponensek az útválasztás fontos elemei, melyek lehetővé teszik az URL kezelést és a navigációt. 
-	\begin{columns}
-		\begin{column}{.5\textwidth}
-			\only<1>{
-				\begin{block}{\texttt{Location}}
-					A Dash alkalmazásban történő kezelésére szolgál. A \texttt{Location} komponens adatai közvetlenül a böngésző URL-jéből származnak, és az alkalmazásban történő változásokat közvetlenül a böngésző URL-jébe írja vissza.
-				\end{block}
-			}
-			\only<2>{
-				\begin{block}{\texttt{Link}}
-					A \texttt{Link} komponens egy hiperhivatkozást hoz létre a Dash alkalmazásban. Fontosabb attribútumai:
-					\begin{itemize}
-						\item \texttt{href}: Meghatározza a hivatkozás URL-jét
-						\item \texttt{target}: Megadja, hogy a hivatkozást az aktuális vagy új ablakban kell-e megnyitni
-						\item \texttt{refresh}: Ha igaz, akkor az URL megnyitásakor frissül az oldal
-					\end{itemize}
-				\end{block}
-			}
-		\end{column}
-		\begin{column}{.5\textwidth}
-			\begin{center}
-				\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/adv_5.png}
-			\end{center}
-		\end{column}
-	\end{columns}
-\end{frame}
-
-\begin{frame}[fragile]{\texttt{Location} és \texttt{Link} komponensek (\texttt{multi\_app\_v2.py})}
-	Az alkalmazás a \texttt{Link} komponens felhasználásával megváltoztatja az URL-t és a \texttt{Location} komponens segítségével pedig kivonatol tetszőleges attribútumokat.
-	\begin{columns}
-		\begin{column}{.6\textwidth}
-			\begin{lstlisting}[language=python]
+				\end{lstlisting}
+			\end{column}
+		\end{columns}
+	\end{frame}
+	
+	\begin{frame}{Az alkalmazás callback gráfja}
+		A felső gráf megegyezik az alkalmazás előző verziójában látottakkal. Az alsó gráfon a \texttt{MATCH} jelzi, hogy csak a megfelelő indexű komponenseket frissítse.\par\medskip
+		\begin{center}
+			\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/adv_4.png}
+		\end{center}
+		\par\medskip
+		A \texttt{MATCH} mellett az \texttt{ALL} használható minden komponens nevének illesztésére, az \texttt{ALLSMALLER} pedig azokra a komponensekre, amelyek a callback függvény indulása előtt lettek létrehozva.
+	\end{frame}
+	
+	\section{URL manipuláció}
+	
+	\begin{frame}
+		\tableofcontents[currentsection]
+	\end{frame}
+	
+	\begin{frame}[fragile]{\texttt{Location} és \texttt{Link} komponensek (\texttt{multi\_app\_v1.py})}
+		Dash keretrendszerben a \texttt{Location} és \texttt{Link} komponensek az útválasztás fontos elemei, melyek lehetővé teszik az URL kezelést és a navigációt. 
+		\begin{columns}
+			\begin{column}{.5\textwidth}
+				\only<1>{
+					\begin{block}{\texttt{Location}}
+						A Dash alkalmazásban történő kezelésére szolgál. A \texttt{Location} komponens adatai közvetlenül a böngésző URL-jéből származnak, és az alkalmazásban történő változásokat közvetlenül a böngésző URL-jébe írja vissza.
+					\end{block}
+				}
+				\only<2>{
+					\begin{block}{\texttt{Link}}
+						A \texttt{Link} komponens egy hiperhivatkozást hoz létre a Dash alkalmazásban. Fontosabb attribútumai:
+						\begin{itemize}
+							\item \texttt{href}: Meghatározza a hivatkozás URL-jét
+							\item \texttt{target}: Megadja, hogy a hivatkozást az aktuális vagy új ablakban kell-e megnyitni
+							\item \texttt{refresh}: Ha igaz, akkor az URL megnyitásakor frissül az oldal
+						\end{itemize}
+					\end{block}
+				}
+			\end{column}
+			\begin{column}{.5\textwidth}
+				\begin{center}
+					\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/adv_5.png}
+				\end{center}
+			\end{column}
+		\end{columns}
+	\end{frame}
+	
+	\begin{frame}[fragile]{\texttt{Location} és \texttt{Link} komponensek (\texttt{multi\_app\_v2.py})}
+		Az alkalmazás a \texttt{Link} komponens felhasználásával megváltoztatja az URL-t és a \texttt{Location} komponens segítségével pedig kivonatol tetszőleges attribútumokat.
+		\begin{columns}
+			\begin{column}{.6\textwidth}
+				\begin{lstlisting}[language=python]
 app.layout = html.Div([
 	dcc.Location(id='location', refresh=False),
 	html.A(href='/path', children='Mappába navigálás'),
@@ -300,21 +299,21 @@ app.layout = html.Div([
 	html.H4("URL tulajdonságai:"),
 	html.Div(id='location_output')
 ])
-			\end{lstlisting}
-		\end{column}
-		\begin{column}{.4\textwidth}
-			\begin{center}
-				\includegraphics[width=6cm, height=7cm, keepaspectratio]{images/adv_6.png}
-			\end{center}
-		\end{column}
-	\end{columns}
-\end{frame}
-
-\begin{frame}[fragile]{\texttt{Location} és \texttt{Link} komponensek (\texttt{multi\_app\_v2.py})}
-	A callback függvény bemenetében a \texttt{Location} több paramétere található, és a formázást megőrző \texttt{html.Pre} majd kiíratódnak a \texttt{Div} tárolóra. 
-	\begin{columns}
-		\begin{column}{.6\textwidth}
-			\begin{lstlisting}[language=python]
+				\end{lstlisting}
+			\end{column}
+			\begin{column}{.4\textwidth}
+				\begin{center}
+					\includegraphics[width=6cm, height=7cm, keepaspectratio]{images/adv_6.png}
+				\end{center}
+			\end{column}
+		\end{columns}
+	\end{frame}
+	
+	\begin{frame}[fragile]{\texttt{Location} és \texttt{Link} komponensek (\texttt{multi\_app\_v2.py})}
+		A callback függvény bemenetében a \texttt{Location} több paramétere található, és a formázást megőrző \texttt{html.Pre} majd kiíratódnak a \texttt{Div} tárolóra. 
+		\begin{columns}
+			\begin{column}{.6\textwidth}
+				\begin{lstlisting}[language=python]
 @app.callback(
 	Output('location_output', 'children'),
 	Input('location', 'pathname'),
@@ -331,74 +330,74 @@ def show_url(pathname, search, href, hash):
 			hash: {hash}"""
 		])
 	])
-			\end{lstlisting}
-		\end{column}
-		\begin{column}{.4\textwidth}
-			\begin{center}
-				\includegraphics[width=6cm, height=7cm, keepaspectratio]{images/adv_6.png}
-			\end{center}
-		\end{column}
-	\end{columns}
-\end{frame}
-
-\section{Többlapos alkalmazások}
-
-\begin{frame}{}
-	\tableofcontents[currentsection]
-\end{frame}
-
-\begin{frame}[fragile]{Többlapos alkalmazások struktúrája}
-	Többlapos alkalmazások esetén az elrendezés csontvázát egy fő elrendezés komponens adja, amelyben egy üres \texttt{Div} található. A \texttt{Div} tartalma attól függően fog változni, hogy a felhasználó milyen oldalra navigál az alkalmazáson belül. 
-	\begin{columns}
-		\begin{column}{.5\textwidth}
-			\begin{enumerate}
-				\item Importok (boilerplate):
-					\begin{lstlisting}[language=python]
+				\end{lstlisting}
+			\end{column}
+			\begin{column}{.4\textwidth}
+				\begin{center}
+					\includegraphics[width=6cm, height=7cm, keepaspectratio]{images/adv_6.png}
+				\end{center}
+			\end{column}
+		\end{columns}
+	\end{frame}
+	
+	\section{Többlapos alkalmazások}
+	
+	\begin{frame}{}
+		\tableofcontents[currentsection]
+	\end{frame}
+	
+	\begin{frame}[fragile]{Többlapos alkalmazások struktúrája}
+		Többlapos alkalmazások esetén az elrendezés csontvázát egy fő elrendezés komponens adja, amelyben egy üres \texttt{Div} található. A \texttt{Div} tartalma attól függően fog változni, hogy a felhasználó milyen oldalra navigál az alkalmazáson belül. 
+		\begin{columns}
+			\begin{column}{.5\textwidth}
+				\begin{enumerate}
+					\item Importok (boilerplate):
+						\begin{lstlisting}[language=python]
 import dash
 from dash import dcc
 ...
-					\end{lstlisting}
-				\item Alkalmazás példányosítása:
-					\begin{lstlisting}[language=python]
+						\end{lstlisting}
+					\item Alkalmazás példányosítása:
+						\begin{lstlisting}[language=python]
 app = dash.Dash(__name__)
-					\end{lstlisting}
-				\item Alkalmazás elrendezése:
-					\begin{lstlisting}[language=python]
+						\end{lstlisting}
+					\item Alkalmazás elrendezése:
+						\begin{lstlisting}[language=python]
 app.layout = html.Div([
 	...
 ])
-					\end{lstlisting}
-			\end{enumerate}			
-		\end{column}
-		\begin{column}{.5\textwidth}
-			\begin{enumerate}
-				\setcounter{enumi}{3}
-				\item Callback függvények:
-					\begin{lstlisting}[language=python]
+						\end{lstlisting}
+				\end{enumerate}			
+			\end{column}
+			\begin{column}{.5\textwidth}
+				\begin{enumerate}
+					\setcounter{enumi}{3}
+					\item Callback függvények:
+						\begin{lstlisting}[language=python]
 @app.callback()
 	...
 @app.callback()
 	...
-					\end{lstlisting}
-				\item Alkalmazás futtatása:
-					\begin{lstlisting}[language=python]
+						\end{lstlisting}
+					\item Alkalmazás futtatása:
+						\begin{lstlisting}[language=python]
 if __name__ = '__main__':
 	app.run_server(debug=True)
-					\end{lstlisting}
-			\end{enumerate}
-		\end{column}
-	\end{columns}
-\end{frame}
-
-\begin{frame}[fragile]{Többlapos alkalmazás: fő elrendezés}
-	\begin{columns}
-		\begin{column}{.5\textwidth}
-			Ez a komponens szolgál az alkalmazás csontvázaként.\par\medskip
-			Tartalmaz egy \texttt{NavbarSimple} navigációs sávot és az országokat tartalmazó legördülő menüt. Az elrendezés még magában foglalja a lapos elrendezést az oldal alján.\par\medskip
-			A lap törzse tartalmaz egy \texttt{Location} komponenst és egy üres \texttt{Div} objektumot, ami majd az elrendezést fogja tartalmazni.
-		\end{column}
-		\begin{column}{.5\textwidth}
-			\begin{lstlisting}[language=python]
+						\end{lstlisting}
+				\end{enumerate}
+			\end{column}
+		\end{columns}
+	\end{frame}
+	
+	\begin{frame}[fragile]{Többlapos alkalmazás: fő elrendezés}
+		\begin{columns}
+			\begin{column}{.5\textwidth}
+				Ez a komponens szolgál az alkalmazás csontvázaként.\par\medskip
+				Tartalmaz egy \texttt{NavbarSimple} navigációs sávot és az országokat tartalmazó legördülő menüt. Az elrendezés még magában foglalja a lapos elrendezést az oldal alján.\par\medskip
+				A lap törzse tartalmaz egy \texttt{Location} komponenst és egy üres \texttt{Div} objektumot, ami majd az elrendezést fogja tartalmazni.
+			\end{column}
+			\begin{column}{.5\textwidth}
+				\begin{lstlisting}[language=python]
 main_layout = html.Div([
 	dbc.NavbarSimple([
 		...
@@ -416,33 +415,33 @@ main_layout = html.Div([
 ...
 
 app.layout = main_layout
-			\end{lstlisting}
-		\end{column}
-	\end{columns}
-\end{frame}
-
-\begin{frame}[fragile]{Többlapos alkalmazás: Indikátorok műszerfala}
-	\begin{columns}
-		\begin{column}{.5\textwidth}
-			Ez az az elrendezés komponens, ami az eddigi alkalmazásokban került fejlesztésre. Azzal a különbséggel, hogy egy új változóba kerül elmentésre, és átadódik a \texttt{main\_content} \texttt{Div} komponensnek, ha a megfelelő feltételek teljesülnek (az URL nem tartalmaz egy országnevet).
-		\end{column}
-		\begin{column}{.5\textwidth}
-			\begin{lstlisting}[language=python]
+				\end{lstlisting}
+			\end{column}
+		\end{columns}
+	\end{frame}
+	
+	\begin{frame}[fragile]{Többlapos alkalmazás: Indikátorok műszerfala}
+		\begin{columns}
+			\begin{column}{.5\textwidth}
+				Ez az az elrendezés komponens, ami az eddigi alkalmazásokban került fejlesztésre. Azzal a különbséggel, hogy egy új változóba kerül elmentésre, és átadódik a \texttt{main\_content} \texttt{Div} komponensnek, ha a megfelelő feltételek teljesülnek (az URL nem tartalmaz egy országnevet).
+			\end{column}
+			\begin{column}{.5\textwidth}
+				\begin{lstlisting}[language=python]
 indicators_dashboard = html.Div([
 	# Minden eddigi komponens
 ])
-			\end{lstlisting}
-		\end{column}
-	\end{columns}
-\end{frame}
-
-\begin{frame}[fragile]{Többlapos alkalmazás: Országok műszerfala}
-	\begin{columns}
-		\begin{column}{.5\textwidth}
-			Ez a komponens is egy külön változóba kerül elmentésre, és akkor jelenítődik meg, amikor az URL tartalmaz egy országnevet. Ebben a komponensben az elrendezés (grafikon és táblázat) az URL-ben szereplő országnévtől függően változhat. 
-		\end{column}
-		\begin{column}{.5\textwidth}
-			\begin{lstlisting}[language=python]
+				\end{lstlisting}
+			\end{column}
+		\end{columns}
+	\end{frame}
+	
+	\begin{frame}[fragile]{Többlapos alkalmazás: Országok műszerfala}
+		\begin{columns}
+			\begin{column}{.5\textwidth}
+				Ez a komponens is egy külön változóba kerül elmentésre, és akkor jelenítődik meg, amikor az URL tartalmaz egy országnevet. Ebben a komponensben az elrendezés (grafikon és táblázat) az URL-ben szereplő országnévtől függően változhat. 
+			\end{column}
+			\begin{column}{.5\textwidth}
+				\begin{lstlisting}[language=python]
 country_dashboard = html.Div([
 	html.H1(id='country_heading'),
 	dcc.Graph(id='country_page_graph'),
@@ -450,37 +449,37 @@ country_dashboard = html.Div([
 	dcc.Dropdown(id='country_page_contry_dropdown'),
 	html.Div(id='country_table')
 ])
-			\end{lstlisting}
-		\end{column}
-	\end{columns}
-\end{frame}
-
-\begin{frame}[fragile]{Többlapos alkalmazás: Validációs elrendezés}
-	\begin{columns}
-		\begin{column}{.5\textwidth}
-			Ez a komponens egy egyszerű lista egy Dash komponens formájában, ami az előző három elrendezést tartalmazza.\par\smallskip 
-			Ennek a jelentősége, hogy megadja az alkalmazás számára, hogy milyen elrendezések érhetőek el a számára. Amikor az alkalmazás csak egy elrendezésből jelenít meg komponenseket és a többiből nem, némely komponensek nem lesznek az alkalmazás része, és néhány callback függvény eltörik.\par\smallskip
-			A validációs elrendezés egy egyszerű módszert ad az alkalmazás egésze számára elérhető elrendezések kezelésére. 
-		\end{column}
-		\begin{column}{.5\textwidth}
-			\begin{lstlisting}[language=python]
+				\end{lstlisting}
+			\end{column}
+		\end{columns}
+	\end{frame}
+	
+	\begin{frame}[fragile]{Többlapos alkalmazás: Validációs elrendezés}
+		\begin{columns}
+			\begin{column}{.5\textwidth}
+				Ez a komponens egy egyszerű lista egy Dash komponens formájában, ami az előző három elrendezést tartalmazza.\par\smallskip 
+				Ennek a jelentősége, hogy megadja az alkalmazás számára, hogy milyen elrendezések érhetőek el a számára. Amikor az alkalmazás csak egy elrendezésből jelenít meg komponenseket és a többiből nem, némely komponensek nem lesznek az alkalmazás része, és néhány callback függvény eltörik.\par\smallskip
+				A validációs elrendezés egy egyszerű módszert ad az alkalmazás egésze számára elérhető elrendezések kezelésére. 
+			\end{column}
+			\begin{column}{.5\textwidth}
+				\begin{lstlisting}[language=python]
 app.validation_layout = html.Div([
 	main_layout,
 	indicators_dashboard,
 	country_dashboard,
 ])
-			\end{lstlisting}
-		\end{column}
-	\end{columns}
-\end{frame}
-
-\begin{frame}[fragile]{Tartalom megjelenítése az URL-től függően}
-	\begin{columns}
-		\begin{column}{.5\textwidth}
-			A következő callback függvény ellenőrzi, hogy a \texttt{Location} komponens egyike-e az elérhető országoknak vagy sem. Ha igen, visszatéríti a \texttt{country\_dashboard} elrendezést, egyébként pedig az \texttt{indicators\_layout} elrendezést. 
-		\end{column}
-		\begin{column}{.5\textwidth}
-			\begin{lstlisting}[language=python]
+				\end{lstlisting}
+			\end{column}
+		\end{columns}
+	\end{frame}
+	
+	\begin{frame}[fragile]{Tartalom megjelenítése az URL-től függően}
+		\begin{columns}
+			\begin{column}{.5\textwidth}
+				A következő callback függvény ellenőrzi, hogy a \texttt{Location} komponens egyike-e az elérhető országoknak vagy sem. Ha igen, visszatéríti a \texttt{country\_dashboard} elrendezést, egyébként pedig az \texttt{indicators\_layout} elrendezést. 
+			\end{column}
+			\begin{column}{.5\textwidth}
+				\begin{lstlisting}[language=python]
 countries = poverty[poverty['is_country']]['Country Name'].drop_duplicates().sort_values().tolist()
 ...
 @app.callback(
@@ -492,82 +491,82 @@ if unquote(pathname[1:]) in countries:
 	return country_dashboard
 else:ar
 	return indicators_dashboard
-			\end{lstlisting}
-		\end{column}
-	\end{columns}
-\end{frame}
-
-\begin{frame}[fragile]{Alkalmazás többlapos támogatással (\texttt{app\_v6\_1.py})}
-	\begin{columns}
-		\begin{column}{.5\textwidth}
-			Az alkalmazás következő verziójához az összes eddig implementált funkcionalitást be kell építeni a korábban létrehozott struktúrába.\par\smallskip
-			Ennek eredménye egy konstans navigációs sáv, amelyben kiválasztható a megfelelő ország. A sávon kiválasztható az ország, amely átnavigálja a felhasználót egy új oldalra, amihez tartozóan az országhoz tartozó specifikus adatok fognak megjelenni.
-		\end{column}
-		\begin{column}{.5\textwidth}
-			\begin{center}
-				\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/adv_7.png}
-			\end{center}
-		\end{column}
-	\end{columns}
-\end{frame}
-
-\begin{frame}[fragile]{Az alkalmazás callback gráfja}
-	\begin{center}
-		\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/adv_8.png}
-	\end{center}
-\end{frame}
-
-\section{Kliensoldali callback függvények}
-
-\begin{frame}{}
-	\tableofcontents[currentsection]
-\end{frame}
-
-\begin{frame}{Szerveroldali callback függvények}
-	\begin{columns}
-		\begin{column}{.5\textwidth}
-				A szerveroldali függvények regisztrációjának és futtatásának folyamata a következőképpen írható le:
-			\begin{enumerate}
-				\item Függvény definiálása
-				\item Szerver regisztrálja a callback függvényt
-				\item Felhasználói interakció
-				\item Callback futtatása a szerveren
-				\item Eredmény visszaküldése a kliensnek
-			\end{enumerate}
-		\end{column}
-		\begin{column}{.5\textwidth}
-			\begin{center}
-				\includegraphics[width=7cm, height=7cm, keepaspectratio]{graphs/adv_1.png}
-			\end{center}	
-		\end{column}
-	\end{columns}
-\end{frame}
-
-\begin{frame}{Kliensoldali callback függvények}
-	\begin{columns}
-		\begin{column}{.5\textwidth}
-			A kliensoldali függvények folyamata: 
-			\begin{enumerate}
-				\item Függvény definiálása
-				\item Szerver elküldi a függvényt a kliens oldalra
-				\item Regisztráció a kliens oldalon 
-				\item Felhasználói interakció
-				\item Callback futtatása a böngészőben
-			\end{enumerate}
-		\end{column}
-		\begin{column}{.5\textwidth}
-			\begin{center}
-				\includegraphics[width=7cm, height=7cm, keepaspectratio]{graphs/adv_2.png}
-			\end{center}	
-		\end{column}
-	\end{columns}
-\end{frame}
-
-\begin{frame}[fragile]{Kliensoldali callback függvények}
-	A következő két programrészlet ugyanazt a callback függvényt mutatja be szerver- és kliens oldalon. 
-	\begin{columns}
-		\begin{column}{.5\textwidth}
-			\begin{lstlisting}[language=python]
+				\end{lstlisting}
+			\end{column}
+		\end{columns}
+	\end{frame}
+	
+	\begin{frame}[fragile]{Alkalmazás többlapos támogatással (\texttt{app\_v6\_1.py})}
+		\begin{columns}
+			\begin{column}{.5\textwidth}
+				Az alkalmazás következő verziójához az összes eddig implementált funkcionalitást be kell építeni a korábban létrehozott struktúrába.\par\smallskip
+				Ennek eredménye egy konstans navigációs sáv, amelyben kiválasztható a megfelelő ország. A sávon kiválasztható az ország, amely átnavigálja a felhasználót egy új oldalra, amihez tartozóan az országhoz tartozó specifikus adatok fognak megjelenni.
+			\end{column}
+			\begin{column}{.5\textwidth}
+				\begin{center}
+					\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/adv_7.png}
+				\end{center}
+			\end{column}
+		\end{columns}
+	\end{frame}
+	
+	\begin{frame}[fragile]{Az alkalmazás callback gráfja}
+		\begin{center}
+			\includegraphics[width=7cm, height=7cm, keepaspectratio]{images/adv_8.png}
+		\end{center}
+	\end{frame}
+	
+	\section{Kliensoldali callback függvények}
+	
+	\begin{frame}{}
+		\tableofcontents[currentsection]
+	\end{frame}
+	
+	\begin{frame}{Szerveroldali callback függvények}
+		\begin{columns}
+			\begin{column}{.5\textwidth}
+					A szerveroldali függvények regisztrációjának és futtatásának folyamata a következőképpen írható le:
+				\begin{enumerate}
+					\item Függvény definiálása
+					\item Szerver regisztrálja a callback függvényt
+					\item Felhasználói interakció
+					\item Callback futtatása a szerveren
+					\item Eredmény visszaküldése a kliensnek
+				\end{enumerate}
+			\end{column}
+			\begin{column}{.5\textwidth}
+				\begin{center}
+					\includegraphics[width=7cm, height=7cm, keepaspectratio]{graphs/adv_1.png}
+				\end{center}	
+			\end{column}
+		\end{columns}
+	\end{frame}
+	
+	\begin{frame}{Kliensoldali callback függvények}
+		\begin{columns}
+			\begin{column}{.5\textwidth}
+				A kliensoldali függvények folyamata: 
+				\begin{enumerate}
+					\item Függvény definiálása
+					\item Szerver elküldi a függvényt a kliens oldalra
+					\item Regisztráció a kliens oldalon 
+					\item Felhasználói interakció
+					\item Callback futtatása a böngészőben
+				\end{enumerate}
+			\end{column}
+			\begin{column}{.5\textwidth}
+				\begin{center}
+					\includegraphics[width=7cm, height=7cm, keepaspectratio]{graphs/adv_2.png}
+				\end{center}	
+			\end{column}
+		\end{columns}
+	\end{frame}
+	
+	\begin{frame}[fragile]{Kliensoldali callback függvények}
+		A következő két programrészlet ugyanazt a callback függvényt mutatja be szerver- és kliens oldalon. 
+		\begin{columns}
+			\begin{column}{.5\textwidth}
+				\begin{lstlisting}[language=python]
 from dash import Input, Output
 
 @callback(
@@ -578,10 +577,10 @@ from dash import Input, Output
 def large_params_function(largeValue1, largeValue2):
 	largeValueOutput = someTransform(largeValue1, largeValue2)
 return largeValueOutput	
-			\end{lstlisting}
-		\end{column}
-		\begin{column}{.5\textwidth}
-			\begin{lstlisting}[language=python]
+				\end{lstlisting}
+			\end{column}
+			\begin{column}{.5\textwidth}
+				\begin{lstlisting}[language=python]
 from dash import clientside_callback, Input, Output
 
 clientside_callback(
@@ -594,41 +593,8 @@ clientside_callback(
 	Input('in-component1', 'value'),
 	Input('in-component2', 'value')
 )
-			\end{lstlisting}
-		\end{column}
-	\end{columns}
-\end{frame}
-
+				\end{lstlisting}
+			\end{column}
+		\end{columns}
+	\end{frame}
 \end{document}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

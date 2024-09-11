@@ -10,7 +10,8 @@ import fitz
 if __name__ == '__main__':
     # Main loop
     root_folder = os.path.dirname(os.path.abspath(__file__))  # By default the root folder is the folder of the script
-    output_filename = 'elemzesmodszertan_merged.pdf'
+    dir_name = os.path.basename(root_folder).lower()
+    output_filename = f'{dir_name}_merged.pdf'
 
     if os.path.isfile(output_filename):
         os.remove(output_filename)

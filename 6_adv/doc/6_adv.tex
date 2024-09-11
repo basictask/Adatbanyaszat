@@ -523,7 +523,48 @@ else:ar
 	\tableofcontents[currentsection]
 \end{frame}
 
-\begin{frame}[fragile]{}
+\begin{frame}{Szerveroldali callback függvények}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+				A szerveroldali függvények regisztrációjának és futtatásának folyamata a következőképpen írható le:
+			\begin{enumerate}
+				\item Függvény definiálása
+				\item Szerver regisztrálja a callback függvényt
+				\item Felhasználói interakció
+				\item Callback futtatása a szerveren
+				\item Eredmény visszaküldése a kliensnek
+			\end{enumerate}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{center}
+				\includegraphics[width=7cm, height=7cm, keepaspectratio]{graphs/adv_1.png}
+			\end{center}	
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Kliensoldali callback függvények}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			A kliensoldali függvények folyamata: 
+			\begin{enumerate}
+				\item Függvény definiálása
+				\item Szerver elküldi a függvényt a kliens oldalra
+				\item Regisztráció a kliens oldalon 
+				\item Felhasználói interakció
+				\item Callback futtatása a böngészőben
+			\end{enumerate}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{center}
+				\includegraphics[width=7cm, height=7cm, keepaspectratio]{graphs/adv_2.png}
+			\end{center}	
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Kliensoldali callback függvények}
+	A következő két programrészlet ugyanazt a callback függvényt mutatja be szerver- és kliens oldalon. 
 	\begin{columns}
 		\begin{column}{.5\textwidth}
 			\begin{lstlisting}[language=python]

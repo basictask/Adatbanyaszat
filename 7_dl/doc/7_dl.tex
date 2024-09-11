@@ -2,12 +2,18 @@
 \documentclass[english, aspectratio=169]{beamer}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
+\usepackage{adjustbox}
 \usepackage{tabularx}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{array}
 \usepackage{babel}
 \usepackage[ruled,vlined]{algorithm2e}
+\usepackage{blkarray}
 \SetAlgorithmName{Algoritmus}{algoritmus}{List of Algorithms}
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{3}
+
 
 \makeatletter
 
@@ -15,9 +21,9 @@
 
 % (ERT) argument for the TOC
 \AtBeginDocument{%
-  \let\origtableofcontents=\tableofcontents
-  \def\tableofcontents{\@ifnextchar[{\origtableofcontents}{\gobbletableofcontents}}
-  \def\gobbletableofcontents#1{\origtableofcontents}
+	\let\origtableofcontents=\tableofcontents
+	\def\tableofcontents{\@ifnextchar[{\origtableofcontents}{\gobbletableofcontents}}
+	\def\gobbletableofcontents#1{\origtableofcontents}
 }
 
 % Theme settings
@@ -30,6 +36,14 @@
 \setbeamertemplate{blocks}[rounded][shadow=false]
 \setbeamertemplate{title page}[default][colsep=-4bp, rounded=true, shadow=false]
 \makeatother
+
+% Custom color definitions
+\definecolor{lightgrey}{gray}{0.95}
+\definecolor{DarkerGreen}{RGB}{0,85,0} % Adjust the RGB values as needed
+
+% Use the newly defined color in Beamer theme elements
+\setbeamercolor{structure}{fg=DarkerGreen} % Changes basic structural elements to Darker Green
+\setbeamercolor{title in head/foot}{bg=DarkerGreen} % Changes the title in header/footer to Darker Green
 
 \begin{document}
 
@@ -49,6 +63,199 @@
 % Table of contents of the current section
 \begin{frame}
 \tableofcontents[currentsection]
+\end{frame}
+
+\begin{frame}{Függvény illesztés alapjai}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			A függvény illesztés eljárása szerint valamely $x$ \textbf{független változóból} vett minta alapján szeretnénk előre jelezni egy $y$ \textbf{függő változó} értékét azért, hogy feltárja az adatpontok közötti mintázatokat.\par\smallskip
+			Két eljárása ismert:
+			\begin{itemize}
+				\item \textbf{Regresszió}: tárgya egy folytonos változó
+				\item \textbf{Osztályozás}: tárgya egy diszkrét változó
+			\end{itemize}
+			A függvény illesztés eredménye a \textbf{modell}.
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{center}
+				\includegraphics[width=7cm, keepaspectratio]{images/ql_8.png}
+			\end{center}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Függvény illesztés alapjai}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			Az illesztett modell alakját és viselkedését a \textbf{paraméterei} határozzák meg, amelyek együtthatókként viselkednek a modell egyenletében. A lineáris modell egyenlete: 
+			\begin{block}{}
+				\vspace{-0.25cm}
+				\[
+				y_i = \theta_0 + \theta_1x_i + \varepsilon_i
+				\]
+			\end{block}
+			Ahol:
+			\begin{itemize}
+				\item $\theta_0$: az $y$ tengely metszéspontja, vagy eltolás
+				\item $\theta_1$: az egyenes meredeksége
+				\item $\varepsilon$: a véletlen hiba, amit a modell nem tud előre jelezni
+			\end{itemize}
+			$\theta=[\theta_0,\theta_1,...,\theta_n]$ a paraméterek vektora.
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{center}
+				\includegraphics[width=7cm, keepaspectratio]{images/ql_9.png}
+			\end{center}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Függvény illesztés több paraméterrel}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			Függvényt lehetséges nemlineáris adatokra is illeszteni. Ebben a példában a minta adatpontok kvadratikusak, \textbf{nem írhatók le egy lineáris egyenlettel}. A modellnek ebben az esetben $3$ paramétere van: $\theta_0$, $\theta_1$ és $\theta_2$. Az illesztett modell egyenlete: 
+			\[
+			y=1.78 + 0.93x + 0.56 x^2
+			\]
+			Tehát ebben az esetben $\theta_0=1.78$, $\theta_1=0.93$ és $\theta_2=0.56$.
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{center}
+				\includegraphics[width=7cm, keepaspectratio]{images/ql_10.png}
+			\end{center}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\section{Gradiens ereszkedés}
+
+\begin{frame}
+	\tableofcontents[currentsection]
+\end{frame}
+
+\begin{frame}{A költségfüggvény}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			A modell illesztő algoritmusok mindegyike úgy találja meg az optimális függvényt, hogy valamilyen költségfüggvényt minimalizál. A leggyakoribb ilyen költségfüggvény az \textbf{átlagos négyzetes hiba}:
+			\begin{block}{}
+				\[
+				MSE = \frac{1}{n} \sum_{i=1}^n \left( y_i - f(x)_i \right)^2
+				\]
+				\begin{itemize}
+					\item $y_i$: Megfigyelt adatpont
+					\item $f(x)_i$: Modell által adott becslés
+				\end{itemize}
+			\end{block}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{center}
+				\includegraphics[width=6cm, keepaspectratio]{images/ql_11.png}
+			\end{center}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{A gradiens}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			A függvény illesztés célja, hogy megtalálja azt a modellt, ami a legjobban illeszkedik az adatpontokra, tehát \textbf{minimalizálja a költségfüggvényt} (MSE). 
+			\begin{block}{Gradiens}
+				Olyan vektor, amely megmutatja hogyan változik a függvény, és megadja a legnagyobb változás irányát minden dimenzióban.
+				\vspace{-0.25cm}
+				\[
+				df = \nabla f * dx
+				\]
+			\end{block} 
+			A gradiens segítségével meg lehet határozni, merre és mennyivel érdemes változtatni a paramétereket a célfüggvény értékének csökkentése érdekében.
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{center}
+				\includegraphics[width=7.5cm, keepaspectratio]{images/ql_12.png}
+			\end{center}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Gradiens ereszkedés}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			\only<1>{A gradiens ereszkedés egy iteratív minimalizálási algoritmus egy tetszőleges függvény lokális minimum helyének megtalálására. Az algoritmus lépésről lépésre mozog a függvény értékének csökkentése érdekében. \par\smallskip
+				\begin{block}{Tanulási sebesség ($\alpha$ vagy $\eta$)}
+					A tanulási sebesség meghatározza, mennyire nagy lépéseket tesz a gradiens ereszkedés az optimalizációs folyamat során.
+			\end{block}}
+			\only<2>{\begin{block}{A gradiens ereszkedés paraméter frissítése:}
+					\[
+					\theta' \leftarrow \theta - \alpha \; \nabla_\theta \; J(\theta)
+					\]
+					\begin{itemize}
+						\item $\theta=[\theta_0,\theta_1,...,\theta_n]$: Paraméterek vektora
+						\item $\alpha \in [0,1]$: Tanulási sebesség
+						\item $\nabla_\theta$: Költségfüggvény gradiense \\($\theta$ szerinti derivált)
+						\item $J(\theta)$: Költségfüggvény $\theta$ szerint \\(pl. MSE)
+					\end{itemize}
+			\end{block}}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\only<1>{\begin{center}
+					\includegraphics[width=7cm, keepaspectratio]{images/ql_13.png}
+			\end{center}}
+			\only<2>{\begin{center}
+					\includegraphics[width=7cm, keepaspectratio]{images/ql_20.png}
+			\end{center}}
+		\end{column}
+	\end{columns}
+\begin{flushright}
+	
+	\end{flushright}\end{frame}
+
+\begin{frame}{Túl alacsony tanulási sebesség}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			\begin{center}
+				\includegraphics[width=6cm, keepaspectratio]{images/ql_17.png}
+			\end{center}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{center}
+				\includegraphics[width=7cm, keepaspectratio]{images/ql_14.png}
+			\end{center}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Túl magas tanulási sebesség}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			\begin{center}
+				\includegraphics[width=6cm, keepaspectratio]{images/ql_19.png}
+			\end{center}
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{center}
+				\includegraphics[width=7cm, keepaspectratio]{images/ql_15.png}
+			\end{center}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Egyéb problémák}
+	\begin{columns}
+		\begin{column}{.5\textwidth}
+			A gradiens ereszkedés nem garantálja, hogy elér egy globális minimumot, hiszen a gradiens operátora csak lokális változásokat vesz figyelembe. Ebből adódóan az \textbf{algoritmus beragadhat egy lokális minimumon}.\par\medskip
+			Vannak esetek, amikor a gradiens nem meghatározható (szaturál), például amikor \textbf{elér egy fennsíkot a függvényen}. Ebben az esetben a futás vagy nagyon lassú lesz, vagy nem halad semerre. 
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\begin{center}
+				\includegraphics[width=7cm, keepaspectratio]{images/ql_16.png}
+			\end{center}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\section{Neurális hálózatok}
+
+\begin{frame}{}
+	\tableofcontents[currentsection]
 \end{frame}
 
 \begin{frame}{Biológiai és mesterséges neuronok}
@@ -86,7 +293,7 @@ h=\varphi(z)
 \end{column}
 \begin{column}{.6\textwidth}
 \begin{center}
-\includegraphics[width=9cm, keepaspectratio]{../../5_ql/doc/images/ql_21.png}
+\includegraphics[width=9cm, keepaspectratio]{images/dl_12.png}
 \end{center}
 \end{column}
 \end{columns}

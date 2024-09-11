@@ -138,3 +138,8 @@ zipp==3.19.2
 zstandard==0.22.0
 
 pandas-datareader~=0.10.0
+opencv-python~=4.10.0.84
+torch~=2.4.1
+matplotlib~=3.9.2
+pillow~=10.4.0
+torchvision~=0.19.1

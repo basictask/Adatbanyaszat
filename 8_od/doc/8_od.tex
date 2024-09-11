@@ -2,12 +2,18 @@
 \documentclass[english, aspectratio=169]{beamer}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
+\usepackage{adjustbox}
 \usepackage{tabularx}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{array}
 \usepackage{babel}
 \usepackage[ruled,vlined]{algorithm2e}
+\usepackage{blkarray}
 \SetAlgorithmName{Algoritmus}{algoritmus}{List of Algorithms}
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{3}
+
 
 \makeatletter
 
@@ -15,9 +21,9 @@
 
 % (ERT) argument for the TOC
 \AtBeginDocument{%
-  \let\origtableofcontents=\tableofcontents
-  \def\tableofcontents{\@ifnextchar[{\origtableofcontents}{\gobbletableofcontents}}
-  \def\gobbletableofcontents#1{\origtableofcontents}
+	\let\origtableofcontents=\tableofcontents
+	\def\tableofcontents{\@ifnextchar[{\origtableofcontents}{\gobbletableofcontents}}
+	\def\gobbletableofcontents#1{\origtableofcontents}
 }
 
 % Theme settings
@@ -31,14 +37,22 @@
 \setbeamertemplate{title page}[default][colsep=-4bp, rounded=true, shadow=false]
 \makeatother
 
+% Custom color definitions
+\definecolor{lightgrey}{gray}{0.95}
+\definecolor{DarkerGreen}{RGB}{0,85,0} % Adjust the RGB values as needed
+
+% Use the newly defined color in Beamer theme elements
+\setbeamercolor{structure}{fg=DarkerGreen} % Changes basic structural elements to Darker Green
+\setbeamercolor{title in head/foot}{bg=DarkerGreen} % Changes the title in header/footer to Darker Green
+
 \begin{document}
 
 % Title page
 \section{Bevezetés}
-\title[]{Üzleti Intelligencia}
+\title[]{Adatbányászat a Gyakorlatban}
 \subtitle{8. Előadás: Objektum detekció}
 \author[Kuknyó Dániel]{Kuknyó Dániel\\Budapesti Gazdasági Egyetem}
-\date{2023/24\\1.félév}
+\date{2024/25\\1.félév}
 \makebeamertitle
 
 % Table of contents slide
@@ -114,7 +128,7 @@ Lokalizáció esetén a neurális hálózat két részre ágazik, mivel két kü
 \end{column}
 \begin{column}{.4\textwidth}
 \begin{center}
-\includegraphics[height=5cm, keepaspectratio]{graphs/od_2.png}\\
+\includegraphics[height=5cm, width=5.5cm, keepaspectratio]{graphs/od_2.png}\\
 \vspace{-0.7cm}
 \includegraphics[height=2.5cm, width=2.5cm, keepaspectratio]{images/od_1.png}
 \end{center}

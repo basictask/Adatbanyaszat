@@ -34,9 +34,14 @@ pip install -r requirements.txt
 ```
 
 ### Javasolt fejlesztői környezetek
-- Pycharm Community/Professional (Egyetemi hallgatóknak ingyenes a Professioanal)
+#### Dash alkalmazásokhoz
+- Pycharm Community/Professional (Egyetemi Hallgatóknak ingyenes a Professioanal)
 - Spyder (Anaconda fejlesztői csomaggal elérhető)  
 A felsoroltakon kívül bármely más fejlesztői környezet is használható a kurzus alatt. 
+#### Jupyter notebook fájlokhoz
+- Jupyter notebook (Anaconda fejlesztői csomaggal ingyenes)
+- Visual Studio Code (Jupyter bővítménnyel)
+- Pycharm Professional Edition (Egyetemi Hallgatóknak ingyenes)
 
 ## Mappák struktúrája
 A gyökérmappában található scriptek:  

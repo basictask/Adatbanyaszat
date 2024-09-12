@@ -10,6 +10,7 @@ sources/*
 elemzesmodszertan_merged.pdf
 *xdp*
 .idea
+*.idea
 *pytxcode
 scratchpad.py
 widgets.qss
@@ -41,6 +42,7 @@ adatbanyaszat_merged.pdf
 *.log
 *.nav
 *.out
+*.pyg
 *.vrb
 *.dvi
 *.snm

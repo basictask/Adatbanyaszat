@@ -1,5 +1,5 @@
 import dash
-import dash_html_components as html
+from dash import html
 import dash_bootstrap_components as dbc
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
@@ -33,16 +33,15 @@ app.layout = html.Div([
         dbc.Tab([
             html.Ul([
                 html.Br(),
-                html.Li('Könyv címe: Interaktív műszerfalak és adatalkalmazások Plotly és Dash segítségével'),
                 html.Li([
                     'GitHub repo: ',
                     html.A(
-                        'https://github.com/PacktPublishing/Interactive-Dashboards-and-Data-Apps-with-Plotly-and-Dash',
-                        'https://github.com/PacktPublishing/Interactive-Dashboards-and-Data-Apps-with-Plotly-and-Dash'
+                        'https://github.com/basictask/Adatbanyaszat',
+                        'https://github.com/basictask/Adatbanyaszat'
                     )
                 ])
             ])
-        ], label='Projekt információ')
+        ], label='Projekt információk')
     ]),
 ])
 

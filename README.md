@@ -32,6 +32,8 @@ conda activate dash
 ```
 pip install -r requirements.txt
 ```
+### Videó klónozásról, környezet telepítéséről és elindításáról
+[Link](https://drive.google.com/file/d/1URRSjCs6gf2ArGA66jI4CfESdtuVdJx1/view?usp=drive_link)
 
 ### Javasolt fejlesztői környezetek
 #### Dash alkalmazásokhoz

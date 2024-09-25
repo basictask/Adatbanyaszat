@@ -585,7 +585,7 @@ def register_callbacks(param_app):
         if (not years) or (not indicator):
             raise PreventUpdate
         df = poverty[poverty['year'].isin(years) & poverty['is_country']]
-        if len(df) == 0 or not df:
+        if len(df) == 0 or df is None:
             return no_update
 
         fig = px.histogram(
@@ -732,4 +732,4 @@ register_callbacks(app)
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=False, use_reloader=False)

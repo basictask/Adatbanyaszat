@@ -33,6 +33,8 @@ widgets.qss
 11_transformer/code/gpt2-finetuned
 widgets.qss
 adatbanyaszat_merged.pdf
+feladatok/1zh/Adatbanyaszat_1zh.pdf
+feladatok/pdf_protect.py
 
 # LaTeX
 *.aux
